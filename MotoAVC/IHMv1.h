@@ -165,7 +165,7 @@ namespace IHMv1
 
 
 namespace IHMv2
-{// início dos Menus Futuros
+{// para ser continuado fururamente
 	struct VarFloat
 	{
 		String nome, unidade;

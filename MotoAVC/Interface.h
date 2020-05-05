@@ -3,7 +3,7 @@
 #include <LiquidCrystal.h>
 
 namespace Interface
-{
+{//não utilizada mais
 	constexpr auto ENCODER_PIN_A = 2 ;
 	constexpr auto ENCODER_PIN_B = 4 ;
 	constexpr auto SWITCH = 3;
