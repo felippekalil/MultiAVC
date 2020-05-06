@@ -201,6 +201,7 @@ namespace IHMv1
 		Ihm(VarFloat* var, float* var2);
 		Ihm(VarFloat* var, Linha* linhas, int nLinhas);
 
+		bool varAjustadas() const;
 		void setup();
 		void imprimeInterface();
 	};
@@ -259,6 +260,11 @@ namespace IHMv1
 		varFloat = var;
 		this->linhas = linhas;
 		nTelasLinha = nLinhas;
+	}
+
+	inline bool Ihm::varAjustadas() const
+	{
+		return select == 0;
 	}
 
 	inline void Ihm::setup()
