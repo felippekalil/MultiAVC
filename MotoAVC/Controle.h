@@ -7,6 +7,7 @@ namespace Controle
 
     float valorTensaoDoArco = 0;
     float valorSaida = 0;
+    float valorSaidaCorrente = 0;
 
     float leituraEntradaAnalogica = 0;
     float referencia = 11;
@@ -30,7 +31,7 @@ namespace Controle
             valorSaida = 0;
         if(valorSaida > 5)
             valorSaida = 5;
-
+        valorSaidaCorrente = valorSaida * 100;
         analogWrite(saidaComarc, 255 * (valorSaida) / 5);
     }
 

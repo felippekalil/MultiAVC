@@ -9,8 +9,13 @@
 #include "IHMv1.h"
 using namespace IHMv1;
 
+Linha linhas[] = { Linha("   In:", &Controle::valorTensaoDoArco, 1, 5, "V"),
+                    Linha("  Out:", &Controle::valorSaida, 1, 5, "V"),
+					Linha("  Out:", &Controle::valorSaidaCorrente, 0, 5, "A") };
+
 VarFloat referencia = { &Controle::referencia , 0.1, 99.9, 0.1 };
-Ihm ihm(&referencia, &Controle::valorTensaoDoArco);//*/
+//Ihm ihm(&referencia, &Controle::valorTensaoDoArco);/*
+Ihm ihm(&referencia, linhas, 3);//*/
 
 
 void setup() {
@@ -23,7 +28,6 @@ void setup() {
 
 void loop() {
     Controle::atua();
-    ihm.debounce(10);
 	if(millis() % 200 == 0)
         //Interface::imprimeInterface();/*
         ihm.imprimeInterface();//*/

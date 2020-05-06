@@ -4,7 +4,6 @@
 
 namespace IHMv1
 {
-	//#define DEBOUNCE
 	struct VarFloat
 	{	
 		float* valor;
@@ -47,37 +46,49 @@ namespace IHMv1
 		int* varInt = nullptr;
 		int nAlgarismos = 0;
 
+
+		static int contCaracteres(const String& n1, const String& n2, const int nAlg) 
+		{
+			return n1.length() + n2.length() + nAlg;
+		}
+
 		int contCaracteres() const
 		{
-			return nome.length() + unidade.length() + nAlgarismos;
+			return contCaracteres(nome, unidade, nAlgarismos);
+		}
+
+		static String printInt(const int valor, const uint8_t nAlg)
+		{
+			auto txt = static_cast<String>(valor);
+			while(txt.length() < nAlg)
+				txt = " " + txt;
+			return txt;
 		}
 
 		String printInt(const int valor) const
 		{
-			auto txt = static_cast<String>(valor);
-			while(txt.length() < nAlgarismos)
-				txt = " " + txt;
-			return txt;
+			return printInt(valor, nAlgarismos);
 		}
 
 		String printInt() const
 		{
-			if(varInt == nullptr)
-				return "";
 			return printInt(*varInt);
+		}
+
+		static String printFloat(const float varFloat, const float nDecimais, const uint8_t nAlgarismos)
+		{
+			String txt = "";
+			txt = String(varFloat, nDecimais);
+			while(txt.length() < nAlgarismos)
+				txt = " " + txt;
+			if(txt.length() > nAlgarismos)
+				return printInt(varFloat, nAlgarismos);
+			return txt;
 		}
 
 		String printFloat() const
 		{
-			String txt = "";
-			if(varFloat == nullptr)
-				return txt;
-			txt = String(*varFloat, nDecimais);
-			while(txt.length() < nAlgarismos)
-				txt = " " + txt;
-			if(txt.length() > nAlgarismos)
-				return printInt(*varFloat);
-			return txt;
+			return printFloat(*varFloat, nDecimais, nAlgarismos);
 		}
 
 		String printValor() const
@@ -93,20 +104,54 @@ namespace IHMv1
 		}
 
 	public:
-		Linha(const String nome, int* varInt, const int nAlgarismos, const String unidade)
+		Linha(const String& nome, int* varInt, const int nAlgarismos, const String unidade)
 		{
 			this->nome = nome;
 			this->varInt = varInt;
 			this->nAlgarismos = nAlgarismos;
 			this->unidade = unidade;
 		}
-		Linha(const String nome, float* varFloat, const int nDecimais, const int nAlgarismos, const String unidade)
+		Linha(const String& nome, float* varFloat, const int nDecimais, const int nAlgarismos, const String unidade)
 		{
 			this->nome = nome;
 			this->varFloat = varFloat;
 			this->nDecimais = nDecimais;
 			this->nAlgarismos = nAlgarismos;
 			this->unidade = unidade;
+		}
+
+		static String texto(const String& nome, const int varInt, const int nAlgarismos, const String& unidade, const bool imprimeValor)
+		{
+			auto txt = nome;
+			for(auto i = 0; i < nAlgarismos; i++)
+				txt += " ";
+			if(contCaracteres(nome, unidade, nAlgarismos) < 16)
+				txt += " ";
+			txt += unidade;
+			if(!imprimeValor)
+				return txt;
+			auto valor = printInt(varInt, nAlgarismos);
+			const auto index = nome.length();
+			for(auto i = 0; i < valor.length() && index + i < 16; i++)
+				txt.setCharAt(index + i, valor[i]);//*/
+			return txt;
+		}
+
+		static String texto(const String& nome, const float varFloat, const int nDecimais, const int nAlgarismos, const String& unidade, const bool imprimeValor)
+		{
+			auto txt = nome;
+			for(auto i = 0; i < nAlgarismos; i++)
+				txt += " ";
+			if(contCaracteres(nome, unidade, nAlgarismos) < 16)
+				txt += " ";
+			txt += unidade;
+			if(!imprimeValor)
+				return txt;
+			auto valor = printFloat(varFloat, nDecimais, nAlgarismos);
+			const auto index = nome.length();
+			for(auto i = 0; i < valor.length() && index + i < 16; i++)
+				txt.setCharAt(index + i, valor[i]);//*/
+			return txt;
 		}
 
 		String texto(const bool imprimeValor) const
@@ -136,16 +181,17 @@ namespace IHMv1
 		VarFloat* varFloat;
 		float* entrada{};
 		volatile bool select{};
+		Linha* linhas = nullptr;
+		volatile byte telasLinha{};
+		byte nTelasLinha = 1;
+
 		int pisca{};
 		static Ihm* instancia;
-
-		volatile bool aguarda = false;
-		long tInt = 0;
 
 		const int rs = A4, en = A5, d4 = A0, d5 = A1, d6 = A2, d7 = A3;
 		LiquidCrystal lcd;
 
-		void handleEncoder() const;
+		void handleEncoder();
 		void handleSwitch();		
 		void printVarNameFloat(VarFloat& var, bool imprimeVar);
 
@@ -153,29 +199,42 @@ namespace IHMv1
 	public:
 		Ihm(float* var1, float* var2, float min, float max, float inc);
 		Ihm(VarFloat* var, float* var2);
+		Ihm(VarFloat* var, Linha* linhas, int nLinhas);
 
 		void setup();
-		void debounce(int wait);
 		void imprimeInterface();
 	};
 
 	Ihm* Ihm::instancia;
 
 	inline void Ihm::handleEncoder()
-	#ifndef DEBOUNCE
-		const
-	#endif
 	{
-		if(!select || aguarda)
+		if(!select && nTelasLinha == 1)
 			return;
 		if(digitalRead(encoderPinB) == digitalRead(encoderPinA))
-			varFloat->dec();
+		{
+			if(select)
+				varFloat->dec();
+			else
+			{
+				if(telasLinha == 0)
+					telasLinha = nTelasLinha - 1;
+				else
+					telasLinha--;
+			}
+		}
 		else
-			varFloat->inc();//*/
-		#ifdef DEBOUNCE
-			aguarda = true;
-		#endif
-
+		{
+			if(select)
+				varFloat->inc();
+			else
+			{
+				if(telasLinha == nTelasLinha - 1)
+					telasLinha = 0;
+				else
+					telasLinha++;
+			}
+		}
 	}
 
 	inline void Ihm::handleSwitch()
@@ -193,6 +252,13 @@ namespace IHMv1
 	{
 		varFloat = var;
 		entrada = var2;
+	}
+
+	inline Ihm::Ihm(VarFloat* var, Linha* linhas, const int nLinhas) : lcd(rs, en, d4, d5, d6, d7)
+	{
+		varFloat = var;
+		this->linhas = linhas;
+		nTelasLinha = nLinhas;
 	}
 
 	inline void Ihm::setup()
@@ -214,27 +280,7 @@ namespace IHMv1
 		lcd.setCursor(0, 1);
 		lcd.print("     v1.0       ");
 
-		//delay(1500);
-	}
-
-	inline void Ihm::debounce(const int wait)
-	{
-		#ifndef DEBOUNCE
-			return;
-		#endif
-
-		if(aguarda && tInt == 0)
-			tInt = millis();
-		else
-			if(millis() >= tInt + wait && aguarda)
-			{
-				tInt = 0;
-				aguarda = false;
-				/*if(digitalRead(encoderPinB) == digitalRead(encoderPinA))
-					varFloat->dec();
-				else
-					varFloat->inc();//*/
-			}
+		delay(1500);
 	}
 
 	inline void Ihm::imprimeInterface()
@@ -252,13 +298,13 @@ namespace IHMv1
 
 		lcd.clear();
 		lcd.setCursor(0, 0);
-		const auto linha1 = new Linha("  Ref:", varFloat->valor, 1, 5, "V");
-		lcd.print(linha1->texto(imprime));
+		lcd.print(Linha::texto("  Ref:", *varFloat->valor, 1, 5, "V", imprime));
 		lcd.setCursor(0, 1);
-		const auto linha2 = new Linha("   In:", entrada, 1, 5, "V");
-		lcd.print(linha2->texto(true));
-		delete linha1;
-		delete linha2;
+		if(linhas == nullptr)
+			lcd.print(Linha::texto("   in:", *entrada, 1, 5, "V", true));
+		else
+			lcd.print(linhas[telasLinha].texto(true));
+
 
 	}
 }
