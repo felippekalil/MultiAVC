@@ -23,7 +23,8 @@ void setup() {
 
 void loop() {
     Controle::atua();
-    if(millis() % 200 == 0)
+    ihm.debounce(10);
+	if(millis() % 200 == 0)
         //Interface::imprimeInterface();/*
         ihm.imprimeInterface();//*/
 }

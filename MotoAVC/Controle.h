@@ -2,7 +2,7 @@
 
 namespace Controle
 {
-    const int tensaoDoArco = A0;  // Entrada analogica, leitura da tensao do arco
+    const int tensaoDoArco = A6;  // Entrada analogica, leitura da tensao do arco
     const int saidaComarc = 6;  // sinal enviado ao motoman
 
     float valorTensaoDoArco = 0;
@@ -34,23 +34,25 @@ namespace Controle
         analogWrite(saidaComarc, 255 * (valorSaida) / 5);
     }
 
-    inline void imprime(String& texto)
+    inline String imprime()
     {
-        texto += millis() / 1000.0;
+        auto texto = static_cast<String>(millis() / 1000.0);
         texto += "\t";
         texto += valorTensaoDoArco;
         texto += "\t";
         texto += 500.0 * leituraEntradaAnalogica / 11264.0;
         texto += "\t";
         texto += valorSaida;
-        texto += "\t";
+        return texto;
     }
 
     inline void atua()
     {
         valorTensaoDoArco = leTensaoArco();
-        if(valorTensaoDoArco < 7 || valorTensaoDoArco > 40)
-            valorTensaoDoArco = referencia;
-        setaSaida(valorTensaoDoArco);
+        if(valorTensaoDoArco < 3 || valorTensaoDoArco > 30)
+            setaSaida(referencia);
+          //  valorTensaoDoArco = referencia;
+        else
+            setaSaida(valorTensaoDoArco);
     }
 }
