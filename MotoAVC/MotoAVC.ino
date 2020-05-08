@@ -44,7 +44,7 @@ void atualizaEeprom() // se não for lenta a leitura da eeprom, dá pra rodar o up
 
 void loop() {
     Controle::atua();
-	if(millis() % 200 == 0)
+	if(millis() % 300 == 0)
         //Interface::imprimeInterface();/*
         ihm.imprimeInterface();//*/
     if(ihm.varAjustadas())
