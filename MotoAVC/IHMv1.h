@@ -4,6 +4,8 @@
 
 namespace IHMv1
 {
+	constexpr auto N_COLUNAS = 16;
+
 	struct VarFloat
 	{	
 		float* valor;
@@ -125,15 +127,23 @@ namespace IHMv1
 			auto txt = nome;
 			for(auto i = 0; i < nAlgarismos; i++)
 				txt += " ";
-			if(contCaracteres(nome, unidade, nAlgarismos) < 16)
+			if(contCaracteres(nome, unidade, nAlgarismos) < N_COLUNAS)
 				txt += " ";
 			txt += unidade;
 			if(!imprimeValor)
+			{
+				while(txt.length() < N_COLUNAS)
+					txt += " ";
 				return txt;
+			}
 			auto valor = printInt(varInt, nAlgarismos);
 			const auto index = nome.length();
-			for(auto i = 0; i < valor.length() && index + i < 16; i++)
+			for(auto i = 0; i < valor.length() && index + i < N_COLUNAS; i++)
 				txt.setCharAt(index + i, valor[i]);//*/
+			if(txt.length() > N_COLUNAS)
+				return txt.substring(0, N_COLUNAS - 1);
+			while(txt.length() < N_COLUNAS)
+				txt += " ";
 			return txt;
 		}
 
@@ -142,15 +152,23 @@ namespace IHMv1
 			auto txt = nome;
 			for(auto i = 0; i < nAlgarismos; i++)
 				txt += " ";
-			if(contCaracteres(nome, unidade, nAlgarismos) < 16)
+			if(contCaracteres(nome, unidade, nAlgarismos) < N_COLUNAS)
 				txt += " ";
 			txt += unidade;
 			if(!imprimeValor)
+			{
+				while(txt.length() < N_COLUNAS)
+					txt += " ";
 				return txt;
+			}
 			auto valor = printFloat(varFloat, nDecimais, nAlgarismos);
 			const auto index = nome.length();
-			for(auto i = 0; i < valor.length() && index + i < 16; i++)
+			for(auto i = 0; i < valor.length() && index + i < N_COLUNAS; i++)
 				txt.setCharAt(index + i, valor[i]);//*/
+			if(txt.length() > N_COLUNAS)
+				return txt.substring(0, N_COLUNAS - 1);
+			while(txt.length() < N_COLUNAS)
+				txt += " ";
 			return txt;
 		}
 
@@ -159,15 +177,23 @@ namespace IHMv1
 			auto txt = nome;
 			for(auto i = 0; i < nAlgarismos; i++)
 				txt += " ";
-			if(contCaracteres() < 16)
+			if(contCaracteres() < N_COLUNAS)
 				txt += " ";
 			txt += unidade;
 			if(!imprimeValor)
+			{
+				while(txt.length() < N_COLUNAS)
+					txt += " ";
 				return txt;
+			}
 			auto valor = printValor();
 			const auto index = nome.length();
-			for(auto i = 0; i < valor.length() && index + i < 16; i++)
+			for(auto i = 0; i < valor.length() && index + i < N_COLUNAS; i++)
 				txt.setCharAt(index + i, valor[i]);//*/
+			if(txt.length() > N_COLUNAS)
+				return txt.substring(0, N_COLUNAS - 1);
+			while(txt.length() < N_COLUNAS)
+				txt += " ";
 			return txt;
 		}
 	};
@@ -183,6 +209,8 @@ namespace IHMv1
 		volatile bool select{};
 		Linha* linhas = nullptr;
 		volatile byte telasLinha{};
+		byte telasLinhaAnt{};
+		float indexDeslocLinha = 0;
 		byte nTelasLinha = 1;
 
 		int pisca{};
@@ -216,7 +244,7 @@ namespace IHMv1
 		{
 			if(select)
 				varFloat->dec();
-			else
+			else// if(telasLinha == telasLinhaAnt)
 			{
 				if(telasLinha == 0)
 					telasLinha = nTelasLinha - 1;
@@ -228,7 +256,7 @@ namespace IHMv1
 		{
 			if(select)
 				varFloat->inc();
-			else
+			else //if(telasLinha == telasLinhaAnt)
 			{
 				if(telasLinha == nTelasLinha - 1)
 					telasLinha = 0;
@@ -281,13 +309,14 @@ namespace IHMv1
 		attachInterrupt(0, []() { instancia->handleEncoder(); }, CHANGE);
 		attachInterrupt(1, []() { instancia->handleSwitch(); }, FALLING);
 
-		lcd.begin(16, 2);
+		lcd.begin(N_COLUNAS, 2);
 		lcd.print("    MotoAVC     ");
 		lcd.setCursor(0, 1);
 		lcd.print("     v1.0       ");
-
-		delay(1500);
+		//delay(1500);
 	}
+
+
 
 	inline void Ihm::imprimeInterface()
 	{
@@ -309,7 +338,34 @@ namespace IHMv1
 		if(linhas == nullptr)
 			lcd.print(Linha::texto("   in:", *entrada, 1, 5, "V", true));
 		else
-			lcd.print(linhas[telasLinha].texto(true));
+		{
+			if(telasLinha != telasLinhaAnt)
+			{
+				auto linhaNova = linhas[telasLinha].texto(true);
+				auto linhaAnter = linhas[telasLinhaAnt].texto(true);
+				String linhaTrans = "";
+				for(auto i = 0; i < N_COLUNAS; i++)
+					linhaTrans += " ";
+				for(auto i = 0; i < N_COLUNAS; i++)
+				{
+					if(i < indexDeslocLinha)
+						linhaTrans.setCharAt(i,linhaNova[N_COLUNAS - indexDeslocLinha + i]);
+					else
+						linhaTrans.setCharAt(i, linhaAnter[i - indexDeslocLinha]);
+
+				}
+				lcd.print(linhaTrans);
+				indexDeslocLinha += 3;
+				if(indexDeslocLinha >= N_COLUNAS)
+				{
+					indexDeslocLinha = 0;
+					
+					telasLinhaAnt = telasLinha;// > telasLinhaAnt ? telasLinhaAnt;
+				}
+			}
+			else//*/
+				lcd.print(linhas[telasLinha].texto(true));
+		}
 
 
 	}
@@ -318,6 +374,7 @@ namespace IHMv1
 
 namespace IHMv2
 {// para ser continuado fururamente
+	constexpr auto N_COLUNAS = 16;
 	struct VarFloat
 	{
 		String nome, unidade;
@@ -438,7 +495,7 @@ namespace IHMv2
 		attachInterrupt(0, []() { instancia->handleEncoder(); }, CHANGE);
 		attachInterrupt(1, []() { instancia->handleSwitch(); }, FALLING);
 
-		lcd.begin(16, 2);
+		lcd.begin(N_COLUNAS, 2);
 		lcd.print("    MotoAVC     ");
 		lcd.setCursor(0, 1);
 		lcd.print("     v1.0       ");

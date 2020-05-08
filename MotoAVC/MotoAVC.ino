@@ -10,8 +10,8 @@
 using namespace IHMv1;
 
 Linha linhas[] = { Linha("   In:", &Controle::valorTensaoDoArco, 1, 5, "V"),
-                    Linha("  Out:", &Controle::valorSaida, 1, 5, "V"),
-					Linha("  Out:", &Controle::valorSaidaCorrente, 0, 5, "A") };
+                   Linha("  Out:", &Controle::valorSaida, 1, 5, "V"),
+				   Linha("  Out:", &Controle::valorSaidaCorrente, 0, 5, "A") };
 
 VarFloat referencia = { &Controle::referencia , 0.1, 99.9, 0.1 };
 //Ihm ihm(&referencia, &Controle::valorTensaoDoArco);/*
@@ -44,7 +44,7 @@ void atualizaEeprom() // se não for lenta a leitura da eeprom, dá pra rodar o up
 
 void loop() {
     Controle::atua();
-	if(millis() % 200 == 0)
+	if(millis() % 300 == 0)
         //Interface::imprimeInterface();/*
         ihm.imprimeInterface();//*/
     if(ihm.varAjustadas())
