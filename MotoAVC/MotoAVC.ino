@@ -8,9 +8,9 @@
 #include "IHMv1.h"
 using namespace IHMv1;
 
-Linha linhas[] = { Linha("   In:", &Controle::valorTensaoDoArco, 1, 5, "V"),
-                    Linha("  Out:", &Controle::valorSaida, 1, 5, "V"),
-					Linha("  Out:", &Controle::valorSaidaCorrente, 0, 5, "A") };
+Linha linhas[] = { Linha("(a)  In:", &Controle::valorTensaoDoArco, 1, 5, "V"),
+                   Linha("(b) Out:", &Controle::valorSaida, 1, 5, "V"),
+				   Linha("(c) Out:", &Controle::valorSaidaCorrente, 0, 5, "A") };
 
 VarFloat referencia = { &Controle::referencia , 0.1, 99.9, 0.1 };
 Ihm ihm(&referencia, linhas, 3);
