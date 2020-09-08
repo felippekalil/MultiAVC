@@ -6,14 +6,22 @@
 #include "EEPROM.h"
 #include "Controle.h"
 #include "IHMv1.h"
-using namespace IHMv1;
+using namespace IHMv2;
 
-Linha linhas[] = { Linha("(a)  In:", &Controle::valorTensaoDoArco, 1, 5, "V"),
-                   Linha("(b) Out:", &Controle::valorSaida, 1, 5, "V"),
-				   Linha("(c) Out:", &Controle::valorSaidaCorrente, 0, 5, "A") };
+AdjFloat referencia = { &Controle::referencia , 0.1, 99.9, 0.1 };
+Linha linhas[] = {  Linha("  Ref:", &referencia, 1, 5, "V"), // 0
+                    Linha("   In:", &Controle::valorTensaoDoArco, 1, 5, "V"), // 1
+                    Linha("  Out:", &Controle::valorSaida, 1, 5, "V"), // 2
+                    Linha("  Out:", &Controle::valorSaidaCorrente, 0, 5, "A"), // 3
+                    Linha("    Leitura"), // 4
+                    Linha("    Serial"), // 5
+                    Linha("  Serial+CRC"), // 6
+					Linha("   Analogica") }; // 7
 
-VarFloat referencia = { &Controle::referencia , 0.1, 99.9, 0.1 };
-Ihm ihm(&referencia, linhas, 3);
+//Ihm(Linha* linhas, byte (*seqTelas)[2], int nLinhas);
+constexpr byte nTelas = 7;
+byte telas[nTelas][2] = { {0,0},{ 0,1 },{0,2},{0,3},{4,5},{4,6},{4,7} };
+Ihm ihm(linhas, telas, nTelas);
 float refEeprom = 0;
 
 
