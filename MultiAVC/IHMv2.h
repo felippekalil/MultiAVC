@@ -1,6 +1,7 @@
 #pragma once
 
 #include <LiquidCrystal.h>
+#include "Menu.h"
 
 namespace IHMv2
 {
@@ -75,7 +76,7 @@ namespace IHMv2
 			return txt;
 		}
 
-		static int contCaracteres(const String& n1, const String& n2, const int nAlg)
+		static unsigned int contCaracteres(const String& n1, const String& n2, const int nAlg)
 		{
 			return n1.length() + n2.length() + nAlg;
 		}
@@ -95,7 +96,7 @@ namespace IHMv2
 			while(txt.length() < nAlgarismos)
 				txt = " " + txt;
 			if(txt.length() > nAlgarismos)
-				return textoInt(varFloat, nAlgarismos);
+				return textoInt(static_cast<int>(varFloat), nAlgarismos);
 			return txt;
 		}
 	};
@@ -110,7 +111,7 @@ namespace IHMv2
 		/// <param name="varInt">Variável escolhida.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		LinhaGetValor(const String& nome, int* varInt, const int nAlgarismos, const String unidade)
+		LinhaGetValor(const String& nome, int* varInt, const int nAlgarismos, const String& unidade)
 		{
 			this->nome = nome;
 			this->varInt = varInt;
@@ -126,7 +127,7 @@ namespace IHMv2
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		LinhaGetValor(const String& nome, float* varFloat, const int nDecimais, const int nAlgarismos, const String unidade)
+		LinhaGetValor(const String& nome, float* varFloat, const int nDecimais, const int nAlgarismos, const String& unidade)
 		{
 			this->nome = nome;
 			this->varFloat = varFloat;
@@ -159,7 +160,7 @@ namespace IHMv2
 		int* varInt = nullptr;
 		int nAlgarismos = 0;
 
-		int nCaracteres() const
+		unsigned int nCaracteres() const
 		{
 			return contCaracteres(nome, unidade, nAlgarismos);
 		}
@@ -205,7 +206,7 @@ namespace IHMv2
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		LinhaSetFloat(const String& nome, AdjFloat* varAdjFloat, const int nDecimais, const int nAlgarismos, const String unidade)
+		LinhaSetFloat(const String& nome, AdjFloat* varAdjFloat, const int nDecimais, const int nAlgarismos, const String& unidade)
 		{
 			this->nome = nome;
 			this->varAdjFloat = varAdjFloat;
@@ -239,7 +240,7 @@ namespace IHMv2
 		int* varInt = nullptr;
 		int nAlgarismos = 0;
 
-		int nCaracteres() const
+		unsigned int nCaracteres() const
 		{
 			return contCaracteres(nome, unidade, nAlgarismos);
 		}
@@ -271,6 +272,121 @@ namespace IHMv2
 			return txt;
 		}
 	};
+
+	class Ihm
+	{
+		const int encoderPinA = 2;
+		const int encoderPinB = 4;
+		const int buzzer = 5;
+		const uint16_t tempoBuzzer = 1;
+		const int SWITCH = 3;
+		const uint16_t tempoVoltar = 3;
+
+		const int rs = A4, en = A5, d4 = A0, d5 = A1, d6 = A2, d7 = A3;
+		LiquidCrystal lcd;
+		static Ihm* instancia;
+		volatile uint16_t apitaBuzzer = 0, clickVoltar = 0;
+
+		void handleEncoder()
+		{
+			apitaBuzzer = tempoBuzzer;
+			if(digitalRead(encoderPinB) == digitalRead(encoderPinA))//dec
+				menuAtual->onEncdrDec();
+			else //inc
+				menuAtual->onEncdrInc();
+		}
+
+		void handleSwitch()
+		{
+			if(digitalRead(SWITCH))
+				clickVoltar = tempoVoltar;
+			else
+			{
+				apitaBuzzer = tempoBuzzer;
+				if(clickVoltar) // se ainda está contando
+				{
+					clickVoltar = 0;
+					menuAtual->onClick();
+				}
+			}
+		}
+
+		void imprimeInterface()
+		{
+			lcd.clear();
+			lcd.setCursor(0, 0);
+			lcd.print(menuAtual->linhaSuperior);			
+			lcd.setCursor(0, 1);
+			lcd.print(menuAtual->linhaInferior);
+
+		}
+
+		Menu* menuAtual;
+
+	public:
+		Ihm() : lcd(rs, en, d4, d5, d6, d7)
+		{
+		}
+
+		Ihm(Menu* menu) : lcd(rs, en, d4, d5, d6, d7)
+		{
+			menuAtual = menu;
+		}
+
+		void atualizaMenu(Menu* menu)
+		{
+			menuAtual = menu;
+		}
+
+		bool varAjustadas() const;
+
+		void setup()
+		{
+			pinMode(LED_BUILTIN, OUTPUT);
+			pinMode(buzzer, OUTPUT);
+			pinMode(encoderPinA, INPUT);
+			//digitalWrite(encoderPinA, HIGH);
+			pinMode(encoderPinB, INPUT);
+			//digitalWrite(encoderPinB, HIGH);
+			pinMode(SWITCH, INPUT);
+			//digitalWrite(SWITCH, HIGH);
+
+			instancia = this;
+			attachInterrupt(0, []() { instancia->handleEncoder(); }, CHANGE);
+			attachInterrupt(1, []() { instancia->handleSwitch(); }, CHANGE);
+
+			lcd.begin(16, 2);
+			lcd.print("    MultiAVC     ");
+			lcd.setCursor(0, 1);
+			lcd.print("     v1.0       ");
+
+			delay(1500);
+		}
+
+		void loop()
+		{
+			if(apitaBuzzer)
+			{
+				apitaBuzzer--;
+				digitalWrite(buzzer, true);
+			}
+			else
+				digitalWrite(buzzer, false);
+			if(clickVoltar)
+			{
+				if(clickVoltar == 1)
+				{
+					apitaBuzzer = tempoBuzzer;
+					menuAtual->onVoltar();
+				}
+				clickVoltar--;
+			}
+			menuAtual->onLoop();
+			imprimeInterface();
+		}
+	};
+
+	Ihm* Ihm::instancia;
 
 }
 
@@ -323,7 +439,7 @@ namespace IHMv1_2
 		/// <param name="varInt">Variável escolhida.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		Linha(const String& nome, int* varInt, const int nAlgarismos, const String unidade) : editavel(false)
+		Linha(const String& nome, int* varInt, const int nAlgarismos, const String& unidade) : editavel(false)
 		{
 			this->nome = nome;
 			this->varInt = varInt;
@@ -339,7 +455,7 @@ namespace IHMv1_2
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		Linha(const String& nome, float* varFloat, const int nDecimais, const int nAlgarismos, const String unidade) : editavel(false)
+		Linha(const String& nome, float* varFloat, const int nDecimais, const int nAlgarismos, const String& unidade) : editavel(false)
 		{
 			this->nome = nome;
 			this->varFloat = varFloat;
@@ -356,7 +472,7 @@ namespace IHMv1_2
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		Linha(const String& nome, AdjFloat* varAdjFloat, const int nDecimais, const int nAlgarismos, const String unidade) : editavel(true)
+		Linha(const String& nome, AdjFloat* varAdjFloat, const int nDecimais, const int nAlgarismos, const String& unidade) : editavel(true)
 		{
 			this->nome = nome;
 			this->varAdjFloat = varAdjFloat;
@@ -369,7 +485,6 @@ namespace IHMv1_2
 		Linha(const String& nome) : editavel(true)
 		{
 			this->nome = nome;
-			this->unidade = unidade;
 		}
 
 		static String texto(const String& nome, const int varInt, const int nAlgarismos, const String& unidade, const bool imprimeValor)
