@@ -2,17 +2,65 @@
 
 #include <LiquidCrystal.h>
 #include "Menu.h"
+#ifndef _IHMV2_H
+	#define _IHMV2_H
 
 namespace IHMv2
 {
-	struct AdjFloat
+	class Pisca
 	{
-		float* valor;
-		float min, max, incremento;
+		byte interacao = 0;
+	public:
+		byte nAceso;
+		byte nApagado;
 
-		float get() const { return *valor; }
+		Pisca(const byte aceso, const byte apagado)
+		{
+			nAceso = aceso;
+			nApagado = apagado;
+		}
 
-		void set(float vlr) const
+		void reseta()
+		{
+			interacao = 0;
+		}
+
+		void redefine(const byte aceso, const byte apagado)
+		{
+			nAceso = aceso;
+			nApagado = apagado;
+		}
+
+		void reseta(const byte aceso, const byte apagado)
+		{
+			redefine(aceso, apagado);
+			reseta();
+		}
+
+		bool aceso()
+		{
+			interacao++;
+			if(interacao < nAceso)
+				return true;
+			if(interacao < nAceso + nApagado)
+				return false;
+			else
+			{
+				interacao = 0;
+				return true;
+			}
+		}
+	};
+
+	template <typename T>
+	struct AdjGenerico
+	{
+		T* valor;
+		T min, max, incremento;
+
+		T get() const { return *valor; }
+
+		void set(T vlr) const
 		{
 			if(vlr < min)
 				vlr = min;
@@ -21,15 +69,15 @@ namespace IHMv2
 			*valor = vlr;
 		}
 
-		void inc(const float incr) const { set(*valor + incr); }
+		void inc(const T incr) const { set(*valor + incr); }
 
 		void inc() const { inc(incremento); }
 
-		void dec(const float decr) const { set(*valor - decr); }
+		void dec(const T decr) const { set(*valor - decr); }
 
 		void dec() const { dec(incremento); }
 
-		AdjFloat& operator = (const AdjFloat var)
+		AdjGenerico& operator = (const AdjGenerico var)
 		{
 			valor = var.valor;
 			min = var.min;
@@ -52,7 +100,7 @@ namespace IHMv2
 			txt += unidade;
 			if(!imprimeValor)
 				return txt;
-			auto valor = textoInt(varInt, nAlgarismos);
+			auto valor = textoVar(varInt, nAlgarismos);
 			const auto index = nome.length();
 			for(auto i = 0; i < valor.length() && index + i < 16; i++)
 				txt.setCharAt(index + i, valor[i]);//*/
@@ -69,7 +117,7 @@ namespace IHMv2
 			txt += unidade;
 			if(!imprimeValor)
 				return txt;
-			auto valor = textoFloat(varFloat, nDecimais, nAlgarismos);
+			auto valor = textoVar(varFloat, nDecimais, nAlgarismos);
 			const auto index = nome.length();
 			for(auto i = 0; i < valor.length() && index + i < 16; i++)
 				txt.setCharAt(index + i, valor[i]);//*/
@@ -81,7 +129,7 @@ namespace IHMv2
 			return n1.length() + n2.length() + nAlg;
 		}
 
-		static String textoInt(const int valor, const uint8_t nAlg)
+		static String textoVar(const int valor, const uint8_t nAlg)
 		{
 			auto txt = static_cast<String>(valor);
 			while(txt.length() < nAlg)
@@ -89,129 +137,110 @@ namespace IHMv2
 			return txt;
 		}
 
-		static String textoFloat(const float varFloat, const float nDecimais, const uint8_t nAlgarismos)
+		static String textoVar(const int valor, const uint8_t nDecimais, const uint8_t nAlg)
+		{
+			return textoVar(valor, nAlg);
+		}
+
+		static String textoVar(const float varFloat, const uint8_t nDecimais, const uint8_t nAlgarismos)
 		{
 			String txt = "";
 			txt = String(varFloat, nDecimais);
 			while(txt.length() < nAlgarismos)
 				txt = " " + txt;
 			if(txt.length() > nAlgarismos)
-				return textoInt(static_cast<int>(varFloat), nAlgarismos);
+				return textoVar(static_cast<int>(varFloat), nAlgarismos);
 			return txt;
+		}
+
+		static String textoCenter(String texto)
+		{
+			const auto lenght = texto.length();
+			if( lenght > 14)
+				return texto;
+			int dif = (16 - lenght) / 2;
+			String txt = " ";
+			while(--dif > 0)
+				txt += " ";
+			return txt + texto;
+		}
+
+		static String limpa()
+		{
+			return textoCenter("");
 		}
 	};
 
-	class LinhaGetValor : LinhaBase
+	template <typename T>
+	class LinhaValor : LinhaBase
 	{
-	public:
-		/// <summary>
-		/// Classe que cria uma linha de tela para uma variável int.
-		/// </summary>
-		/// <param name="nome"> Nome adotado pela variável.</param>
-		/// <param name="varInt">Variável escolhida.</param>
-		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
-		/// <param name="unidade">Unidade dimensional.</param>
-		LinhaGetValor(const String& nome, int* varInt, const int nAlgarismos, const String& unidade)
-		{
-			this->nome = nome;
-			this->varInt = varInt;
-			this->nAlgarismos = nAlgarismos;
-			this->unidade = unidade;
-		}
-
-		/// <summary>
-		/// Classe que cria uma linha de tela para uma variável float.
-		/// </summary>
-		/// <param name="nome">Nome adotado pela variável.</param>
-		/// <param name="varFloat">Variável escolhida.</param>
-		/// <param name="nDecimais">Número de casas decimais máximo.</param>
-		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
-		/// <param name="unidade">Unidade dimensional.</param>
-		LinhaGetValor(const String& nome, float* varFloat, const int nDecimais, const int nAlgarismos, const String& unidade)
-		{
-			this->nome = nome;
-			this->varFloat = varFloat;
-			this->nDecimais = nDecimais;
-			this->nAlgarismos = nAlgarismos;
-			this->unidade = unidade;
-		}	
-
-		String texto(const bool imprimeValor) const
-		{
-			auto txt = nome;
-			for(auto i = 0; i < nAlgarismos; i++)
-				txt += " ";
-			if(nCaracteres() < 16)
-				txt += " ";
-			txt += unidade;
-			if(!imprimeValor)
-				return txt;
-			auto valor = printValor();
-			const auto index = nome.length();
-			for(auto i = 0; i < valor.length() && index + i < 16; i++)
-				txt.setCharAt(index + i, valor[i]);//*/
-			return txt;
-		}
-
-	private:
 		String nome, unidade;
-		float* varFloat = nullptr;
-		unsigned char nDecimais = 1;
-		int* varInt = nullptr;
-		int nAlgarismos = 0;
+		T* var = nullptr;
+		uint8_t nDecimais = 1;
+		uint8_t nAlgarismos = 0;
 
 		unsigned int nCaracteres() const
 		{
 			return contCaracteres(nome, unidade, nAlgarismos);
 		}
 
-		String printInt(const int valor) const
-		{
-			return textoInt(valor, nAlgarismos);
-		}
-
-		String printInt() const
-		{
-			return printInt(*varInt);
-		}
-
-		String printFloat() const
-		{
-			return textoFloat(*varFloat, nDecimais, nAlgarismos);
-		}
-
 		String printValor() const
 		{
-			if(varFloat != nullptr)
-				return printFloat();
-			if(varInt != nullptr)
-				return printInt();
+			if(var != nullptr)
+				return textoVar(*var, nDecimais, nAlgarismos);
 			String txt = "";
 			for(auto i = 0; i < nAlgarismos; i++)
 				txt = " " + txt;
 			return txt;
 		}
-	};
-	
-	class LinhaSetFloat : LinhaBase
-	{
+
 	public:
-		AdjFloat* varAdjFloat = nullptr;
+		/// <summary>
+		/// Classe que cria uma linha de tela para uma variável float.
+		/// </summary>
+		/// <param name="nome">Nome adotado pela variável.</param>
+		/// <param name="var">Variável escolhida.</param>
+		/// <param name="nDecimais">Número de casas decimais máximo.</param>
+		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
+		/// <param name="unidade">Unidade dimensional.</param>
+		LinhaValor(const String& nome, T* var, const int nDecimais, const int nAlgarismos, const String& unidade)
+		{
+			this->nome = nome;
+			this->var = var;
+			this->nDecimais = nDecimais;
+			this->nAlgarismos = nAlgarismos;
+			this->unidade = unidade;
+		}
+
+		LinhaValor(const String& nome, T& var, const int nDecimais, const int nAlgarismos, const String& unidade)
+		{			
+			this->nome = nome;
+			this->var = &var;
+			this->nDecimais = nDecimais;
+			this->nAlgarismos = nAlgarismos;
+			this->unidade = unidade;
+		}
 
 		/// <summary>
 		/// Classe que cria uma linha de tela para uma variável float.
 		/// </summary>
 		/// <param name="nome">Nome adotado pela variável.</param>
-		/// <param name="varAdjFloat">Variável escolhida.</param>
-		/// <param name="nDecimais">Número de casas decimais máximo.</param>
+		/// <param name="var">Variável inteira escolhida.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		LinhaSetFloat(const String& nome, AdjFloat* varAdjFloat, const int nDecimais, const int nAlgarismos, const String& unidade)
+		LinhaValor(const String& nome, T* var, const int nAlgarismos, const String& unidade)
 		{
 			this->nome = nome;
-			this->varAdjFloat = varAdjFloat;
-			varFloat = varAdjFloat->valor;
-			this->nDecimais = nDecimais;
+			this->var = var;
+			this->nDecimais = 0;
+			this->nAlgarismos = nAlgarismos;
+			this->unidade = unidade;
+		}
+		LinhaValor(const String& nome, T& var, const int nAlgarismos, const String& unidade)
+		{
+			this->nome = nome;
+			this->var = &var;
+			this->nDecimais = 0;
 			this->nAlgarismos = nAlgarismos;
 			this->unidade = unidade;
 		}
@@ -233,44 +262,7 @@ namespace IHMv2
 			return txt;
 		}
 
-	private:
-		String nome, unidade;
-		float* varFloat = nullptr;
-		unsigned char nDecimais = 1;
-		int* varInt = nullptr;
-		int nAlgarismos = 0;
-
-		unsigned int nCaracteres() const
-		{
-			return contCaracteres(nome, unidade, nAlgarismos);
-		}
-
-		String printInt(const int valor) const
-		{
-			return textoInt(valor, nAlgarismos);
-		}
-
-		String printInt() const
-		{
-			return printInt(*varInt);
-		}
-
-		String printFloat() const
-		{
-			return textoFloat(*varFloat, nDecimais, nAlgarismos);
-		}
-
-		String printValor() const
-		{
-			if(varFloat != nullptr)
-				return printFloat();
-			if(varInt != nullptr)
-				return printInt();
-			String txt = "";
-			for(auto i = 0; i < nAlgarismos; i++)
-				txt = " " + txt;
-			return txt;
-		}
+		String texto() const { return texto(true); }
 	};
 
 	class Ihm
@@ -318,17 +310,14 @@ namespace IHMv2
 			lcd.print(menuAtual->linhaSuperior);			
 			lcd.setCursor(0, 1);
 			lcd.print(menuAtual->linhaInferior);
-
 		}
 
-		Menu* menuAtual;
+		Menu* menuAtual{};
 
 	public:
-		Ihm() : lcd(rs, en, d4, d5, d6, d7)
-		{
-		}
+		Ihm() : lcd(rs, en, d4, d5, d6, d7)	{}
 
-		Ihm(Menu* menu) : lcd(rs, en, d4, d5, d6, d7)
+		explicit Ihm(Menu* menu) : lcd(rs, en, d4, d5, d6, d7)
 		{
 			menuAtual = menu;
 		}
@@ -451,7 +440,7 @@ namespace IHMv1_2
 		/// Classe que cria uma linha de tela para uma variável float.
 		/// </summary>
 		/// <param name="nome">Nome adotado pela variável.</param>
-		/// <param name="varFloat">Variável escolhida.</param>
+		/// <param name="var">Variável escolhida.</param>
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
@@ -824,7 +813,7 @@ namespace IHMv1
 		/// Classe que cria uma linha de tela para uma variável float.
 		/// </summary>
 		/// <param name="nome">Nome adotado pela variável.</param>
-		/// <param name="varFloat">Variável escolhida.</param>
+		/// <param name="var">Variável escolhida.</param>
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
@@ -1114,3 +1103,5 @@ namespace IHMv1
 
 	}
 }
+
+#endif

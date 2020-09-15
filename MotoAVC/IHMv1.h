@@ -122,7 +122,7 @@ namespace IHMv2
 		/// Classe que cria uma linha de tela para uma variável float.
 		/// </summary>
 		/// <param name="nome">Nome adotado pela variável.</param>
-		/// <param name="varFloat">Variável escolhida.</param>
+		/// <param name="varGenerica">Variável escolhida.</param>
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
@@ -335,7 +335,7 @@ namespace IHMv1_2
 		/// Classe que cria uma linha de tela para uma variável float.
 		/// </summary>
 		/// <param name="nome">Nome adotado pela variável.</param>
-		/// <param name="varFloat">Variável escolhida.</param>
+		/// <param name="varGenerica">Variável escolhida.</param>
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
@@ -709,7 +709,7 @@ namespace IHMv1
 		/// Classe que cria uma linha de tela para uma variável float.
 		/// </summary>
 		/// <param name="nome">Nome adotado pela variável.</param>
-		/// <param name="varFloat">Variável escolhida.</param>
+		/// <param name="varGenerica">Variável escolhida.</param>
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>

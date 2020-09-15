@@ -4,82 +4,68 @@
  Author:	Felippe Kalil Mendonça
 */
 #include <LiquidCrystal.h>
-//#include "MenusIni.h"
+#include "MenusIni.h"
+#include "Menu.h"
 #include "IHMv2.h"
 using namespace IHMv2;
 Ihm ihm;
 
+
+
 namespace MenuPrincipal
 {
-    //void(*onLoop)() = nullptr;
-    //void(*onEncdrDec)() = nullptr;
-    //void(*onEncdrInc)() = nullptr;
-    //void(*onClick)() = nullptr;
-    //void(*onVoltar)() = nullptr;
-    //String linhaSuperior = "";
-    //String linhaInferior = "";
-
     Menu menuPrincipal;
-
+    uint16_t modoOper;
+    AdjGenerico<uint16_t> trocaModoOper = { &modoOper, 0, 3, 1};
+    String nomeModos[4] = { "MOTOMAN","TIG HF", "TIG", "Modo MIG" };
     volatile byte select;
-    int pisca;
-    
+    Pisca pisca(5, 4);
+
     void menuPrincipalOnLoop()
     {
-    	const auto espera = 3;
-    	if(select)
-    	{
-    		if(!pisca)
-    			pisca = espera - 1;
-    		pisca++;
-    	}
-    	else
-    		pisca = 0;
-    	const auto imprime = pisca == 0 || pisca % espera != 0;
-    									//"0123456789012345"
-        if(select == 1 && !imprime)
-            menuPrincipal.linhaSuperior = "                ";
+        if(select)
+        {
+            select--;
+            if(!select)
+            {
+                trocaModoOper.dec();
+                pisca.redefine(5,4);
+            }
+        }
+        const auto imprime = pisca.aceso();
+        //"0123456789012345"
+        menuPrincipal.linhaSuperior = LinhaBase::textoCenter("Modo:");
+        if(imprime)
+            menuPrincipal.linhaInferior = LinhaBase::textoCenter(nomeModos[modoOper]);
         else
-            menuPrincipal.linhaSuperior = "    SUPERIOR    ";
-        if(select == 2 && !imprime)
-            menuPrincipal.linhaInferior = "                ";
-        else
-            menuPrincipal.linhaInferior = "    INFERIOR    ";
+            menuPrincipal.linhaInferior = LinhaBase::limpa();
     }
-    
+
     void menuPrincipalOnEncdrDec()
     {
-    	
+        trocaModoOper.dec();
     }
-    
+
     void menuPrincipalOnEncdrInc()
     {
-    
+        if(modoOper == trocaModoOper.max)
+            modoOper = trocaModoOper.min;
+        else
+            trocaModoOper.inc();
     }
-    
+
     inline void menuPrincipalOnClick()
     {
-    	if(select > 1)
-    		select = 0;
-    	else
-    		select++;
+        select = 5;
+        pisca.reseta(1,1);
     }
-    
-    inline void menuPrincipalOnVoltar()
-    {
-    	if(select < 1)
-    		select = 2;
-    	else
-    		select--;
-    }
-    
+
     void inicializaMenuInicial()
     {
-    	menuPrincipal.onLoop = menuPrincipalOnLoop;
-    	menuPrincipal.onEncdrDec = menuPrincipalOnEncdrDec;
-    	menuPrincipal.onEncdrInc = menuPrincipalOnEncdrInc;
-    	menuPrincipal.onClick = menuPrincipalOnClick;
-    	menuPrincipal.onVoltar = menuPrincipalOnVoltar;
+        menuPrincipal.onLoop = menuPrincipalOnLoop;
+        menuPrincipal.onEncdrDec = menuPrincipalOnEncdrDec;
+        menuPrincipal.onEncdrInc = menuPrincipalOnEncdrInc;
+        menuPrincipal.onClick = menuPrincipalOnClick;
     }
 }
 
@@ -95,6 +81,6 @@ void setup() {
 
 // the loop function runs over and over again until power down or reset
 void loop() {
-	if(millis() % 300 == 0)
+	if(millis() % 200 == 0)
         ihm.loop();
 }
