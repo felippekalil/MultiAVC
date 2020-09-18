@@ -82,74 +82,74 @@ namespace Icones
 	}
 	};
 
-	byte logoLabsolda2[][8] = { {
+	byte logoRobo[][8] = { {
 		B00000,
 		B00000,
 		B00000,
 		B00000,
-		B00111,
-		B00100,
-		B00100,
-		B00100
-	},{
-		B00000,
-		B11000,
-		B11100,
-		B10010,
-		B00001,
-		B00000,
-		B01000,
-		B00100
-	},{
-		B00000,
-		B00000,
-		B00000,
-		B00000,
-		B11100,
-		B00100,
-		B00100,
-		B00100
-	},{
-		B00100,
-		B00100,
-		B00100,
-		B00111,
 		B00000,
 		B00000,
 		B00000,
 		B00000
 	},{
-		B00100,
-		B00010,
+		B00000,
+		B00000,
+		B00000,
+		B00111,
+		B01111,
+		B01111,
+		B01111,
+		B01111
+	},{
+		B00011,
+		B00111,
+		B00111,
+		B11111,
+		B11000,
+		B10000,
+		B00000,
+		B00000
+	},{
+		B00000,
 		B00000,
 		B00000,
 		B10000,
-		B01111,
-		B00111,
-		B00000
+		B11110,
+		B01001,
+		B01000,
+		B01100
 	},{
 		B00000,
-		B00001,
-		B00111,
-		B01111,
-		B11110,
-		B01100,
-		B01100,
-		B00100
-	},{
-		B00100,
-		B00010,
-		B00010,
-		B00111,
-		B11110,
-		B11100,
-		B11000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
 		B00000
 	},{
-		B00100,
-		B00100,
-		B00100,
-		B11100,
+		B00111,
+		B00111,
+		B00111,
+		B01111,
+		B01111,
+		B01111,
+		B11111,
+		B11111
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B10000,
+		B10000,
+		B10000,
+		B11000,
+		B11000
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
 		B00000,
 		B00000,
 		B00000,
@@ -161,17 +161,22 @@ namespace Icones
 namespace IHMv2
 {
 	using namespace Icones;
-	class Pisca
+
+	class PiscaCiclo
 	{
 		byte interacao = 0;
 	public:
 		byte nAceso;
 		byte nApagado;
 
-		Pisca(const byte aceso, const byte apagado)
+		PiscaCiclo(const uint16_t aceso, const uint16_t apagado, const uint16_t tCiclo = 1)
 		{
-			nAceso = aceso;
-			nApagado = apagado;
+			nAceso = aceso / tCiclo;
+			nApagado = apagado / tCiclo;
+			if (nAceso < 1)
+				nAceso = 1;
+			if (nApagado < 1)
+				nApagado = 1;
 		}
 
 		void reseta()
@@ -179,30 +184,31 @@ namespace IHMv2
 			interacao = 0;
 		}
 
-		void redefine(const byte aceso, const byte apagado)
+		void redefine(const uint16_t aceso, const uint16_t apagado, const uint16_t tCiclo = 1)
 		{
-			nAceso = aceso;
-			nApagado = apagado;
+			nAceso = aceso / tCiclo;
+			nApagado = apagado / tCiclo;
+			if (nAceso < 1)
+				nAceso = 1;
+			if (nApagado < 1)
+				nApagado = 1;
 		}
 
-		void reseta(const byte aceso, const byte apagado)
+		void reseta(const uint16_t aceso, const uint16_t apagado, const uint16_t tCiclo = 1)
 		{
-			redefine(aceso, apagado);
+			redefine(aceso, apagado, tCiclo);
 			reseta();
 		}
 
 		bool aceso()
 		{
 			interacao++;
-			if(interacao < nAceso)
+			if (interacao < nAceso)
 				return true;
-			if(interacao < nAceso + nApagado)
+			if (interacao < nAceso + nApagado)
 				return false;
-			else
-			{
-				interacao = 0;
-				return true;
-			}
+			interacao = 0;
+			return true;
 		}
 	};
 
@@ -312,7 +318,7 @@ namespace IHMv2
 			const auto lenght = texto.length();
 			if(lenght > 14)
 				return texto;
-			int dif = (16 - offset - lenght) / 2;
+			int dif = (16 - lenght) / 2 + offset;
 			String txt = " ";
 			while(--dif > 0)
 				txt += " ";
@@ -429,9 +435,11 @@ namespace IHMv2
 		const int encoderPinA = 2;
 		const int encoderPinB = 4;
 		const int buzzer = 5;
-		const uint16_t tempoBuzzer = 1;
+		uint16_t tempoBuzzer;
 		const int SWITCH = 3;
-		const uint16_t tempoVoltar = 3;
+		uint16_t tempoVoltar;
+		const uint16_t duracaoBuzzer = 200;
+		const uint16_t duracaoVoltar = 600;
 
 		const int rs = A4, en = A5, d4 = A0, d5 = A1, d6 = A2, d7 = A3;
 		LiquidCrystal lcd;
@@ -439,9 +447,14 @@ namespace IHMv2
 		volatile uint16_t apitaBuzzer = 0, clickVoltar = 0;
 		uint8_t nCharLogo = 0;
 
-		void handleEncoder()
+		void apitarBuzzer()
 		{
 			apitaBuzzer = tempoBuzzer;
+		}
+
+		void handleEncoder()
+		{
+			apitarBuzzer();
 			if(digitalRead(encoderPinB) == digitalRead(encoderPinA))//dec
 				menuAtual->onEncdrDec();
 			else //inc
@@ -454,7 +467,7 @@ namespace IHMv2
 				clickVoltar = tempoVoltar;
 			else
 			{
-				apitaBuzzer = tempoBuzzer;
+				apitarBuzzer();
 				if(clickVoltar) // se ainda está contando
 				{
 					clickVoltar = 0;
@@ -476,10 +489,16 @@ namespace IHMv2
 		Menu* menuAtual{};
 
 	public:
-		Ihm() : lcd(rs, en, d4, d5, d6, d7)	{}
-
-		explicit Ihm(Menu* menu) : lcd(rs, en, d4, d5, d6, d7)
+		Ihm(const uint16_t tLoop) : lcd(rs, en, d4, d5, d6, d7)
 		{
+			tempoBuzzer = duracaoBuzzer / tLoop;
+			tempoVoltar = duracaoVoltar / tLoop;
+		}
+
+		explicit Ihm(Menu* menu, const uint16_t tLoop) : lcd(rs, en, d4, d5, d6, d7)
+		{
+			tempoBuzzer = duracaoBuzzer / tLoop;
+			tempoVoltar = duracaoVoltar / tLoop;
 			atualizaMenu(menu);
 		}
 
@@ -574,7 +593,7 @@ namespace IHMv2
 			{
 				if(clickVoltar == 1)
 				{
-					apitaBuzzer = tempoBuzzer;
+					apitarBuzzer();
 					menuAtual->onVoltar();
 				}
 				clickVoltar--;

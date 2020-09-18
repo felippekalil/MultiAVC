@@ -8,7 +8,8 @@
 #include "Menu.h"
 #include "IHMv2.h"
 using namespace IHMv2;
-Ihm ihm;
+constexpr uint16_t tLoop = 200;
+Ihm ihm(tLoop);
 
 namespace MenuPrincipal
 {
@@ -17,7 +18,10 @@ namespace MenuPrincipal
     uint16_t modoOper, modoOperAnt;
     AdjGenerico<uint16_t> trocaModoOper = { &modoOper, 0, 4, 1};
     volatile byte select;
-    Pisca pisca(5, 4);
+    constexpr uint16_t tAceso = 800, tApagado = 500, tCiclo = tLoop;
+   // PiscaMs pisca(tAceso, tApagado);/*
+    PiscaCiclo pisca(tAceso, tApagado, tCiclo);//*/
+    bool voltar = false;
     void(*updateLogo)(uint8_t logo[][8], uint8_t nChar) = nullptr;
 
 
@@ -25,11 +29,13 @@ namespace MenuPrincipal
     {        
         if (updateLogo == nullptr)
             return;
-        updateLogo(logoLabsolda, modoOper * 2);
-        /*switch (modoOper)
+        switch (modoOper)
         {
         case 0:
-            updateLogo(logoLabsolda, modoOper);
+            updateLogo(logoRobo, 8);
+            break;
+        default:
+            updateLogo(logoLabsolda, 8);
             break;
         }//*/
     }
@@ -48,15 +54,21 @@ namespace MenuPrincipal
             select--;
             if(!select)
             {
-                trocaModoOper.dec();
-                pisca.redefine(5,4);
+                if (voltar)
+                {
+                    voltar = false;
+                    trocaModoOper.dec();
+                }
+                else
+                    trocaModoOper.inc();
+                pisca.redefine(tAceso, tApagado, tCiclo);
             }
         }
         const auto imprime = pisca.aceso();
 
-        menuPrincipal.linhaSuperior = "    " + LinhaBase::textoCenter("Modo", 5);
+        menuPrincipal.linhaSuperior = LinhaBase::textoCenter("Modo:", 2);
         if(imprime)
-            menuPrincipal.linhaInferior = "    " + LinhaBase::textoCenter(nomeModos[modoOper], 5);
+            menuPrincipal.linhaInferior = LinhaBase::textoCenter(nomeModos[modoOper], 2);
         else
             menuPrincipal.linhaInferior = LinhaBase::limpa();
         if (modoOper != modoOperAnt)
@@ -81,8 +93,14 @@ namespace MenuPrincipal
 
     inline void menuPrincipalOnClick()
     {
-        select = 5;
-        pisca.reseta(1,1);
+        select = 1000 / tCiclo;
+        pisca.reseta(150, 150, tCiclo);
+    }
+
+    inline void menuPrincipalOnVotar()
+    {
+        voltar = true;
+        menuPrincipalOnClick();
     }
 
     void inicializaMenuInicial()
@@ -92,6 +110,7 @@ namespace MenuPrincipal
         menuPrincipal.onEncdrDec = menuPrincipalOnEncdrDec;
         menuPrincipal.onEncdrInc = menuPrincipalOnEncdrInc;
         menuPrincipal.onClick = menuPrincipalOnClick;
+        menuPrincipal.onVoltar = menuPrincipalOnVotar;
     }
 }
 
@@ -107,6 +126,6 @@ void setup() {
 
 // the loop function runs over and over again until power down or reset
 void loop() {
-	if(millis() % 200 == 0)
+	if(millis() % tLoop == 0)
         ihm.loop();
 }
