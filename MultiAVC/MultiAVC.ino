@@ -10,16 +10,36 @@
 using namespace IHMv2;
 Ihm ihm;
 
-
-
 namespace MenuPrincipal
 {
     Menu menuPrincipal;
-    uint16_t modoOper;
-    AdjGenerico<uint16_t> trocaModoOper = { &modoOper, 0, 3, 1};
-    String nomeModos[4] = { "MOTOMAN","TIG HF", "TIG", "Modo MIG" };
+    String nomeModos[5] = { "MOTOMAN","TIG HF", "TIG", "MIG Conv.", "MIG Puls." };
+    uint16_t modoOper, modoOperAnt;
+    AdjGenerico<uint16_t> trocaModoOper = { &modoOper, 0, 4, 1};
     volatile byte select;
     Pisca pisca(5, 4);
+    void(*updateLogo)(uint8_t logo[][8], uint8_t nChar) = nullptr;
+
+
+    void atualizaLogo()
+    {        
+        if (updateLogo == nullptr)
+            return;
+        updateLogo(logoLabsolda, modoOper * 2);
+        /*switch (modoOper)
+        {
+        case 0:
+            updateLogo(logoLabsolda, modoOper);
+            break;
+        }//*/
+    }
+
+
+    void menuPrincipalOnMenuIni(void(*logoUpdate)(uint8_t logo[][8], uint8_t nChar))
+    {
+        updateLogo = logoUpdate;
+        atualizaLogo();
+    }
 
     void menuPrincipalOnLoop()
     {
@@ -33,17 +53,21 @@ namespace MenuPrincipal
             }
         }
         const auto imprime = pisca.aceso();
-        //"0123456789012345"
-        menuPrincipal.linhaSuperior = LinhaBase::textoCenter("Modo:");
+
+        menuPrincipal.linhaSuperior = "    " + LinhaBase::textoCenter("Modo", 5);
         if(imprime)
-            menuPrincipal.linhaInferior = LinhaBase::textoCenter(nomeModos[modoOper]);
+            menuPrincipal.linhaInferior = "    " + LinhaBase::textoCenter(nomeModos[modoOper], 5);
         else
             menuPrincipal.linhaInferior = LinhaBase::limpa();
+        if (modoOper != modoOperAnt)
+            atualizaLogo();
+        modoOperAnt = modoOper;
     }
 
     void menuPrincipalOnEncdrDec()
     {
         trocaModoOper.dec();
+        pisca.reseta();
     }
 
     void menuPrincipalOnEncdrInc()
@@ -52,6 +76,7 @@ namespace MenuPrincipal
             modoOper = trocaModoOper.min;
         else
             trocaModoOper.inc();
+        pisca.reseta();
     }
 
     inline void menuPrincipalOnClick()
@@ -62,6 +87,7 @@ namespace MenuPrincipal
 
     void inicializaMenuInicial()
     {
+        menuPrincipal.onMenuIni = menuPrincipalOnMenuIni;
         menuPrincipal.onLoop = menuPrincipalOnLoop;
         menuPrincipal.onEncdrDec = menuPrincipalOnEncdrDec;
         menuPrincipal.onEncdrInc = menuPrincipalOnEncdrInc;

@@ -5,8 +5,162 @@
 #ifndef _IHMV2_H
 	#define _IHMV2_H
 
+namespace Icones
+{
+	byte logoLabsolda[][8] = { {
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00111,
+		B00100,
+		B00100,
+		B00100
+	},{
+		B00000,
+		B00001,
+		B00111,
+		B01111,
+		B11110,
+		B01100,
+		B01100,
+		B00100
+	},{
+		B00000,
+		B11000,
+		B11100,
+		B10010,
+		B00001,
+		B00000,
+		B01000,
+		B00100
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B11100,
+		B00100,
+		B00100,
+		B00100
+	},{
+		B00100,
+		B00100,
+		B00100,
+		B00111,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B00100,
+		B00010,
+		B00000,
+		B00000,
+		B10000,
+		B01111,
+		B00111,
+		B00000
+	},{
+		B00100,
+		B00010,
+		B00010,
+		B00111,
+		B11110,
+		B11100,
+		B11000,
+		B00000
+	},{
+		B00100,
+		B00100,
+		B00100,
+		B11100,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	}
+	};
+
+	byte logoLabsolda2[][8] = { {
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00111,
+		B00100,
+		B00100,
+		B00100
+	},{
+		B00000,
+		B11000,
+		B11100,
+		B10010,
+		B00001,
+		B00000,
+		B01000,
+		B00100
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B11100,
+		B00100,
+		B00100,
+		B00100
+	},{
+		B00100,
+		B00100,
+		B00100,
+		B00111,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B00100,
+		B00010,
+		B00000,
+		B00000,
+		B10000,
+		B01111,
+		B00111,
+		B00000
+	},{
+		B00000,
+		B00001,
+		B00111,
+		B01111,
+		B11110,
+		B01100,
+		B01100,
+		B00100
+	},{
+		B00100,
+		B00010,
+		B00010,
+		B00111,
+		B11110,
+		B11100,
+		B11000,
+		B00000
+	},{
+		B00100,
+		B00100,
+		B00100,
+		B11100,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	}
+	};
+}
+
 namespace IHMv2
 {
+	using namespace Icones;
 	class Pisca
 	{
 		byte interacao = 0;
@@ -153,16 +307,21 @@ namespace IHMv2
 			return txt;
 		}
 
-		static String textoCenter(String texto)
+		static String textoCenter(String texto, const uint8_t offset)
 		{
 			const auto lenght = texto.length();
-			if( lenght > 14)
+			if(lenght > 14)
 				return texto;
-			int dif = (16 - lenght) / 2;
+			int dif = (16 - offset - lenght) / 2;
 			String txt = " ";
 			while(--dif > 0)
 				txt += " ";
 			return txt + texto;
+		}
+
+		static String textoCenter(const String& texto)
+		{
+			return textoCenter(texto, 0);
 		}
 
 		static String limpa()
@@ -278,6 +437,7 @@ namespace IHMv2
 		LiquidCrystal lcd;
 		static Ihm* instancia;
 		volatile uint16_t apitaBuzzer = 0, clickVoltar = 0;
+		uint8_t nCharLogo = 0;
 
 		void handleEncoder()
 		{
@@ -305,11 +465,12 @@ namespace IHMv2
 
 		void imprimeInterface()
 		{
-			lcd.clear();
+			lcd.clear(); 
 			lcd.setCursor(0, 0);
-			lcd.print(menuAtual->linhaSuperior);			
+			lcd.print(menuAtual->linhaSuperior);
 			lcd.setCursor(0, 1);
 			lcd.print(menuAtual->linhaInferior);
+			imprimeLogo();
 		}
 
 		Menu* menuAtual{};
@@ -319,35 +480,83 @@ namespace IHMv2
 
 		explicit Ihm(Menu* menu) : lcd(rs, en, d4, d5, d6, d7)
 		{
-			menuAtual = menu;
+			atualizaMenu(menu);
 		}
 
 		void atualizaMenu(Menu* menu)
 		{
 			menuAtual = menu;
+			nCharLogo = 0;
+			menuAtual->onMenuIni([](uint8_t logo[][8], const uint8_t nChar) {instancia->createLogo(logo, nChar);});
 		}
 
 		bool varAjustadas() const;
+
+		void imprimeLogo()
+		{
+			lcd.home();
+			for (uint8_t i = 0; i < nCharLogo; i++)
+			{
+				if(i == nCharLogo / 2)
+					lcd.setCursor(0, 1);
+				lcd.write(static_cast<uint8_t>(i));
+			}
+		}
+
+		void createChar(const uint8_t index, uint8_t customChar[])
+		{
+			lcd.createChar(index, customChar);
+		}
+
+		void createLogo(uint8_t logo[][8], const uint8_t nChars)
+		{
+			for (uint8_t i = 0; i < nChars; i++)
+					createChar(i, logo[i]);
+			nCharLogo = nChars;
+		}
+		
+		void telaInicialLabsolda()
+		{
+			imprimeLogo();
+			lcd.setCursor(4, 0);
+			lcd.print("  LABSOLDA");
+			const String inst = "Instituto de Soldagem e Mecatronica";
+			const auto iniLcd = 5;
+			const auto lenght = 15 - iniLcd;
+			const auto lastLcd = inst.length() - lenght;
+			delay(1000);
+			for(auto i = 0; i < lastLcd; i++)
+			{
+				lcd.setCursor(iniLcd, 1);
+				lcd.print(inst.substring(i, i + lenght + 1));
+				delay(200);
+			}
+		}
 
 		void setup()
 		{
 			pinMode(LED_BUILTIN, OUTPUT);
 			pinMode(buzzer, OUTPUT);
 			pinMode(encoderPinA, INPUT);
-			//digitalWrite(encoderPinA, HIGH);
 			pinMode(encoderPinB, INPUT);
-			//digitalWrite(encoderPinB, HIGH);
 			pinMode(SWITCH, INPUT);
-			//digitalWrite(SWITCH, HIGH);
 
 			instancia = this;
 			attachInterrupt(0, []() { instancia->handleEncoder(); }, CHANGE);
 			attachInterrupt(1, []() { instancia->handleSwitch(); }, CHANGE);
 
 			lcd.begin(16, 2);
-			lcd.print("    MultiAVC     ");
-			lcd.setCursor(0, 1);
-			lcd.print("     v1.0       ");
+
+			createLogo(logoLabsolda, 8);
+
+			//telaInicialLabsolda();
+
+			imprimeLogo();
+
+			lcd.setCursor(4, 0);
+			lcd.print("  MultiAVC");
+			lcd.setCursor(4, 1);
+			lcd.print("    v1.0");
 
 			delay(1500);
 		}
@@ -693,7 +902,6 @@ namespace IHMv1_2
 			if(!linhaEditavel(0))
 				select++;
 		}
-
 	}
 
 	inline Ihm::Ihm(Linha* linhas, byte (*seqTelas)[2], const int nLinhas) : lcd(rs, en, d4, d5, d6, d7)
@@ -749,8 +957,6 @@ namespace IHMv1_2
 		lcd.print(linhaAtual(0)->texto(imprime || select != 1));
 		lcd.setCursor(0, 1);
 		lcd.print(linhaAtual(1)->texto(imprime || select != 2));
-
-
 	}
 }
 
