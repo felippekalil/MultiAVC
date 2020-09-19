@@ -8,11 +8,10 @@
 class Menu
 {
 	static void vazio() {}
-	static void vazio(void (*)(uint8_t[][8])) {}
-	static void vazio(void (*)(uint8_t [][8], uint8_t )) {}
+	static void vazio(void (*)(uint8_t[][8],uint8_t)) {}
 public:
 	Menu() = default;
-	void(*onMenuIni)(void(*logoUpdate)(uint8_t logo[][8], uint8_t nChar)) = vazio;
+	void(*onMenuIni)(void(*logoUpdate)(uint8_t logo[][8], uint8_t offset)) = vazio;
 	void(*onLoop)() = vazio;
 	void(*onEncdrDec)() = vazio;
 	void(*onEncdrInc)() = vazio;

@@ -22,8 +22,13 @@ namespace MenuPrincipal
    // PiscaMs pisca(tAceso, tApagado);/*
     PiscaCiclo pisca(tAceso, tApagado, tCiclo);//*/
     bool voltar = false;
-    void(*updateLogo)(uint8_t logo[][8], uint8_t nChar) = nullptr;
+    void(*updateLogo)(uint8_t logo[][8], uint8_t offset) = nullptr;
 
+    constexpr uint8_t logoSize = 3; 
+    /*constexpr uint8_t offset = logoSize + 1;
+    constexpr uint8_t offsetLogo = 1;//*/
+	constexpr uint8_t offset = -(logoSize -1);
+    constexpr uint8_t offsetLogo = 15 - logoSize - 1;//*/
 
     void atualizaLogo()
     {        
@@ -32,48 +37,30 @@ namespace MenuPrincipal
         switch (modoOper)
         {
         case 0:
-            updateLogo(logoRobo, 8);
+            updateLogo(logoRobo, offsetLogo);
+            break;
+        case 1:
+            updateLogo(logoTigHf, offsetLogo);
+            break;
+        case 2:
+            updateLogo(logoTig, offsetLogo);
+            break;
+        case 3:
+            updateLogo(logoMigConv, offsetLogo);
+            break;
+        case 4:
+            updateLogo(logoMigPulse, offsetLogo);
             break;
         default:
-            updateLogo(logoLabsolda, 8);
+            updateLogo(logoLabsolda, offsetLogo);
             break;
         }//*/
     }
 
-
-    void menuPrincipalOnMenuIni(void(*logoUpdate)(uint8_t logo[][8], uint8_t nChar))
+    void menuPrincipalOnMenuIni(void(*logoUpdate)(uint8_t logo[][8], uint8_t offset))
     {
         updateLogo = logoUpdate;
         atualizaLogo();
-    }
-
-    void menuPrincipalOnLoop()
-    {
-        if(select)
-        {
-            select--;
-            if(!select)
-            {
-                if (voltar)
-                {
-                    voltar = false;
-                    trocaModoOper.dec();
-                }
-                else
-                    trocaModoOper.inc();
-                pisca.redefine(tAceso, tApagado, tCiclo);
-            }
-        }
-        const auto imprime = pisca.aceso();
-
-        menuPrincipal.linhaSuperior = LinhaBase::textoCenter("Modo:", 2);
-        if(imprime)
-            menuPrincipal.linhaInferior = LinhaBase::textoCenter(nomeModos[modoOper], 2);
-        else
-            menuPrincipal.linhaInferior = LinhaBase::limpa();
-        if (modoOper != modoOperAnt)
-            atualizaLogo();
-        modoOperAnt = modoOper;
     }
 
     void menuPrincipalOnEncdrDec()
@@ -103,6 +90,34 @@ namespace MenuPrincipal
         menuPrincipalOnClick();
     }
 
+    void menuPrincipalOnLoop()
+    {
+        if (select)
+        {
+            select--;
+            if (!select)
+            {
+                if (voltar)
+                {
+                    voltar = false;
+                    menuPrincipalOnEncdrDec();
+                }
+                else
+                    menuPrincipalOnEncdrInc();
+                pisca.redefine(tAceso, tApagado, tCiclo);
+            }
+        }
+        const auto imprime = pisca.aceso();
+        menuPrincipal.linhaSuperior =  LinhaBase::textoCenter("Modo", offset);
+        if (imprime)
+            menuPrincipal.linhaInferior = LinhaBase::textoCenter(nomeModos[modoOper], offset);
+        else
+            menuPrincipal.linhaInferior = LinhaBase::limpa();
+        if (modoOper != modoOperAnt)
+            atualizaLogo();
+        modoOperAnt = modoOper;
+    }
+
     void inicializaMenuInicial()
     {
         menuPrincipal.onMenuIni = menuPrincipalOnMenuIni;
@@ -119,7 +134,7 @@ void setup() {
     Serial.begin(9600);
     Serial.println("Inicializado!");
    // inicializaMenuInicial();
-    ihm.setup();//*/
+    ihm.setup();//*/    
     MenuPrincipal::inicializaMenuInicial();
     ihm.atualizaMenu(&MenuPrincipal::menuPrincipal);
 }

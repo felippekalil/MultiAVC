@@ -7,6 +7,19 @@
 
 namespace Icones
 {
+	// usar B100000 como identificador de final
+
+	byte fim[] = {
+		B100000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000 
+	};
+
 	byte logoLabsolda[][8] = { {
 		B00000,
 		B00000,
@@ -86,15 +99,6 @@ namespace Icones
 		B00000,
 		B00000,
 		B00000,
-		B00000,
-		B00000,
-		B00000,
-		B00000,
-		B00000
-	},{
-		B00000,
-		B00000,
-		B00000,
 		B00111,
 		B01111,
 		B01111,
@@ -118,15 +122,6 @@ namespace Icones
 		B01001,
 		B01000,
 		B01100
-	},{
-		B00000,
-		B00000,
-		B00000,
-		B00000,
-		B00000,
-		B00000,
-		B00000,
-		B00000
 	},{
 		B00111,
 		B00111,
@@ -154,6 +149,279 @@ namespace Icones
 		B00000,
 		B00000,
 		B00000
+	},{
+		B100000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	}
+	};
+
+	byte logoTig[][8] = { {
+		B11000,
+		B11100,
+		B01110,
+		B00111,
+		B00011,
+		B00001,
+		B00001,
+		B00000
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B11000,
+		B11100,
+		B11110,
+		B11111
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B00001,
+		B00011,
+		B01111,
+		B11111,
+		B11110,
+		B11100,
+		B11000,
+		B10000
+	},{
+		B11111,
+		B11111,
+		B10011,
+		B00001,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B10000,
+		B11000,
+		B11100,
+		B11100,
+		B11110,
+		B00110,
+		B00001,
+		B00000
+	},{
+		B100000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	}
+	};
+
+	byte logoTigHf[][8] = { {
+		B11000,
+		B11100,
+		B01110,
+		B00111,
+		B00011,
+		B00001,
+		B00001,
+		B00000
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B11000,
+		B11100,
+		B11110,
+		B11111
+	},{
+		B00111,
+		B01110,
+		B01100,
+		B11111,
+		B00110,
+		B00100,
+		B01000,
+		B00000
+	},{
+		B00001,
+		B00011,
+		B01111,
+		B11111,
+		B11110,
+		B11100,
+		B11000,
+		B10000
+	},{
+		B11111,
+		B11111,
+		B10011,
+		B00001,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B10000,
+		B11000,
+		B11100,
+		B11100,
+		B11110,
+		B00110,
+		B00001,
+		B00000
+	},{
+		B100000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	}
+	};
+	
+	byte logoMigConv[][8] = { {
+		B00000,
+		B00000,
+		B11100,
+		B11111,
+		B00011,
+		B00001,
+		B00001,
+		B00001
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B11100,
+		B11110,
+		B11111,
+		B11111
+	},{
+		B00010,
+		B00100,
+		B01100,
+		B11111,
+		B00110,
+		B01110,
+		B11100,
+		B00000
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B11111,
+		B01111,
+		B00111,
+		B00001,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B10000,
+		B11000,
+		B11100,
+		B11110,
+		B11110,
+		B11100,
+		B01010,
+		B00001
+	},{
+		B100000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	}
+	};
+
+	byte logoMigPulse[][8] = { {
+		B00000,
+		B00000,
+		B11100,
+		B11111,
+		B00011,
+		B00001,
+		B00001,
+		B00001
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B11100,
+		B11110,
+		B11111,
+		B11111
+	},{
+		B00000,
+		B00000,
+		B01110,
+		B01010,
+		B01010,
+		B01010,
+		B11011,
+		B00000
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B11111,
+		B01111,
+		B00111,
+		B00001,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B10000,
+		B11000,
+		B11100,
+		B11110,
+		B11110,
+		B11100,
+		B01010,
+		B00001
+	},{
+		B100000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
 	}
 	};
 }
@@ -161,6 +429,11 @@ namespace Icones
 namespace IHMv2
 {
 	using namespace Icones;
+
+	inline void pause()
+	{
+		while (1) {}
+	}
 
 	class PiscaCiclo
 	{
@@ -313,12 +586,12 @@ namespace IHMv2
 			return txt;
 		}
 
-		static String textoCenter(String texto, const uint8_t offset)
+		static String textoCenter(String texto, const int8_t offset, const int8_t max = 16)
 		{
 			const auto lenght = texto.length();
-			if(lenght > 14)
+			if(lenght > max - 2)
 				return texto;
-			int dif = (16 - lenght) / 2 + offset;
+			int dif = (max - lenght) / 2 + offset/2;
 			String txt = " ";
 			while(--dif > 0)
 				txt += " ";
@@ -445,7 +718,7 @@ namespace IHMv2
 		LiquidCrystal lcd;
 		static Ihm* instancia;
 		volatile uint16_t apitaBuzzer = 0, clickVoltar = 0;
-		uint8_t nCharLogo = 0;
+		uint8_t nCharLogo = 0, offsetLogo = 0;
 
 		void apitarBuzzer()
 		{
@@ -506,18 +779,18 @@ namespace IHMv2
 		{
 			menuAtual = menu;
 			nCharLogo = 0;
-			menuAtual->onMenuIni([](uint8_t logo[][8], const uint8_t nChar) {instancia->createLogo(logo, nChar);});
+			menuAtual->onMenuIni([](uint8_t logo[][8], const uint8_t offset) {instancia->createLogo(logo, offset);});
 		}
 
 		bool varAjustadas() const;
 
 		void imprimeLogo()
 		{
-			lcd.home();
+			lcd.setCursor(offsetLogo, 0);
 			for (uint8_t i = 0; i < nCharLogo; i++)
 			{
 				if(i == nCharLogo / 2)
-					lcd.setCursor(0, 1);
+					lcd.setCursor(offsetLogo, 1);
 				lcd.write(static_cast<uint8_t>(i));
 			}
 		}
@@ -527,18 +800,24 @@ namespace IHMv2
 			lcd.createChar(index, customChar);
 		}
 
-		void createLogo(uint8_t logo[][8], const uint8_t nChars)
+		void createLogo(uint8_t logo[][8], const uint8_t offsetLogo = 0)
 		{
-			for (uint8_t i = 0; i < nChars; i++)
-					createChar(i, logo[i]);
-			nCharLogo = nChars;
+			uint8_t i;
+			for (i = 0; i < 8; i++)
+			{
+				if (logo[i][0] >= B100000)
+					break;
+				createChar(i, logo[i]);
+			}
+			nCharLogo = i;
+			this->offsetLogo = offsetLogo;
 		}
 		
 		void telaInicialLabsolda()
 		{
 			imprimeLogo();
-			lcd.setCursor(4, 0);
-			lcd.print("  LABSOLDA");
+			lcd.setCursor(5, 0);
+			lcd.print(" LABSOLDA");
 			const String inst = "Instituto de Soldagem e Mecatronica";
 			const auto iniLcd = 5;
 			const auto lenght = 15 - iniLcd;
@@ -566,18 +845,20 @@ namespace IHMv2
 
 			lcd.begin(16, 2);
 
-			createLogo(logoLabsolda, 8);
+			createLogo(logoLabsolda, 1);
 
 			//telaInicialLabsolda();
 
+			lcd.clear();
 			imprimeLogo();
 
-			lcd.setCursor(4, 0);
-			lcd.print("  MultiAVC");
-			lcd.setCursor(4, 1);
-			lcd.print("    v1.0");
-
+			lcd.setCursor(5, 0);
+			lcd.print(" MultiAVC");
+			lcd.setCursor(5, 1);
+			lcd.print("   v1.0");
 			delay(1500);
+			offsetLogo = 0;
+			imprimeLogo();
 		}
 
 		void loop()
