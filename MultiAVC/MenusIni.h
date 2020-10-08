@@ -101,7 +101,7 @@ namespace MenuPrincipal
                 }
                 else
                     //menuPrincipalOnEncdrInc();/*
-                    menuPrincipal.trocaMenu(MenusEnum::Processos);
+                    *menuPrincipal.menuIhm = MenusEnum::Processos;
                 pisca.redefine(tAceso, tApagado, tCiclo);
             }
         }
@@ -116,7 +116,7 @@ namespace MenuPrincipal
         modoOperAnt = modoOper;
     }
 
-    inline void inicializaMenuInicial(void(*atualizaMenu)(MenusEnum::Menus menuEnum))
+    inline void inicializaMenuInicial(MenusEnum::Menus* menuAtual)
     {
         menuPrincipal.onMenuIni = menuPrincipalOnMenuIni;
         menuPrincipal.onLoop = menuPrincipalOnLoop;
@@ -124,7 +124,7 @@ namespace MenuPrincipal
         menuPrincipal.onEncdrInc = menuPrincipalOnEncdrInc;
         menuPrincipal.onClick = menuPrincipalOnClick;
         menuPrincipal.onVoltar = menuPrincipalOnVotar;
-        menuPrincipal.trocaMenu = atualizaMenu;
+        menuPrincipal.menuIhm = menuAtual;
     }
 }
 
@@ -198,7 +198,7 @@ namespace MenuProcessos
     {
         voltar = true;
         //menuPrincipalOnClick();
-    	menuProcessos.trocaMenu(MenusEnum::Principal);
+    	*menuProcessos.menuIhm = MenusEnum::Principal;
     }
 
     inline void menuPrincipalOnLoop()
@@ -229,7 +229,7 @@ namespace MenuProcessos
         voltar = false;
     }
 
-    inline void inicializaMenuInicial(void(*atualizaMenu)(MenusEnum::Menus menuEnum))
+    inline void inicializaMenuInicial(MenusEnum::Menus* menuAtual)
     {
         menuProcessos.onMenuIni = menuPrincipalOnMenuIni;
         menuProcessos.onLoop = menuPrincipalOnLoop;
@@ -237,9 +237,8 @@ namespace MenuProcessos
         menuProcessos.onEncdrInc = menuPrincipalOnEncdrInc;
         menuProcessos.onClick = menuPrincipalOnClick;
         menuProcessos.onVoltar = menuPrincipalOnVotar;
-        menuProcessos.trocaMenu = atualizaMenu;
+        menuProcessos.menuIhm = menuAtual;
     }
 }
-
 #endif
 

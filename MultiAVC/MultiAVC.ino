@@ -7,23 +7,12 @@
 #include "MenusIni.h"
 #include "Menu.h"
 #include "IHMv2.h"
-#include "MenusIni.h"
 using namespace IHMv2;
 
 Ihm ihm(tLoop);
-
-void trocaMenuPrincipal(MenusEnum::Menus menu)
-{
-	switch (menu)
-	{
-    default:
-        ihm.atualizaMenu(&MenuPrincipal::menuPrincipal);
-        break;
-    case MenusEnum::Menus::Processos:
-        ihm.atualizaMenu(&MenuProcessos::menuProcessos);
-        break;
-	}
-}
+MenusEnum::Menus menuIhm = MenusEnum::Menus::Principal;
+MenusEnum::Menus menuAnterior = MenusEnum::Menus::Principal;
+Menu* menus[2] = { &MenuPrincipal::menuPrincipal , &MenuProcessos::menuProcessos };
 
 // the setup function runs once when you press reset or power the board
 void setup() {
@@ -31,14 +20,19 @@ void setup() {
     Serial.println("Inicializado!");
    // inicializaMenuInicial();
     ihm.setup();//*/    
-    MenuPrincipal::inicializaMenuInicial(trocaMenuPrincipal);
-    MenuProcessos::inicializaMenuInicial(trocaMenuPrincipal);
+    MenuPrincipal::inicializaMenuInicial(&menuIhm);
+    MenuProcessos::inicializaMenuInicial(&menuIhm);
     //ihm.atualizaMenu(&MenuProcessos::menuProcessos);/*
-    ihm.atualizaMenu(&MenuPrincipal::menuPrincipal);//*/
+    ihm.atualizaMenu(menus[menuIhm]);//*/
 }
 
 // the loop function runs over and over again until power down or reset
 void loop() {
-	if(millis() % tLoop == 0)
+    if (millis() % tLoop == 0)
+    {
+        if(menuIhm != menuAnterior)
+            ihm.atualizaMenu(menus[menuIhm]);
+        menuAnterior = menuIhm;
         ihm.loop();
+    }
 }
