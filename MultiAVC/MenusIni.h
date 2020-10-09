@@ -12,7 +12,12 @@
 #include "Menu.h"
 #include "IHMv2.h"
 using namespace IHMv2;
-constexpr uint16_t tLoop = 200;
+
+#ifdef T_LOOP 
+	constexpr uint16_t tLoop = T_LOOP;
+#else
+	constexpr uint16_t tLoop = 200;
+#endif
 
 class MenuBase : public Menu
 {
@@ -26,18 +31,17 @@ class MenuBase : public Menu
     PiscaCiclo pisca;
     MenusEnum::Menus menuVoltar;
 
-    void(*updateLogo)(uint8_t logo[][8], uint8_t offset) = nullptr; 
-    byte(**logos)[8] = nullptr;
+    void(*updateLogo)(Logo logo) = nullptr;
+    Logo* logos = nullptr;
 
-    uint8_t logoSize = 0;// = 3;
-    uint8_t offset = 0;// = -(logoSize + 1);
-    uint8_t offsetLogo = 0;// = 15 - logoSize - 1;//*/
+    uint8_t logoSize = 0;
+    uint8_t offset = 0;
 
     void atualizaLogo() const
     {
         if (updateLogo == nullptr || logos == nullptr)
             return;
-        updateLogo(logos[enumerador], offsetLogo);
+        updateLogo(logos[enumerador]);
     }
 
 public:
@@ -49,12 +53,9 @@ public:
         this->nEnum = nEnum;
         trocaEnum = { &enumerador, 0, nEnum - 1, 1 };
         nomeModos = nomeEnums;
-        this->logoSize = logoSize;
-        this->offset = offset;
-        this->offsetLogo = offsetLogo;
     }
 
-    MenuBase(const String& titulo, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar, const uint8_t nEnum, String nomeEnums[], byte(*logos[])[8], const uint8_t logoSize, const uint8_t offset, const uint8_t offsetLogo) : pisca(tAceso, tApagado, tCiclo)
+    MenuBase(const String& titulo, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar, const uint8_t nEnum, String nomeEnums[], Logo* logos, const uint8_t logoSize, const uint8_t offset) : pisca(tAceso, tApagado, tCiclo)
     {
         this->titulo = titulo;
         menuIhm = menuAtual;
@@ -65,10 +66,25 @@ public:
         this->logos = logos;
         this->logoSize = logoSize;
         this->offset = offset;
-        this->offsetLogo = offsetLogo;
     }
 
-    void onMenuIni(void(*logoUpdate)(uint8_t logo[][8], uint8_t offset)) override
+    MenuBase(const String& titulo, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar, const uint8_t nEnum, String nomeEnums[], byte(*logos[])[8], const uint8_t logoSize, const uint8_t offset, const uint8_t offsetLogo) : pisca(tAceso, tApagado, tCiclo)
+    {
+        this->titulo = titulo;
+        menuIhm = menuAtual;
+        this->menuVoltar = menuVoltar;
+        this->nEnum = nEnum;
+        trocaEnum = { &enumerador, 0, nEnum - 1, 1 };
+        nomeModos = nomeEnums;
+        const auto logosLogo = new Logo[nEnum];
+        for (uint8_t i = 0; i < nEnum; i++)
+            logosLogo[i] = { logos[i], offsetLogo };
+        this->logos = logosLogo;
+        this->logoSize = logoSize;
+        this->offset = offset;
+    }
+
+    void onMenuIni(void(*logoUpdate)(Logo logos)) override
     {
         updateLogo = logoUpdate;
         atualizaLogo();

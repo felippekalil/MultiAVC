@@ -171,6 +171,72 @@ namespace Icones
 	
 	byte logoCnc[][8] = { {
 		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B00000,
+		B00000,
+		B00100,
+		B00100,
+		B01110,
+		B01110,
+		B01110,
+		B01110
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00111,
+		B01100,
+		B01000,
+		B11111,
+		B11111
+	},{
+		B01110,
+		B00100,
+		B00000,
+		B11111,
+		B00000,
+		B00000,
+		B11111,
+		B11111
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B11100,
+		B00100,
+		B00010,
+		B11111,
+		B11111
+	},{
+		B100000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	}
+	};
+	
+	byte logoCncOld[][8] = { {
+		B00000,
 		B11111,
 		B10000,
 		B10000,
@@ -919,7 +985,7 @@ namespace IHMv2
 		{
 			menuAtual = menu;
 			nCharLogo = 0;
-			menuAtual->onMenuIni([](uint8_t logo[][8], const uint8_t offset) {instancia->createLogo(logo, offset);});
+			menuAtual->onMenuIni([](const Menu::Logo logo) {instancia->createLogo(logo);});
 		}
 
 		bool varAjustadas() const;
@@ -940,17 +1006,17 @@ namespace IHMv2
 			lcd.createChar(index, customChar);
 		}
 
-		void createLogo(uint8_t logo[][8], const uint8_t offsetLogo = 0)
+		void createLogo(Menu::Logo logo)
 		{
 			uint8_t i;
 			for (i = 0; i < 8; i++)
 			{
-				if (logo[i][0] >= B100000)
+				if (logo.logo[i][0] >= B100000)
 					break;
-				createChar(i, logo[i]);
+				createChar(i, logo.logo[i]);
 			}
 			nCharLogo = i;
-			this->offsetLogo = offsetLogo;
+			this->offsetLogo = logo.offset;
 		}
 		
 		void telaInicialLabsolda()
@@ -984,8 +1050,8 @@ namespace IHMv2
 			attachInterrupt(1, []() { instancia->handleSwitch(); }, CHANGE);
 
 			lcd.begin(16, 2);
-
-			createLogo(logoLabsolda, 1);
+			const Menu::Logo logoLab = { logoLabsolda, 1 };
+			createLogo(logoLab);
 
 			//telaInicialLabsolda();
 

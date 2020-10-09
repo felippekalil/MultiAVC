@@ -4,49 +4,51 @@
  Author:	Kalil
 */
 
-#define ENCODER_PIN_A  2 
-#define ENCODER_PIN_B  3 
-#define LED_2 9 
-#define SWITCH 
+const int encoderPinA = 2;
+const int encoderPinB = 4;
+const int SWITCH = 3;
+#define LED_2 9
 
 volatile int encoder0Pos;
-volatile int encoder1Pos;
 
+bool dir = false, dirAnt = false;
+byte mudancas = 0;
 
-void doEncoder0()
+void handleEncoder()
 {
-    if(digitalRead(ENCODER_PIN_B) == digitalRead(ENCODER_PIN_A))
-    {
-        encoder0Pos++;
-    }
-    else
+    dirAnt = dir;
+    if (digitalRead(encoderPinB) == digitalRead(encoderPinA))//dec
     {
         encoder0Pos--;
+        dir = false;
     }
+    else //inc
+    {
+        encoder0Pos++;
+        dir = true;
+    }
+    if (dir != dirAnt)
+        mudancas++;
 }
 
-void doEncoder1()
+void handleSwitch()
 {
-    if(digitalRead(ENCODER_PIN_B) == digitalRead(ENCODER_PIN_A))
+    if (digitalRead(SWITCH))
     {
-        encoder1Pos++;
+        encoder0Pos = 0; 
+        mudancas = 0;
     }
-    else
-    {
-        encoder1Pos--;
-    }
+	
 }
 
 void setup()
 {
     pinMode(LED_BUILTIN, OUTPUT);
     pinMode(LED_2, OUTPUT);
-    pinMode(ENCODER_PIN_A, INPUT);
-    digitalWrite(ENCODER_PIN_A, HIGH); 
-    pinMode(ENCODER_PIN_B, INPUT);
-    digitalWrite(ENCODER_PIN_B, HIGH);  
-    attachInterrupt(0, doEncoder0, CHANGE); 
-    attachInterrupt(1, doEncoder1, CHANGE);
+    pinMode(encoderPinA, INPUT);
+    pinMode(encoderPinB, INPUT);
+    attachInterrupt(0, handleEncoder, CHANGE);
+    attachInterrupt(1, handleSwitch, CHANGE);
     Serial.begin(9600);
     Serial.println("start");       
 }
@@ -54,15 +56,15 @@ void setup()
 void loop()
 {
     Serial.print("Pos:");
-    Serial.print(encoder0Pos + encoder1Pos, DEC);
+    Serial.print(encoder0Pos, DEC);
+    Serial.print("\tMud:");
+    Serial.print(mudancas, DEC);
     Serial.print("\tP0:");
     Serial.print(encoder0Pos, DEC);
-    Serial.print("\tP1:");
-    Serial.print(encoder1Pos, DEC);
     Serial.print("\tPin 0:");
-    Serial.print(digitalRead(ENCODER_PIN_A) ? "alto" : "baixo");
+    Serial.print(digitalRead(encoderPinA) ? "alto" : "baixo");
     Serial.print("\tPin 1:");
-    Serial.println(digitalRead(ENCODER_PIN_B) ? "alto" : "baixo");
-    digitalWrite(LED_BUILTIN, digitalRead(ENCODER_PIN_A));
-    digitalWrite(LED_2, digitalRead(ENCODER_PIN_B));
+    Serial.println(digitalRead(encoderPinB) ? "alto" : "baixo");
+    digitalWrite(LED_BUILTIN, digitalRead(encoderPinA));
+    digitalWrite(LED_2, digitalRead(encoderPinB));
 }

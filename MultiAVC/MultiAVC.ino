@@ -16,12 +16,13 @@ namespace Menus
     MenusEnum::Menus menuIhm = MenusEnum::Menus::Principal;
     MenusEnum::Menus menuAnterior = MenusEnum::Menus::Principal;
 
-    String nomeModos[3] = { "MOTOMAN","CNC", "Step&Dir" };
-    byte(*logos1[])[8] = { logoRobo, logoCnc, logoStepDir, logoLabsolda };
-    uint8_t logoSize = 3, offset = -(logoSize + 1), offsetLogo = 15 - logoSize - 1;
-    MenuBase menuInicial("Modo", &menuIhm, MenusEnum::Principal, 3, nomeModos, logos1, logoSize, offset, offsetLogo);
+    String nomeModos[] = { "MOTOMAN","CNC", "Step&Dir" };
+    uint8_t logoSize = 3, offsetLogo = 15 - logoSize - 1;
+    Menu::Logo logos1[] = { {logoRobo, offsetLogo}, {logoCnc, offsetLogo - 1}, {logoStepDir, offsetLogo}, {logoLabsolda, offsetLogo} };
+    uint8_t offset = -(logoSize + 1);
+    MenuBase menuInicial("Modo", &menuIhm, MenusEnum::Principal, 3, nomeModos, logos1, logoSize, offset);
 
-    String nomeEnums[4] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
+    String nomeEnums[] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
     byte(*logos2[])[8] = { logoTig, logoTigHf, logoMigConv, logoMigPulse };
     uint8_t logoSize2 = 3, offset2 = logoSize2 + 1, offsetLogo2 = 2;
     MenuBase menuProcessos("Processo", &menuIhm, MenusEnum::Principal, 4, nomeEnums, logos2, logoSize2, offset2, offsetLogo2);

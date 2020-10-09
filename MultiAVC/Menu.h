@@ -41,7 +41,14 @@ class Menu
 {
 public:
 	Menu() = default;
-	virtual void onMenuIni(void(*logoUpdate)(uint8_t logo[][8], uint8_t offset)) = 0;
+
+	struct Logo
+	{
+		uint8_t (*logo)[8];
+		uint8_t offset;
+	};
+
+	virtual void onMenuIni(void(*logoUpdate)(Logo logo)) = 0;
 	MenusEnum::Menus* menuIhm = nullptr;
 	virtual void onLoop() = 0;
 	virtual void onEncdrDec() = 0;
