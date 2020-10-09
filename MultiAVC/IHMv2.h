@@ -902,7 +902,7 @@ namespace IHMv2
 		Menu* menuAtual{};
 
 	public:
-		Ihm(const uint16_t tLoop) : lcd(rs, en, d4, d5, d6, d7)
+		explicit Ihm(const uint16_t tLoop) : lcd(rs, en, d4, d5, d6, d7)
 		{
 			tempoBuzzer = duracaoBuzzer / tLoop;
 			tempoVoltar = duracaoVoltar / tLoop;
