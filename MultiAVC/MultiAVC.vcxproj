@@ -119,14 +119,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IHMv2.h" />
-    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MenuBase.h" />
+    <ClInclude Include="Menus.h" />
     <ClInclude Include="MenusIni.h" />
     <ClInclude Include="Icones.h" />
     <ClInclude Include="__vm\.MultiAVC.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IHMv2.cpp" />
-    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuBase.cpp" />
+    <ClCompile Include="Menus.cpp" />
     <ClCompile Include="MenusIni.cpp" />
     <ClCompile Include="Icones.cpp" />
   </ItemGroup>

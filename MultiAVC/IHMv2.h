@@ -1,17 +1,13 @@
 #pragma once
 
 #include <LiquidCrystal.h>
-#include "Menu.h"
+#include "MenuBase.h"
 #ifndef _IHMV2_H
 	#define _IHMV2_H
 
 namespace IHMv2
 {
-
-	inline void pause()
-	{
-		while (true) {}
-	}
+	inline void pause() { while (true) {} }
 
 	class Ihm
 	{
@@ -39,14 +35,14 @@ namespace IHMv2
 
 		void imprimeInterface();
 
-		Menu* menuAtual{};
+		MenuBase* menuAtual{};
 
 	public:
 		explicit Ihm(uint16_t tLoop);
 
-		explicit Ihm(Menu* menu, uint16_t tLoop);
+		explicit Ihm(MenuBase* menu, uint16_t tLoop);
 
-		void atualizaMenu(Menu* menu);
+		void atualizaMenu(MenuBase* menu);
 
 		bool varAjustadas() const;
 
@@ -54,7 +50,7 @@ namespace IHMv2
 
 		void createChar(uint8_t index, uint8_t customChar[]);
 
-		void createLogo(Menu::Logo logo);
+		void createLogo(MenuBase::Logo logo);
 
 		void telaInicialLabsolda();
 

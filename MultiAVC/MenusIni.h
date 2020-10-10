@@ -9,53 +9,29 @@
 	#include "WProgram.h"
 #endif
 
-#include "Menu.h"
-#include "IHMv2.h"
-using namespace IHMv2;
+#include "Menus.h"
+#include "Icones.h"
 
-class MenuBase : public Menu
-{    
-    String titulo;
-    uint8_t nEnum;
-    String* nomeModos;
-    uint16_t enumerador = 0, enumeradorAnt = 0;
-    MenuExtensoes::AdjGenerico<uint16_t> trocaEnum{};
-    volatile byte select = 0;
-    const uint16_t tAceso = 800, tApagado = 500, tLoop;
-    MenuExtensoes::PiscaCiclo pisca;
-    MenusEnum::Menus menuVoltar;
+namespace Menus
+{
+    uint16_t tLoop = 200;
 
-    void(*updateLogo)(Logo logo) = nullptr;
-    Logo* logos = nullptr;
+    MenusEnum::Menus menuIhm = MenusEnum::Menus::Principal;
+    MenusEnum::Menus menuAnterior = MenusEnum::Menus::Principal;
 
-    uint8_t logoSize = 0;
-    uint8_t offset = 0;
+    String nomeModos[] = { "MOTOMAN","CNC", "Step&Dir" };
+    uint8_t logoSize = 3, offsetLogo = 15 - logoSize - 1;
+    MenuBase::Logo logos1[] = { {Icones::logoRobo, offsetLogo}, {Icones::logoCnc, offsetLogo - 1}, {Icones::logoStepDir, offsetLogo}, {Icones::logoLabsolda, offsetLogo} };
+    uint8_t offset = -(logoSize + 1);
+    MenuPortal menuInicial("Modo", &menuIhm, MenusEnum::Principal, 3, nomeModos, logos1, logoSize, offset, tLoop);
 
-    void atualizaLogo() const;
+    String nomeEnums[] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
+    byte(*logos2[])[8] = { Icones::logoTig, Icones::logoTigHf, Icones::logoMigConv, Icones::logoMigPulse };
+    uint8_t logoSize2 = 3, offset2 = logoSize2 + 1, offsetLogo2 = 2;
+    MenuPortal menuProcessos("Processo", &menuIhm, MenusEnum::Principal, 4, nomeEnums, logos2, logoSize2, offset2, offsetLogo2, tLoop);
 
-public:
-    MenuBase(const String& titulo, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar, const uint8_t nEnum,
-             String nomeEnums[], const uint16_t tLoop);
-
-    MenuBase(const String& titulo, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar, const uint8_t nEnum,
-             String nomeEnums[], Logo* logos, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop);
-
-    MenuBase(const String& titulo, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar, const uint8_t nEnum,
-             String nomeEnums[], byte (*logos[])[8], const uint8_t logoSize, const uint8_t offset,
-             const uint8_t offsetLogo, const uint16_t tLoop);
-
-    void onMenuIni(void (*logoUpdate)(Logo logos)) override;
-
-    void onLoop() override;
-
-    void onEncdrDec() override;
-
-    void onEncdrInc() override;
-
-    void onClick() override;
-
-    void onVoltar() override;
-};
+    MenuBase* menus[2] = { &menuInicial , &menuProcessos };//*/	
+}
 
 #endif
 

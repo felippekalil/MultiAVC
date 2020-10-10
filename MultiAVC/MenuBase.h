@@ -1,9 +1,13 @@
 #pragma once
 //#define MODO_CHAR
-#ifndef _MENUS_h
-	#define _MENUS_h
+#ifndef _MENU_h
+	#define _MENU_h
 
-#include "Arduino.h"
+#if defined(ARDUINO) && ARDUINO >= 100
+	#include "arduino.h"
+#else
+	#include "WProgram.h"
+#endif
 
 namespace MenusEnum
 {
@@ -14,10 +18,10 @@ namespace MenusEnum
 	};
 }
 
-class Menu
+class MenuBase
 {
 public:
-	Menu() = default;
+	MenuBase() = default;
 
 	struct Logo
 	{
@@ -41,8 +45,6 @@ public:
 	String linhaInferior = "";
 #endif
 };
-
-
 
 namespace MenuExtensoes
 {
@@ -315,13 +317,13 @@ namespace MenuExtensoes
 	};
 }
 
-//class Menu
+//class MenuBase
 //{
 //	static void vazio() {}
 //	static void vazio(void (*)(uint8_t[][8], uint8_t)) {}
 //	static void vazio(MenusEnum::Menus) {}
 //public:
-//	Menu() = default;
+//	MenuBase() = default;
 //	void(*onMenuIni)(void(*logoUpdate)(uint8_t logo[][8], uint8_t offset)) = vazio;
 //	MenusEnum::Menus* menuIhm = nullptr;
 //	void(*onLoop)() = vazio;

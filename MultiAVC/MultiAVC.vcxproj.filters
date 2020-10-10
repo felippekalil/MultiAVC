@@ -21,9 +21,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Menu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="__vm\.MultiAVC.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -36,6 +33,12 @@
     <ClInclude Include="Icones.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Menus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MenusIni.cpp">
@@ -44,10 +47,13 @@
     <ClCompile Include="IHMv2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
+    <ClCompile Include="Icones.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Icones.cpp">
+    <ClCompile Include="Menus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

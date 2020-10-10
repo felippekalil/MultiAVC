@@ -1,4 +1,4 @@
-#include "IHMv2.H"
+#include "IHMv2.h"
 #include "Icones.h"
 
 namespace IHMv2
@@ -51,7 +51,7 @@ namespace IHMv2
 		this->logoIni = logoIni;
 	}
 
-	Ihm::Ihm(Menu* menu, const uint16_t tLoop): lcd(rs, en, d4, d5, d6, d7)
+	Ihm::Ihm(MenuBase* menu, const uint16_t tLoop): lcd(rs, en, d4, d5, d6, d7)
 	{
 		tempoBuzzer = duracaoBuzzer / tLoop;
 		tempoVoltar = duracaoVoltar / tLoop;
@@ -59,11 +59,11 @@ namespace IHMv2
 		this->logoIni = logoIni;
 	}
 
-	void Ihm::atualizaMenu(Menu* menu)
+	void Ihm::atualizaMenu(MenuBase* menu)
 	{
 		menuAtual = menu;
 		nCharLogo = 0;
-		menuAtual->onMenuIni([](const Menu::Logo logo) { instancia->createLogo(logo); });
+		menuAtual->onMenuIni([](const MenuBase::Logo logo) { instancia->createLogo(logo); });
 	}
 
 	void Ihm::imprimeLogo()
@@ -82,7 +82,7 @@ namespace IHMv2
 		lcd.createChar(index, customChar);
 	}
 
-	void Ihm::createLogo(const Menu::Logo logo)
+	void Ihm::createLogo(const MenuBase::Logo logo)
 	{
 		uint8_t i;
 		for (i = 0; i < 8; i++)
@@ -126,7 +126,7 @@ namespace IHMv2
 		attachInterrupt(1, []() { instancia->handleSwitch(); }, CHANGE);
 
 		lcd.begin(16, 2);
-		const Menu::Logo logoLab = { Icones::logoLabsolda, 1 };
+		const MenuBase::Logo logoLab = { Icones::logoLabsolda, 1 };
 		createLogo(logoLab);
 
 		//telaInicialLabsolda();
