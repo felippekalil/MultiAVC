@@ -33,9 +33,21 @@
     <ClInclude Include="IHMv2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Icones.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MenusIni.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IHMv2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Icones.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
