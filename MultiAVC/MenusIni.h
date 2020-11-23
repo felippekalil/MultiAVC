@@ -14,23 +14,32 @@
 
 namespace Menus
 {
-    uint16_t tLoop = 200;
+    uint16_t tLoop = 50; // lembrar de ajustar no .ino
 
     MenusEnum::Menus menuIhm = MenusEnum::Menus::Principal;
     MenusEnum::Menus menuAnterior = MenusEnum::Menus::Principal;
 
-    String nomeModos[] = { "MOTOMAN","CNC", "Step&Dir" };
-    uint8_t logoSize = 3, offsetLogo = 15 - logoSize - 1;
-    MenuBase::Logo logos1[] = { {Icones::logoRobo, offsetLogo}, {Icones::logoCnc, offsetLogo - 1}, {Icones::logoStepDir, offsetLogo}, {Icones::logoLabsolda, offsetLogo} };
-    uint8_t offset = -(logoSize + 1);
-    MenuPortal menuInicial("Modo", &menuIhm, MenusEnum::Principal, 3, nomeModos, logos1, logoSize, offset, tLoop);
+    namespace MenuPrincipal
+    {
+        String nomeEnums[] = { "MOTOMAN","CNC", "Step&Dir" };
+        uint8_t logoSize = 3, offsetLogo = 15 - logoSize - 1;
+        MenuBase::Logo logos[] = {
+	        {Icones::logoRobo, offsetLogo}, {Icones::logoCnc, offsetLogo - 1}, {Icones::logoStepDir, offsetLogo},
+	        {Icones::logoLabsolda, offsetLogo}
+        };
+        uint8_t offset = -(logoSize + 1);
+        MenuPortal menu("Modo", &menuIhm, MenusEnum::Principal, 3, nomeEnums, logos, logoSize, offset, tLoop);
+    }
 
-    String nomeEnums[] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
-    byte(*logos2[])[8] = { Icones::logoTig, Icones::logoTigHf, Icones::logoMigConv, Icones::logoMigPulse };
-    uint8_t logoSize2 = 3, offset2 = logoSize2 + 1, offsetLogo2 = 2;
-    MenuPortal menuProcessos("Processo", &menuIhm, MenusEnum::Principal, 4, nomeEnums, logos2, logoSize2, offset2, offsetLogo2, tLoop);
+    namespace MenuProcessos
+    {
+        String nomeEnums[] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
+        byte(*logos[])[8] = { Icones::logoTig, Icones::logoTigHf, Icones::logoMigConv, Icones::logoMigPulse };
+        uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
+        MenuPortal menu("Processo", &menuIhm, MenusEnum::Principal, 4, nomeEnums, logos, logoSize, offset, offsetLogo, tLoop);	    
+    }
 
-    MenuBase* menus[2] = { &menuInicial , &menuProcessos };//*/	
+    MenuBase* menus[2] = { &MenuPrincipal::menu , &MenuProcessos::menu };//*/	
 }
 
 #endif

@@ -5,14 +5,77 @@ namespace IHMv2
 {
 	Ihm* Ihm::instancia;
 
-	void Ihm::apitarBuzzer()
+	void Ihm::setFreqBuzzer(const uint8_t nFreq)
 	{
-		apitaBuzzer = tempoBuzzer;
+		switch (nFreq)
+		{
+		default:
+			TCCR2B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) | // aumenta a frequencia do pwm, pra melhorar o som
+				(0 << CS02) | (1 << CS01) | (1 << CS00);
+			break;
+		case 1:
+			TCCR2B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) | // aumenta a frequencia do pwm, pra melhorar o som
+				(0 << CS02) | (1 << CS01) | (0 << CS00);
+			break;
+		case 2:
+			TCCR2B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) | // aumenta a frequencia do pwm, pra melhorar o som
+				(1 << CS02) | (0 << CS01) | (1 << CS00);
+			break;
+		}
+	}
+
+	void Ihm::apitarBuzzerInc()
+	{
+		modoBuzzer = 0;
+		apitaBuzzer = tempoBuzzerInc;
+	}
+
+	void Ihm::apitarBuzzerEnter()
+	{
+		modoBuzzer = 1;
+		apitaBuzzer = tempoBuzzerInc * 8;
+	}
+
+	void Ihm::apitarBuzzerVoltar()
+	{
+		modoBuzzer = 2;
+		apitaBuzzer = tempoBuzzerInc * 6;
+	}
+
+	void Ihm::processaBuzzer()
+	{
+		if (apitaBuzzer)
+		{
+			switch (modoBuzzer)
+			{
+			default:
+				setFreqBuzzer(0);
+				break;
+			case 1:
+				if (apitaBuzzer == tempoBuzzerInc * 8)
+					setFreqBuzzer(0);
+				if (apitaBuzzer == tempoBuzzerInc * 6)
+					setFreqBuzzer(1);
+				break;
+			case 2:
+				if (apitaBuzzer == tempoBuzzerInc * 6)
+					setFreqBuzzer(0);
+				if (apitaBuzzer == tempoBuzzerInc * 3)
+					setFreqBuzzer(2);
+				break;
+			}
+			analogWrite(buzzer, 10);
+			apitaBuzzer--;
+		}
+		else
+			digitalWrite(buzzer, false);
 	}
 
 	void Ihm::handleEncoder()
 	{
-		apitarBuzzer();
+		if (aguardaMenu)
+			return;
+		apitarBuzzerInc();
 		if (digitalRead(encoderPinB) == digitalRead(encoderPinA)) //dec
 			menuAtual->onEncdrDec();
 		else //inc
@@ -21,11 +84,14 @@ namespace IHMv2
 
 	void Ihm::handleSwitch()
 	{
+		if (aguardaMenu)
+			return;
 		if (digitalRead(SWITCH))
 			clickVoltar = tempoVoltar;
 		else
 		{
-			apitarBuzzer();
+			apitarBuzzerEnter(); 
+			aguardaMenu = tempoAguardaMenu / 2;
 			if (clickVoltar) // se ainda está contando
 			{
 				clickVoltar = 0;
@@ -46,15 +112,29 @@ namespace IHMv2
 
 	Ihm::Ihm(const uint16_t tLoop): lcd(rs, en, d4, d5, d6, d7)
 	{
-		tempoBuzzer = duracaoBuzzer / tLoop;
+		tempoBuzzerInc = duracaoBuzzer / tLoop;
+		if (!tempoBuzzerInc)
+			tempoBuzzerInc = 1;
 		tempoVoltar = duracaoVoltar / tLoop;
+		if (!tempoVoltar)
+			tempoVoltar = 1;
+		tempoAguardaMenu = duracaoAguardaMenu / tLoop;
+		if (!tempoAguardaMenu)
+			tempoAguardaMenu = 1;
 		this->logoIni = logoIni;
 	}
 
 	Ihm::Ihm(MenuBase* menu, const uint16_t tLoop): lcd(rs, en, d4, d5, d6, d7)
 	{
-		tempoBuzzer = duracaoBuzzer / tLoop;
+		tempoBuzzerInc = duracaoBuzzer / tLoop;
+		if (!tempoBuzzerInc) 
+			tempoBuzzerInc = 1;
 		tempoVoltar = duracaoVoltar / tLoop;
+		if (!tempoVoltar)
+			tempoVoltar = 1;
+		tempoAguardaMenu = duracaoAguardaMenu / tLoop;
+		if (!tempoAguardaMenu)
+			tempoAguardaMenu = 1;
 		atualizaMenu(menu);
 		this->logoIni = logoIni;
 	}
@@ -63,6 +143,7 @@ namespace IHMv2
 	{
 		menuAtual = menu;
 		nCharLogo = 0;
+		aguardaMenu = tempoAguardaMenu;
 		menuAtual->onMenuIni([](const MenuBase::Logo logo) { instancia->createLogo(logo); });
 	}
 
@@ -143,22 +224,18 @@ namespace IHMv2
 
 	void Ihm::loop()
 	{
-		if (apitaBuzzer)
-		{
-			apitaBuzzer--;
-			digitalWrite(buzzer, true);
-		}
-		else
-			digitalWrite(buzzer, false);
+		processaBuzzer();
 		if (clickVoltar)
 		{
 			if (clickVoltar == 1)
 			{
-				apitarBuzzer();
+				apitarBuzzerVoltar();
 				menuAtual->onVoltar();
 			}
 			clickVoltar--;
 		}
+		if (aguardaMenu)
+			aguardaMenu--;
 		menuAtual->onLoop();
 		imprimeInterface();
 	}

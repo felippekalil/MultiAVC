@@ -8,13 +8,14 @@
 #include "IHMv2.h"
 
 using namespace IHMv2;
-constexpr uint16_t tLoop = 200;
+constexpr uint16_t tLoop = 50; // lembrar de ajustar no MenusIni.h
 
 Ihm ihm(tLoop);
 
 void setup() {
     Serial.begin(9600);
     Serial.println("Inicializado!");
+    Menus::tLoop = tLoop;
     ihm.setup();    
     ihm.atualizaMenu(Menus::menus[Menus::menuIhm]);
 }
