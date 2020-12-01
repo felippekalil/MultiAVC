@@ -7,7 +7,7 @@ void MenuMensagem::atualizaLogo() const
 	updateLogo(logo[0]);
 }
 
-MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar,
+MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
 	Logo* logo, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) :
 	tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
 {
@@ -20,7 +20,7 @@ MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInfer
 	this->offset = offset;
 }
 
-MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar,
+MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
 	byte(*logo[])[8], const uint8_t logoSize, const uint8_t offset, uint8_t offsetLogo, const uint16_t tLoop) :
 	tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
 {

@@ -9,7 +9,7 @@
 	#include "WProgram.h"
 #endif
 
-namespace MenusEnum
+namespace EnumMenus
 {
 	enum Menus
 	{
@@ -31,7 +31,7 @@ public:
 	};
 
 	virtual void onMenuIni(void(*logoUpdate)(Logo logo)) = 0;
-	MenusEnum::Menus* menuIhm = nullptr;
+	EnumMenus::Menus* menuIhm = nullptr;
 	virtual void onLoop() = 0;
 	virtual void onEncdrDec() = 0;
 	virtual void onEncdrInc() = 0;
@@ -322,11 +322,11 @@ namespace MenuExtensoes
 //{
 //	static void vazio() {}
 //	static void vazio(void (*)(uint8_t[][8], uint8_t)) {}
-//	static void vazio(MenusEnum::Menus) {}
+//	static void vazio(EnumMenus::Menus) {}
 //public:
 //	MenuBase() = default;
 //	void(*onMenuIni)(void(*logoUpdate)(uint8_t logo[][8], uint8_t offset)) = vazio;
-//	MenusEnum::Menus* menuIhmIndex = nullptr;
+//	EnumMenus::Menus* menuIhmIndex = nullptr;
 //	void(*onLoop)() = vazio;
 //	void(*onEncdrDec)() = vazio;
 //	void(*onEncdrInc)() = vazio;

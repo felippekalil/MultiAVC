@@ -10,7 +10,7 @@
 #endif
 
 #include "Icones.h"
-#include "MenuPortal.h"
+#include "MenuEnum.h"
 #include "MenuMensagem.h"
 
 namespace Menus
@@ -21,27 +21,27 @@ namespace Menus
     uint16_t tLoop = 50; // lembrar de ajustar no .ino
 #endif
 
-    MenusEnum::Menus menuIhmIndex = MenusEnum::Menus::Obras;
-    MenusEnum::Menus menuIndexAnterior = MenusEnum::Menus::Principal;
+    EnumMenus::Menus menuIhmIndex = EnumMenus::Menus::Obras;
+    EnumMenus::Menus menuIndexAnterior = EnumMenus::Menus::Principal;
 
     namespace MenuPrincipal
     {
-        String nomeEnums[] = { "MOTOMAN","CNC", "Step&Dir" };
+        String enumModo[] = { "MOTOMAN","CNC", "Step&Dir" };
         uint8_t logoSize = 3, offsetLogo = 15 - logoSize - 1;
         MenuBase::Logo logos[] = {
 	        {Icones::logoRobo, offsetLogo}, {Icones::logoCnc, offsetLogo - 1}, {Icones::logoStepDir, offsetLogo},
 	        {Icones::logoLabsolda, offsetLogo}
         };
         uint8_t offset = -(logoSize + 1);
-        MenuPortal menu("Modo", &menuIhmIndex, MenusEnum::Principal, 3, nomeEnums, logos, logoSize, offset, tLoop);
+        MenuEnum menu("Modo", &menuIhmIndex, EnumMenus::Principal, 3, enumModo, logos, logoSize, offset, tLoop);
     }
 
     namespace MenuProcessos
     {
-        String nomeEnums[] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
+        String enumProcesso[] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
         byte(*logos[])[8] = { Icones::logoTig, Icones::logoTigHf, Icones::logoMigConv, Icones::logoMigPulse };
         uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
-        MenuPortal menu("Processo", &menuIhmIndex, MenusEnum::Principal, 4, nomeEnums, logos, logoSize, offset, offsetLogo, tLoop);	    
+        MenuEnum menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, enumProcesso, logos, logoSize, offset, offsetLogo, tLoop);	    
     }
 
     namespace MenuEmObras
@@ -50,7 +50,7 @@ namespace Menus
         MenuBase::Logo logo[] = {
             {Icones::logoMartelo, offsetLogo}
         };
-        MenuMensagem menu("EM", "OBRAS!", &menuIhmIndex, MenusEnum::Principal, logo, logoSize, offset, tLoop);
+        MenuMensagem menu("EM", "OBRAS!", &menuIhmIndex, EnumMenus::Principal, logo, logoSize, offset, tLoop);
     }
 
     MenuBase* menus[3] = { &MenuPrincipal::menu , &MenuProcessos::menu, &MenuEmObras::menu };//*/	

@@ -5,7 +5,7 @@
 
 #include "MenuBase.h"
 
-class MenuPortal : public MenuBase
+class MenuEnum : public MenuBase
 {
     String titulo;
     uint8_t nEnum;
@@ -15,7 +15,7 @@ class MenuPortal : public MenuBase
     volatile byte select = 0;
     const uint16_t tAceso = 800, tApagado = 500, tLoop;
     MenuExtensoes::PiscaCiclo pisca;
-    MenusEnum::Menus menuVoltar;
+    EnumMenus::Menus menuVoltar;
 
     void(*updateLogo)(Logo logo) = nullptr;
     Logo* logos = nullptr;
@@ -26,13 +26,13 @@ class MenuPortal : public MenuBase
     void atualizaLogo() const;
 
 public:
-    MenuPortal(const String& titulo, MenusEnum::Menus* menuAtual, MenusEnum::Menus menuVoltar, uint8_t nEnum,
+    MenuEnum(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
         String nomeEnums[], uint16_t tLoop);
 
-    MenuPortal(const String& titulo, MenusEnum::Menus* menuAtual, MenusEnum::Menus menuVoltar, uint8_t nEnum,
+    MenuEnum(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
         String nomeEnums[], Logo* logos, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
-    MenuPortal(const String& titulo, MenusEnum::Menus* menuAtual, MenusEnum::Menus menuVoltar, uint8_t nEnum,
+    MenuEnum(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
         String nomeEnums[], byte(*logos[])[8], uint8_t logoSize, uint8_t offset,
         uint8_t offsetLogo, uint16_t tLoop);
 

@@ -6,7 +6,7 @@ class MenuMensagem : public MenuBase
     String textoSuperior, textoInferior;
     const uint16_t tAceso = 800, tApagado = 100, tLoop;
     MenuExtensoes::PiscaCiclo pisca;
-    MenusEnum::Menus menuVoltar;
+    EnumMenus::Menus menuVoltar;
 
     void(*updateLogo)(Logo logo) = nullptr;
     Logo* logo = nullptr;
@@ -15,9 +15,9 @@ class MenuMensagem : public MenuBase
     void atualizaLogo() const;
 
 public:
-    MenuMensagem(const String& textoSuperior, const String& textoInferior, MenusEnum::Menus* menuAtual, MenusEnum::Menus menuVoltar,
+    MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar,
         Logo* logo, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
-    MenuMensagem(const String& textoSuperior, const String& textoInferior, MenusEnum::Menus* menuAtual, MenusEnum::Menus menuVoltar,
+    MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar,
         byte(*logo[])[8], uint8_t logoSize, uint8_t offset, uint8_t offsetLogo, uint16_t tLoop);
 
     void onMenuIni(void (*logoUpdate)(Logo logos)) override;

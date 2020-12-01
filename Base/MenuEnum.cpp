@@ -1,13 +1,13 @@
-#include "MenuPortal.h"
+#include "MenuEnum.h"
 
-void MenuPortal::atualizaLogo() const
+void MenuEnum::atualizaLogo() const
 {
 	if (updateLogo == nullptr || logos == nullptr)
 		return;
 	updateLogo(logos[enumerador]);
 }
 
-MenuPortal::MenuPortal(const String& titulo, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar,
+MenuEnum::MenuEnum(const String& titulo, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
 						const uint8_t nEnum, String nomeEnums[], const uint16_t tLoop) :
 						tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
 {
@@ -19,7 +19,7 @@ MenuPortal::MenuPortal(const String& titulo, MenusEnum::Menus* menuAtual, const 
 	nomeModos = nomeEnums;
 }
 
-MenuPortal::MenuPortal(const String& titulo, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar,
+MenuEnum::MenuEnum(const String& titulo, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
 						const uint8_t nEnum, String nomeEnums[], Logo* logos, const uint8_t logoSize, const uint8_t offset,
 						const uint16_t tLoop) :
 						tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
@@ -35,7 +35,7 @@ MenuPortal::MenuPortal(const String& titulo, MenusEnum::Menus* menuAtual, const 
 	this->offset = offset;
 }
 
-MenuPortal::MenuPortal(const String& titulo, MenusEnum::Menus* menuAtual, const MenusEnum::Menus menuVoltar,
+MenuEnum::MenuEnum(const String& titulo, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
 						const uint8_t nEnum, String nomeEnums[], byte(*logos[])[8], const uint8_t logoSize,
 						const uint8_t offset,
 						const uint8_t offsetLogo, const uint16_t tLoop) :
@@ -55,20 +55,20 @@ MenuPortal::MenuPortal(const String& titulo, MenusEnum::Menus* menuAtual, const 
 	this->offset = offset;
 }
 
-void MenuPortal::onMenuIni(void (*logoUpdate)(Logo logos))
+void MenuEnum::onMenuIni(void (*logoUpdate)(Logo logos))
 {
 	updateLogo = logoUpdate;
 	atualizaLogo();
 }
 
-void MenuPortal::onLoop()
+void MenuEnum::onLoop()
 {
 	if (select)
 	{
 		select--;
 		if (!select)
 		{
-			*menuIhm = MenusEnum::Processos;
+			*menuIhm = EnumMenus::Processos;
 			pisca.redefine(tAceso, tApagado, tLoop);
 		}
 	}
@@ -83,7 +83,7 @@ void MenuPortal::onLoop()
 	enumeradorAnt = enumerador;
 }
 
-void MenuPortal::onEncdrDec()
+void MenuEnum::onEncdrDec()
 {
 	if (select)
 		return;
@@ -91,7 +91,7 @@ void MenuPortal::onEncdrDec()
 	pisca.reseta();
 }
 
-void MenuPortal::onEncdrInc()
+void MenuEnum::onEncdrInc()
 {
 	if (select)
 		return;
@@ -102,13 +102,13 @@ void MenuPortal::onEncdrInc()
 	pisca.reseta();
 }
 
-void MenuPortal::onClick()
+void MenuEnum::onClick()
 {
 	select = 1000 / tLoop;
 	pisca.reseta(150, 150, tLoop);
 }
 
-void MenuPortal::onVoltar()
+void MenuEnum::onVoltar()
 {
 	*menuIhm = menuVoltar;
 }
