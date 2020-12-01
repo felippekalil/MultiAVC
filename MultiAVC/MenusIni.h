@@ -9,15 +9,15 @@
 	#include "WProgram.h"
 #endif
 
-#include "Menus.h"
+#include "MenuPortal.h"
 #include "Icones.h"
 
 namespace Menus
 {
     uint16_t tLoop = 50; // lembrar de ajustar no .ino
 
-    MenusEnum::Menus menuIhm = MenusEnum::Menus::Principal;
-    MenusEnum::Menus menuAnterior = MenusEnum::Menus::Principal;
+    MenusEnum::Menus menuIhmIndex = MenusEnum::Menus::Principal;
+    MenusEnum::Menus menuIndexAnterior = MenusEnum::Menus::Principal;
 
     namespace MenuPrincipal
     {
@@ -28,7 +28,7 @@ namespace Menus
 	        {Icones::logoLabsolda, offsetLogo}
         };
         uint8_t offset = -(logoSize + 1);
-        MenuPortal menu("Modo", &menuIhm, MenusEnum::Principal, 3, nomeEnums, logos, logoSize, offset, tLoop);
+        MenuPortal menu("Modo", &menuIhmIndex, MenusEnum::Principal, 3, nomeEnums, logos, logoSize, offset, tLoop);
     }
 
     namespace MenuProcessos
@@ -36,7 +36,7 @@ namespace Menus
         String nomeEnums[] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
         byte(*logos[])[8] = { Icones::logoTig, Icones::logoTigHf, Icones::logoMigConv, Icones::logoMigPulse };
         uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
-        MenuPortal menu("Processo", &menuIhm, MenusEnum::Principal, 4, nomeEnums, logos, logoSize, offset, offsetLogo, tLoop);	    
+        MenuPortal menu("Processo", &menuIhmIndex, MenusEnum::Principal, 4, nomeEnums, logos, logoSize, offset, offsetLogo, tLoop);	    
     }
 
     MenuBase* menus[2] = { &MenuPrincipal::menu , &MenuProcessos::menu };//*/	

@@ -17,15 +17,15 @@ void setup() {
     Serial.println("Inicializado!");
     Menus::tLoop = tLoop;
     ihm.setup();    
-    ihm.atualizaMenu(Menus::menus[Menus::menuIhm]);
+    ihm.atualizaMenu(Menus::menus[Menus::menuIhmIndex]);
 }
 
 void loop() {
     if (millis() % tLoop == 0)
     {
-        if(Menus::menuIhm != Menus::menuAnterior)
-            ihm.atualizaMenu(Menus::menus[Menus::menuIhm]);
-        Menus::menuAnterior = Menus::menuIhm;
+        if(Menus::menuIhmIndex != Menus::menuIndexAnterior)
+            ihm.atualizaMenu(Menus::menus[Menus::menuIhmIndex]);
+        Menus::menuIndexAnterior = Menus::menuIhmIndex;
         ihm.loop();
     }
 }
