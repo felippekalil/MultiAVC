@@ -9,8 +9,8 @@
 	#include "WProgram.h"
 #endif
 
-#include "MenuEnum.h"
 #include "Icones.h"
+#include "MenuPortal.h"
 
 namespace Menus
 {
@@ -32,7 +32,7 @@ namespace Menus
 	        {Icones::logoLabsolda, offsetLogo}
         };
         uint8_t offset = -(logoSize + 1);
-        MenuEnum menu("Modo", &menuIhmIndex, EnumMenus::Principal, 3, enumModo, logos, logoSize, offset, tLoop);
+        MenuPortal menu("Modo", &menuIhmIndex, EnumMenus::Principal, 3, enumModo, logos, logoSize, offset, tLoop);
     }
 
     namespace MenuProcessos
@@ -40,7 +40,7 @@ namespace Menus
         String enumProcesso[] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
         byte(*logos[])[8] = { Icones::logoTig, Icones::logoTigHf, Icones::logoMigConv, Icones::logoMigPulse };
         uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
-        MenuEnum menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, enumProcesso, logos, logoSize, offset, offsetLogo, tLoop);	    
+        MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, enumProcesso, logos, logoSize, offset, offsetLogo, tLoop);	    
     }
 
     MenuBase* menus[2] = { &MenuPrincipal::menu , &MenuProcessos::menu };//*/	

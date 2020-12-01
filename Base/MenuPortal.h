@@ -5,7 +5,7 @@
 
 #include "MenuBase.h"
 
-class MenuEnum : public MenuBase
+class MenuPortal : public MenuBase
 {
     String titulo;
     uint8_t nEnum;
@@ -26,13 +26,13 @@ class MenuEnum : public MenuBase
     void atualizaLogo() const;
 
 public:
-    MenuEnum(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
+    MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
         String nomeEnums[], uint16_t tLoop);
 
-    MenuEnum(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
+    MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
         String nomeEnums[], Logo* logos, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
-    MenuEnum(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
+    MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
         String nomeEnums[], byte(*logos[])[8], uint8_t logoSize, uint8_t offset,
         uint8_t offsetLogo, uint16_t tLoop);
 
