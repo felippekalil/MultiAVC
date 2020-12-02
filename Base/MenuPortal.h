@@ -5,7 +5,7 @@
 
 #include "MenuBase.h"
 
-class MenuPortal : public MenuBase
+class MenuPortal final : public MenuBase
 {
     String titulo;
     uint8_t nEnum;
@@ -33,7 +33,7 @@ public:
         String nomeEnums[], Logo* logos, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
     MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
-        String nomeEnums[], byte(*logos[])[8], uint8_t logoSize, uint8_t offset,
+        String nomeEnums[], byte *logo[], uint8_t logoSize, uint8_t offset,
         uint8_t offsetLogo, uint16_t tLoop);
 
     void onMenuIni(void (*logoUpdate)(Logo logos)) override;

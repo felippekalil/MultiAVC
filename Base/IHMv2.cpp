@@ -168,12 +168,15 @@ namespace IHMv2
 		uint8_t i;
 		for (i = 0; i < 8; i++)
 		{
-			if (logo.logo[i][0] >= B100000)
+			if (*(logo.logoPtr + i * 8) >= B100000 || logo.logoPtr == nullptr)
 				break;
-			createChar(i, logo.logo[i]);
+			Serial.println("logo i = " + String(i) + " B: " + String(*(logo.logoPtr + i * 8)));
+			createChar(i, logo.logoPtr + i * 8);
 		}
 		nCharLogo = i;
 		this->offsetLogo = logo.offset;
+		Serial.println("nChar = " + String(i));
+		Serial.println("offset = " + String(logo.offset));
 	}
 
 	void Ihm::telaInicialLabsolda()
@@ -207,7 +210,7 @@ namespace IHMv2
 		attachInterrupt(1, []() { instancia->handleSwitch(); }, CHANGE);
 
 		lcd.begin(16, 2);
-		const MenuBase::Logo logoLab = { Icones::logoLabsolda, 1 };
+		const MenuBase::Logo logoLab = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
 		createLogo(logoLab);
 
 		//telaInicialLabsolda();

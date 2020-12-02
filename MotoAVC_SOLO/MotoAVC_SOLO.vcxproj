@@ -120,9 +120,6 @@
     <ClInclude Include="MenusIni.h" />
     <ClInclude Include="__vm\.MotoAVC_SOLO.vsarduino.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="MenusIni.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

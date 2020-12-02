@@ -2,13 +2,13 @@
 
 void MenuMensagem::atualizaLogo() const
 {
-	if (updateLogo == nullptr || logo == nullptr)
+	if (updateLogo == nullptr || logo.logoPtr == nullptr)
 		return;
-	updateLogo(logo[0]);
+	updateLogo(logo);
 }
 
 MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
-	Logo* logo, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) :
+                           const Logo logo, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) :
 	tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
 {
 	this->textoSuperior = textoSuperior;
@@ -16,21 +16,6 @@ MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInfer
 	menuIhm = menuAtual;
 	this->menuVoltar = menuVoltar;
 	this->logo = logo;
-	this->logoSize = logoSize;
-	this->offset = offset;
-}
-
-MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
-	byte(*logo[])[8], const uint8_t logoSize, const uint8_t offset, uint8_t offsetLogo, const uint16_t tLoop) :
-	tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
-{
-	this->textoSuperior = textoSuperior;
-	this->textoInferior = textoInferior;
-	menuIhm = menuAtual;
-	this->menuVoltar = menuVoltar;
-	const auto logosLogo = new Logo[1];
-	logosLogo[0] = { logo[0], offsetLogo };
-	this->logo = logosLogo;
 	this->logoSize = logoSize;
 	this->offset = offset;
 }

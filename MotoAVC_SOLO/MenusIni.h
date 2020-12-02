@@ -29,8 +29,9 @@ namespace Menus
         String enumModo[] = { "MOTOMAN","CNC", "Step&Dir" };
         uint8_t logoSize = 3, offsetLogo = 15 - logoSize - 1;
         MenuBase::Logo logos[] = {
-	        {Icones::logoRobo, offsetLogo}, {Icones::logoCnc, offsetLogo - 1}, {Icones::logoStepDir, offsetLogo},
-	        {Icones::logoLabsolda, offsetLogo}
+	        {reinterpret_cast<uint8_t*>(&Icones::logoRobo), offsetLogo}, 
+        	{reinterpret_cast<uint8_t*>(&Icones::logoCnc), offsetLogo - 1}, 
+        	{reinterpret_cast<uint8_t*>(&Icones::logoStepDir), offsetLogo}
         };
         uint8_t offset = -(logoSize + 1);
         MenuPortal menu("Modo", &menuIhmIndex, EnumMenus::Principal, 3, enumModo, logos, logoSize, offset, tLoop);
@@ -39,7 +40,10 @@ namespace Menus
     namespace MenuProcessos
     {
         String enumProcesso[] = { "TIG","TIG HF", " MIG Conv.", " MIG Puls." };
-        byte(*logos[])[8] = { Icones::logoTig, Icones::logoTigHf, Icones::logoMigConv, Icones::logoMigPulse };
+        byte *logos[] = { 
+        	reinterpret_cast<uint8_t*>(&Icones::logoTig), reinterpret_cast<uint8_t*>(&Icones::logoTigHf), 
+            reinterpret_cast<uint8_t*>(&Icones::logoMigConv), reinterpret_cast<uint8_t*>(&Icones::logoMigPulse) 
+        };
         uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
         MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, enumProcesso, logos, logoSize, offset, offsetLogo, tLoop);	    
     }
@@ -47,9 +51,7 @@ namespace Menus
     namespace MenuEmObras
     {
         uint8_t logoSize = 3, offset = logoSize + 0, offsetLogo = 2;
-        MenuBase::Logo logo[] = {
-            {Icones::logoMartelo, offsetLogo}
-        };
+        MenuBase::Logo logo = {reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo};
         MenuMensagem menu("EM", "OBRAS!", &menuIhmIndex, EnumMenus::Principal, logo, logoSize, offset, tLoop);
     }
 

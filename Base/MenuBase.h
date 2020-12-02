@@ -22,11 +22,12 @@ namespace EnumMenus
 class MenuBase
 {
 public:
+	virtual ~MenuBase() = default;
 	MenuBase() = default;
 
 	struct Logo
 	{
-		uint8_t (*logo)[8];
+		uint8_t *logoPtr;
 		uint8_t offset;
 	};
 
@@ -325,7 +326,7 @@ namespace MenuExtensoes
 //	static void vazio(EnumMenus::Menus) {}
 //public:
 //	MenuBase() = default;
-//	void(*onMenuIni)(void(*logoUpdate)(uint8_t logo[][8], uint8_t offset)) = vazio;
+//	void(*onMenuIni)(void(*logoUpdate)(uint8_t logoPtr[][8], uint8_t offset)) = vazio;
 //	EnumMenus::Menus* menuIhmIndex = nullptr;
 //	void(*onLoop)() = vazio;
 //	void(*onEncdrDec)() = vazio;

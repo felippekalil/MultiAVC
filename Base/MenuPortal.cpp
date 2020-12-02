@@ -36,7 +36,7 @@ MenuPortal::MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, const 
 }
 
 MenuPortal::MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
-						const uint8_t nEnum, String nomeEnums[], byte(*logos[])[8], const uint8_t logoSize,
+						const uint8_t nEnum, String nomeEnums[], byte *logos[], const uint8_t logoSize,
 						const uint8_t offset,
 						const uint8_t offsetLogo, const uint16_t tLoop) :
 						tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
