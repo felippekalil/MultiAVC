@@ -170,13 +170,10 @@ namespace IHMv2
 		{
 			if (*(logo.logoPtr + i * 8) >= B100000 || logo.logoPtr == nullptr)
 				break;
-			Serial.println("logo i = " + String(i) + " B: " + String(*(logo.logoPtr + i * 8)));
 			createChar(i, logo.logoPtr + i * 8);
 		}
 		nCharLogo = i;
 		this->offsetLogo = logo.offset;
-		Serial.println("nChar = " + String(i));
-		Serial.println("offset = " + String(logo.offset));
 	}
 
 	void Ihm::telaInicialLabsolda()

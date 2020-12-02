@@ -20,6 +20,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Icones.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)IHMv2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MenuBase.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MenuBase.Linha.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MenuMensagem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MenuPortal.cpp" />
   </ItemGroup>

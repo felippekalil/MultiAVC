@@ -5,6 +5,11 @@
 
 #include "MenuBase.h"
 
+//struct Portal
+//{
+//	
+//};
+
 class MenuPortal final : public MenuBase
 {
     String titulo;
