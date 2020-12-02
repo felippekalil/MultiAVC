@@ -5,16 +5,18 @@
 
 #include "MenuBase.h"
 
-//struct Portal
-//{
-//	
-//};
+struct Portal
+{
+    String nome;
+    MenuBase::Logo logo;
+    EnumMenus::Menus destino;
+};
 
 class MenuPortal final : public MenuBase
 {
     String titulo;
+    Portal* portais = nullptr;
     uint8_t nEnum;
-    String* nomeModos;
     uint16_t enumerador = 0, enumeradorAnt = 0;
     MenuExtensoes::AdjGenerico<uint16_t> trocaEnum{};
     volatile byte select = 0;
@@ -23,7 +25,6 @@ class MenuPortal final : public MenuBase
     EnumMenus::Menus menuVoltar;
 
     void(*updateLogo)(Logo logo) = nullptr;
-    Logo* logos = nullptr;
 
     uint8_t logoSize = 0;
     uint8_t offset = 0;
@@ -35,11 +36,7 @@ public:
         String nomeEnums[], uint16_t tLoop);
 
     MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
-        String nomeEnums[], Logo* logos, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
-
-    MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, EnumMenus::Menus menuVoltar, uint8_t nEnum,
-        String nomeEnums[], byte *logo[], uint8_t logoSize, uint8_t offset,
-        uint8_t offsetLogo, uint16_t tLoop);
+        Portal* portais, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
     void onMenuIni(void (*logoUpdate)(Logo logos)) override;
 

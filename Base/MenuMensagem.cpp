@@ -7,23 +7,24 @@ void MenuMensagem::atualizaLogo() const
 	updateLogo(logo);
 }
 
-MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
+MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual,
                            const Logo logo, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) :
-	tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
+	pisca(tAceso, tApagado, tLoop)
 {
 	this->textoSuperior = textoSuperior;
 	this->textoInferior = textoInferior;
 	menuIhm = menuAtual;
-	this->menuVoltar = menuVoltar;
 	this->logo = logo;
 	this->logoSize = logoSize;
 	this->offset = offset;
+	tDuracao = tDuracao / tLoop;
 }
 
 void MenuMensagem::onMenuIni(void(*logoUpdate)(Logo logos))
 {
 	updateLogo = logoUpdate;
 	atualizaLogo();
+	contDuracao = 0;
 }
 
 
@@ -40,9 +41,14 @@ void MenuMensagem::onLoop()
 		linhaSuperior = MenuExtensoes::LinhaBase::limpa();
 		linhaInferior = MenuExtensoes::LinhaBase::limpa();
 	}
+	contDuracao++;
+	if (contDuracao > tDuracao*0.3 && contDuracao < tDuracao*0.5) // segura um pouco
+		apitar = 3;
+	if (contDuracao > tDuracao)	
+		onVoltar();
 }
 
 void MenuMensagem::onVoltar()
 {
-	*menuIhm = menuVoltar;
+	*menuIhm = menuAnterior;
 }

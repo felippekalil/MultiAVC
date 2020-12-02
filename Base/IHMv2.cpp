@@ -42,6 +42,24 @@ namespace IHMv2
 		apitaBuzzer = tempoBuzzerInc * 6;
 	}
 
+	void Ihm::apitarBuzzer(const uint8_t tipo)
+	{
+		switch (tipo)
+		{
+		default:
+			break;
+		case 1:
+			apitarBuzzerInc();
+			break;
+		case 2:
+			apitarBuzzerEnter();
+			break;
+		case 3:
+			apitarBuzzerVoltar();
+			break;
+		}
+	}
+
 	void Ihm::processaBuzzer()
 	{
 		if (apitaBuzzer)
@@ -236,6 +254,11 @@ namespace IHMv2
 		}
 		if (aguardaMenu)
 			aguardaMenu--;
+		if (menuAtual->apitar)
+		{
+			apitarBuzzer(menuAtual->apitar);
+			menuAtual->apitar = 0;
+		}
 		menuAtual->onLoop();
 		imprimeInterface();
 	}

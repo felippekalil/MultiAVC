@@ -27,7 +27,12 @@ void loop() {
     if (millis() % TLOOP == 0)
     {
         if (menuIhmIndex != menuIndexAnterior)
+        {
+            Serial.println("MenuAnt = " + String(menuIndexAnterior));
+            Serial.println("MenuAtual = " + String(menuIhmIndex));
+            menus[menuIhmIndex]->menuAnterior = menuIndexAnterior;
             ihm.atualizaMenu(menus[menuIhmIndex]);
+        }
         menuIndexAnterior = menuIhmIndex;
         ihm.loop();
     }

@@ -13,6 +13,7 @@ namespace EnumMenus
 {
 	enum Menus
 	{
+		Nada = -1,
 		Principal = 0,
 		Processos,
 		Obras
@@ -31,8 +32,10 @@ public:
 		uint8_t offset;
 	};
 
-	virtual void onMenuIni(void(*logoUpdate)(Logo logo)) = 0;
 	EnumMenus::Menus* menuIhm = nullptr;
+	EnumMenus::Menus menuAnterior;
+	uint8_t apitar = 0;
+	virtual void onMenuIni(void(*logoUpdate)(Logo logo)) = 0;
 	virtual void onLoop() = 0;
 	virtual void onEncdrDec() = 0;
 	virtual void onEncdrInc() = 0;

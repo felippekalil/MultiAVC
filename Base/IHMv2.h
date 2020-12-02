@@ -38,6 +38,8 @@ namespace IHMv2
 
 		void apitarBuzzerVoltar();
 
+		void apitarBuzzer(uint8_t tipo);
+
 		void processaBuzzer();
 
 		void handleEncoder();
