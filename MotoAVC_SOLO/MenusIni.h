@@ -54,6 +54,17 @@ namespace Menus
         MenuMensagem menu("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
     }
 
+    //namespace MenuExecucao
+    //{
+    //    uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
+    //    Portal portaisProc[] = {
+    //        {"TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Obras},
+    //        {"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Nada},
+    //        {" MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMigConv), offsetLogo }, EnumMenus::Obras},
+    //        {" MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMigPulse), offsetLogo }, EnumMenus::Obras } };
+    //    MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, portaisProc, logoSize, offset, tLoop);
+    //}
+
     MenuBase* menus[3] = { &MenuPrincipal::menu , &MenuProcessos::menu, &MenuEmObras::menu };//*/	
 }
 

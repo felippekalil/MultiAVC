@@ -19,6 +19,7 @@ public:
 	static byte logoMigConv[][8];
 	static byte logoMigPulse[][8];
 	static byte logoMartelo[][8];
+	static byte simbolosExecucao[][8];
 };
 
 #endif

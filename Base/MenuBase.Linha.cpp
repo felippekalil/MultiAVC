@@ -91,7 +91,6 @@ namespace MenuExtensoes // LINHA BASE
 	}
 }
 
-
 namespace MenuExtensoes // LINHA VALOR
 {
 	template <typename T>

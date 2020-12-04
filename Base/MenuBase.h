@@ -16,9 +16,11 @@ namespace EnumMenus
 		Nada = -1,
 		Principal = 0,
 		Processos,
+		Execucao,
 		Obras
 	};
 }
+
 
 class MenuBase
 {
@@ -29,7 +31,10 @@ public:
 	struct Logo
 	{
 		uint8_t *logoPtr;
+		uint8_t* charExtra;
 		uint8_t offset;
+		Logo() : logoPtr(nullptr), charExtra(nullptr), offset(0) {};
+		Logo(uint8_t* logo, uint8_t off) : logoPtr(logo), charExtra(nullptr), offset(off) {};
 	};
 
 	EnumMenus::Menus* menuIhm = nullptr;

@@ -9,7 +9,7 @@ class MenuMensagem final : public MenuBase
     MenuExtensoes::PiscaCiclo pisca;
 
     void(*updateLogo)(Logo logo) = nullptr;
-    Logo logo{};
+    Logo logo{ nullptr, 0 };
     uint8_t logoSize = 0;
     uint8_t offset = 0;
     void atualizaLogo() const;
