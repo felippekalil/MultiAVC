@@ -28,8 +28,8 @@ void loop() {
     {
         if (menuIhmIndex != menuIndexAnterior)
         {
-            //Serial.println("MenuAnt = " + String(menuIndexAnterior));
-            //Serial.println("MenuAtual = " + String(menuIhmIndex));
+            Serial.println("MenuAnt = " + String(menuIndexAnterior));
+            Serial.println("MenuAtual = " + String(menuIhmIndex));
             menus[menuIhmIndex]->menuAnterior = menuIndexAnterior;
             ihm.atualizaMenu(menus[menuIhmIndex]);
         }
