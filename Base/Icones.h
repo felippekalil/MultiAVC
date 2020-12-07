@@ -15,11 +15,15 @@ public:
 	static byte logoCncOld[][8];
 	static byte logoStepDir[][8];
 	static byte logoTig[][8];
-	static byte logoTigHf[][8];
-	static byte logoMigConv[][8];
-	static byte logoMigPulse[][8];
+	static byte logoMig[][8];
 	static byte logoMartelo[][8];
-	static byte simbolosExecucao[][8];
+	static byte charRaio[8];
+	static byte charCurto[8];
+	static byte charPulse[8];
+	static byte charOk[8];
+	static byte charNone[8];
+	static byte charUp[8];
+	static byte charDwn[8];
 };
 
 #endif

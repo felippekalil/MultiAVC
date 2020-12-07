@@ -191,6 +191,14 @@ namespace IHMv2
 			createChar(i, logo.logoPtr + i * 8);
 		}
 		nCharLogo = i;
+
+		if(logo.charExtra != nullptr)
+		{
+			createChar(logo.posCharExtra, logo.charExtra);
+			if (logo.posCharExtra > i)
+				nCharLogo = logo.posCharExtra;
+		}
+
 		this->offsetLogo = logo.offset;
 	}
 

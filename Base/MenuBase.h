@@ -16,8 +16,8 @@ namespace EnumMenus
 		Nada = -1,
 		Principal = 0,
 		Processos,
-		Execucao,
-		Obras
+		Obras,
+		Execucao
 	};
 }
 
@@ -30,11 +30,13 @@ public:
 
 	struct Logo
 	{
-		uint8_t *logoPtr;
-		uint8_t* charExtra;
-		uint8_t offset;
-		Logo() : logoPtr(nullptr), charExtra(nullptr), offset(0) {};
-		Logo(uint8_t* logo, uint8_t off) : logoPtr(logo), charExtra(nullptr), offset(off) {};
+		uint8_t *logoPtr{};
+		uint8_t offset{};
+		uint8_t* charExtra{};
+		uint8_t posCharExtra{};
+		Logo() = default;
+		Logo(uint8_t* logo, const uint8_t off) : logoPtr(logo), offset(off){}
+		Logo(uint8_t* logo, const uint8_t off, uint8_t* extra, const uint8_t pos) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(pos) {}
 	};
 
 	EnumMenus::Menus* menuIhm = nullptr;

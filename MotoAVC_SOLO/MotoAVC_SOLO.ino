@@ -33,7 +33,8 @@ void loop() {
             menus[menuIhmIndex]->menuAnterior = menuIndexAnterior;
             ihm.atualizaMenu(menus[menuIhmIndex]);
         }
-        menuIndexAnterior = menuIhmIndex;
+        if(menuIhmIndex != EnumMenus::Nada)
+            menuIndexAnterior = menuIhmIndex;
         ihm.loop();
     }
 }
