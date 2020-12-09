@@ -21,6 +21,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)IHMv2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MenuBase.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MenuBase.Linha.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MenuExecucao.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MenuMensagem.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MenuPortal.cpp" />
   </ItemGroup>
@@ -28,6 +29,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Icones.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IHMv2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MenuBase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MenuExecucao.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MenuMensagem.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MenuPortal.h" />
   </ItemGroup>

@@ -41,9 +41,9 @@ namespace Menus
         uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
         Portal portaisProc[] = {
             {"TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Obras},
-            {"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTigHf), offsetLogo}, EnumMenus::Nada},
-            {" MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMigConv), offsetLogo }, EnumMenus::Obras},
-            {" MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMigPulse), offsetLogo }, EnumMenus::Obras } };
+            {"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charRaio), 2}, EnumMenus::Nada},
+            {" MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charCurto), 2 }, EnumMenus::Obras},
+            {" MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charPulse), 2 }, EnumMenus::Obras } };
         MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, portaisProc, logoSize, offset, tLoop);
     }
 

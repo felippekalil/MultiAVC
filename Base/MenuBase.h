@@ -60,57 +60,6 @@ public:
 
 namespace MenuExtensoes
 {
-	/*class PiscaCiclo
-	{
-		byte interacao = 0;
-	public:
-		byte nAceso;
-		byte nApagado;
-
-		PiscaCiclo(const uint16_t aceso, const uint16_t apagado, const uint16_t tCiclo = 1)
-		{
-			nAceso = aceso / tCiclo;
-			nApagado = apagado / tCiclo;
-			if (nAceso < 1)
-				nAceso = 1;
-			if (nApagado < 1)
-				nApagado = 1;
-		}
-
-		void reseta()
-		{
-			interacao = 0;
-		}
-
-		void redefine(const uint16_t aceso, const uint16_t apagado, const uint16_t tCiclo = 1)
-		{
-			nAceso = aceso / tCiclo;
-			nApagado = apagado / tCiclo;
-			if (nAceso < 1)
-				nAceso = 1;
-			if (nApagado < 1)
-				nApagado = 1;
-		}
-
-		void reseta(const uint16_t aceso, const uint16_t apagado, const uint16_t tCiclo = 1)
-		{
-			redefine(aceso, apagado, tCiclo);
-			reseta();
-		}
-
-		bool aceso()
-		{
-			interacao++;
-			if (interacao < nAceso)
-				return true;
-			if (interacao < nAceso + nApagado)
-				return false;
-			interacao = 0;
-			return true;
-		}
-	};*/
-
-
 	class PiscaCiclo
 	{
 		byte interacao = 0;

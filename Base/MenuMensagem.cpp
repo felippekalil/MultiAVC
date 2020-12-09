@@ -8,8 +8,8 @@ void MenuMensagem::atualizaLogo() const
 }
 
 MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual,
-                           const Logo logo, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) :
-	pisca(tAceso, tApagado, tLoop)
+                           const Logo logo, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) 
+							: pisca(tAceso, tApagado, tLoop)
 {
 	this->textoSuperior = textoSuperior;
 	this->textoInferior = textoInferior;

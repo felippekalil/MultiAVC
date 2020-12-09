@@ -4,6 +4,7 @@
  Author:	Kalil
 */
 
+#include "MenuExecucao.h"
 const int encoderPinA = 2;
 const int encoderPinB = 4;
 const int SWITCH = 3;

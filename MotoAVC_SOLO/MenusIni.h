@@ -56,12 +56,26 @@ namespace Menus
 
     //namespace MenuExecucao
     //{
+    //    using namespace MenuExtensoes;
     //    uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
+    //    float ref = 0, zm = 0;
+
+    //    AdjGenerico<float> referencia = { &ref, 0.1, 99.9, 0.1 };
+    //    LinhaValor<float> linhaRef = {"Ref: ", }
+
+    //    AdjGenerico<float> zonaMorta = { &zm, 0.1, 99.9, 0.1 };
+    //    //LinhaValor linhas[] = { Linha("  Ref:", &referencia, 1, 5, "V"), // 0
+    //    //                    Linha("   In:", &Controle::valorTensaoDoArco, 1, 5, "V"), // 1
+    //    //                    Linha("  Out:", &Controle::valorSaida, 1, 5, "V"), // 2
+    //    //                    Linha("  Out:", &Controle::valorSaidaCorrente, 0, 5, "A"), // 3
+    //    //                    Linha("    Leitura"), // 4
+    //    //                    Linha("    Serial"), // 5
+    //    //                    Linha("  Serial+CRC"), // 6
+    //    //                    Linha("   Analogica") }; // 7
+
     //    Portal portaisProc[] = {
     //        {"TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Obras},
-    //        {"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Nada},
-    //        {" MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMigConv), offsetLogo }, EnumMenus::Obras},
-    //        {" MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMigPulse), offsetLogo }, EnumMenus::Obras } };
+    //        {"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Nada}};
     //    MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, portaisProc, logoSize, offset, tLoop);
     //}
 
