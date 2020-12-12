@@ -110,34 +110,15 @@ namespace MenuExtensoes // LINHA VALOR
 		return txt;
 	}
 
-	template <typename T>
-	LinhaValor<T>::LinhaValor(const String& nome, T* var, const int nDecimais, const int nAlgarismos,
-		const String& unidade)
-	{
-		this->nome = nome;
-		this->var = var;
-		this->nDecimais = nDecimais;
-		this->nAlgarismos = nAlgarismos;
-		this->unidade = unidade;
-	}
+	// ------ READONLY ------
 
 	template <typename T>
 	LinhaValor<T>::LinhaValor(const String& nome, T& var, const int nDecimais, const int nAlgarismos,
-		const String& unidade)
+		const String& unidade) 
 	{
 		this->nome = nome;
 		this->var = &var;
 		this->nDecimais = nDecimais;
-		this->nAlgarismos = nAlgarismos;
-		this->unidade = unidade;
-	}
-
-	template <typename T>
-	LinhaValor<T>::LinhaValor(const String& nome, T* var, const int nAlgarismos, const String& unidade)
-	{
-		this->nome = nome;
-		this->var = var;
-		this->nDecimais = 0;
 		this->nAlgarismos = nAlgarismos;
 		this->unidade = unidade;
 	}
@@ -150,6 +131,37 @@ namespace MenuExtensoes // LINHA VALOR
 		this->nDecimais = 0;
 		this->nAlgarismos = nAlgarismos;
 		this->unidade = unidade;
+	}
+
+	// ------ EDITÁVEL -------
+
+	template <typename T>
+	LinhaValor<T>::LinhaValor(const String& nome, AdjGenerico<T>& var, int nDecimais, int nAlgarismos,
+		const String& unidade)
+	{
+		this->nome = nome;
+		this->varAdjGen = &var;
+		this->var = var->get();
+		this->nDecimais = nDecimais;
+		this->nAlgarismos = nAlgarismos;
+		this->unidade = unidade;
+	}
+
+	template <typename T>
+	LinhaValor<T>::LinhaValor(const String& nome, AdjGenerico<T>& var, int nAlgarismos, const String& unidade)
+	{
+		this->nome = nome;
+		this->varAdjGen = &var;
+		this->var = var->get();
+		this->nDecimais = 0;
+		this->nAlgarismos = nAlgarismos;
+		this->unidade = unidade;
+	}
+
+	template <typename T>
+	bool LinhaValor<T>::editavel() const
+	{
+		return varAdjGen != nullptr;
 	}
 
 	template <typename T>

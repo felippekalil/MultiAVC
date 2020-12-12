@@ -323,13 +323,7 @@ namespace IHMv1_2
 		/// <param name="varInt">Variável escolhida.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		Linha(const String& nome, int* varInt, const int nAlgarismos, const String unidade) : editavel(false)
-		{
-			this->nome = nome;
-			this->varInt = varInt;
-			this->nAlgarismos = nAlgarismos;
-			this->unidade = unidade; 
-		}
+		Linha(const String& nome, int* varInt, const int nAlgarismos, const String unidade);
 
 		/// <summary>
 		/// Classe que cria uma linha de tela para uma variável float.
@@ -339,14 +333,7 @@ namespace IHMv1_2
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		Linha(const String& nome, float* varFloat, const int nDecimais, const int nAlgarismos, const String unidade) : editavel(false)
-		{
-			this->nome = nome;
-			this->varFloat = varFloat;
-			this->nDecimais = nDecimais;
-			this->nAlgarismos = nAlgarismos;
-			this->unidade = unidade;
-		}
+		Linha(const String& nome, float* varFloat, const int nDecimais, const int nAlgarismos, const String unidade);
 
 		/// <summary>
 		/// Classe que cria uma linha de tela para uma variável float.
@@ -356,72 +343,18 @@ namespace IHMv1_2
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		Linha(const String& nome, AdjFloat* varAdjFloat, const int nDecimais, const int nAlgarismos, const String unidade) : editavel(true)
-		{
-			this->nome = nome;
-			this->varAdjFloat = varAdjFloat;
-			varFloat = varAdjFloat->valor;
-			this->nDecimais = nDecimais;
-			this->nAlgarismos = nAlgarismos;
-			this->unidade = unidade;
-		}
+		Linha(const String& nome, AdjFloat* varAdjFloat, const int nDecimais, const int nAlgarismos,
+		      const String unidade);
 
-		Linha(const String& nome) : editavel(true)
-		{
-			this->nome = nome;
-			this->unidade = unidade;
-		}
+		explicit Linha(const String& nome);
 
-		static String texto(const String& nome, const int varInt, const int nAlgarismos, const String& unidade, const bool imprimeValor)
-		{
-			auto txt = nome;
-			for(auto i = 0; i < nAlgarismos; i++)
-				txt += " ";
-			if(contCaracteres(nome, unidade, nAlgarismos) < 16)
-				txt += " ";
-			txt += unidade;
-			if(!imprimeValor)
-				return txt;
-			auto valor = printInt(varInt, nAlgarismos);
-			const auto index = nome.length();
-			for(auto i = 0; i < valor.length() && index + i < 16; i++)
-				txt.setCharAt(index + i, valor[i]);//*/
-			return txt;
-		}
+		static String texto(const String& nome, const int varInt, const int nAlgarismos, const String& unidade,
+		                    const bool imprimeValor);
 
-		static String texto(const String& nome, const float varFloat, const int nDecimais, const int nAlgarismos, const String& unidade, const bool imprimeValor)
-		{
-			auto txt = nome;
-			for(auto i = 0; i < nAlgarismos; i++)
-				txt += " ";
-			if(contCaracteres(nome, unidade, nAlgarismos) < 16)
-				txt += " ";
-			txt += unidade;
-			if(!imprimeValor)
-				return txt;
-			auto valor = printFloat(varFloat, nDecimais, nAlgarismos);
-			const auto index = nome.length();
-			for(auto i = 0; i < valor.length() && index + i < 16; i++)
-				txt.setCharAt(index + i, valor[i]);//*/
-			return txt;
-		}
+		static String texto(const String& nome, const float varFloat, const int nDecimais, const int nAlgarismos,
+		                    const String& unidade, const bool imprimeValor);
 
-		String texto(const bool imprimeValor) const
-		{
-			auto txt = nome;
-			for(auto i = 0; i < nAlgarismos; i++)
-				txt += " ";
-			if(contCaracteres() < 16)
-				txt += " ";
-			txt += unidade;
-			if(!imprimeValor)
-				return txt;
-			auto valor = printValor();
-			const auto index = nome.length();
-			for(auto i = 0; i < valor.length() && index + i < 16; i++)
-				txt.setCharAt(index + i, valor[i]);//*/
-			return txt;
-		}
+		String texto(const bool imprimeValor) const;
 
 	private:
 		String nome, unidade;
@@ -431,62 +364,167 @@ namespace IHMv1_2
 		int nAlgarismos = 0;
 
 
-		static int contCaracteres(const String& n1, const String& n2, const int nAlg) 
-		{
-			return n1.length() + n2.length() + nAlg;
-		}
+		static int contCaracteres(const String& n1, const String& n2, const int nAlg);
 
-		int contCaracteres() const
-		{
-			return contCaracteres(nome, unidade, nAlgarismos);
-		}
+		int contCaracteres() const;
 
-		static String printInt(const int valor, const uint8_t nAlg)
-		{
-			auto txt = static_cast<String>(valor);
-			while(txt.length() < nAlg)
-				txt = " " + txt;
-			return txt;
-		}
+		static String printInt(const int valor, const uint8_t nAlg);
 
-		String printInt(const int valor) const
-		{
-			return printInt(valor, nAlgarismos);
-		}
+		String printInt(const int valor) const;
 
-		String printInt() const
-		{
-			return printInt(*varInt);
-		}
+		String printInt() const;
 
-		static String printFloat(const float varFloat, const float nDecimais, const uint8_t nAlgarismos)
-		{
-			String txt = "";
-			txt = String(varFloat, nDecimais);
-			while(txt.length() < nAlgarismos)
-				txt = " " + txt;
-			if(txt.length() > nAlgarismos)
-				return printInt(varFloat, nAlgarismos);
-			return txt;
-		}
+		static String printFloat(const float varFloat, const float nDecimais, const uint8_t nAlgarismos);
 
-		String printFloat() const
-		{
-			return printFloat(*varFloat, nDecimais, nAlgarismos);
-		}
+		String printFloat() const;
 
-		String printValor() const
-		{
-			if(varFloat != nullptr)
-				return printFloat();
-			if(varInt != nullptr)
-				return printInt();
-			String txt = "";
-			for(auto i = 0; i < nAlgarismos; i++)
-				txt = " " + txt;
-			return txt;
-		}
+		String printValor() const;
 	};
+	
+
+	inline Linha::Linha(const String& nome, int* varInt, const int nAlgarismos, const String unidade): editavel(false)
+	{
+		this->nome = nome;
+		this->varInt = varInt;
+		this->nAlgarismos = nAlgarismos;
+		this->unidade = unidade;
+	}
+
+	inline Linha::Linha(const String& nome, float* varFloat, const int nDecimais, const int nAlgarismos,
+	                    const String unidade): editavel(false)
+	{
+		this->nome = nome;
+		this->varFloat = varFloat;
+		this->nDecimais = nDecimais;
+		this->nAlgarismos = nAlgarismos;
+		this->unidade = unidade;
+	}
+
+	inline Linha::Linha(const String& nome, AdjFloat* varAdjFloat, const int nDecimais, const int nAlgarismos,
+	                    const String unidade): editavel(true)
+	{
+		this->nome = nome;
+		this->varAdjFloat = varAdjFloat;
+		varFloat = varAdjFloat->valor;
+		this->nDecimais = nDecimais;
+		this->nAlgarismos = nAlgarismos;
+		this->unidade = unidade;
+	}
+
+	inline Linha::Linha(const String& nome): editavel(true)
+	{
+		this->nome = nome;
+		this->unidade = unidade;
+	}
+
+	inline String Linha::texto(const String& nome, const int varInt, const int nAlgarismos, const String& unidade,
+	                           const bool imprimeValor)
+	{
+		auto txt = nome;
+		for (auto i = 0; i < nAlgarismos; i++)
+			txt += " ";
+		if (contCaracteres(nome, unidade, nAlgarismos) < 16)
+			txt += " ";
+		txt += unidade;
+		if (!imprimeValor)
+			return txt;
+		auto valor = printInt(varInt, nAlgarismos);
+		const auto index = nome.length();
+		for (auto i = 0; i < valor.length() && index + i < 16; i++)
+			txt.setCharAt(index + i, valor[i]); //*/
+		return txt;
+	}
+
+	inline String Linha::texto(const String& nome, const float varFloat, const int nDecimais, const int nAlgarismos,
+	                           const String& unidade, const bool imprimeValor)
+	{
+		auto txt = nome;
+		for (auto i = 0; i < nAlgarismos; i++)
+			txt += " ";
+		if (contCaracteres(nome, unidade, nAlgarismos) < 16)
+			txt += " ";
+		txt += unidade;
+		if (!imprimeValor)
+			return txt;
+		auto valor = printFloat(varFloat, nDecimais, nAlgarismos);
+		const auto index = nome.length();
+		for (auto i = 0; i < valor.length() && index + i < 16; i++)
+			txt.setCharAt(index + i, valor[i]); //*/
+		return txt;
+	}
+
+	inline String Linha::texto(const bool imprimeValor) const
+	{
+		auto txt = nome;
+		for (auto i = 0; i < nAlgarismos; i++)
+			txt += " ";
+		if (contCaracteres() < 16)
+			txt += " ";
+		txt += unidade;
+		if (!imprimeValor)
+			return txt;
+		auto valor = printValor();
+		const auto index = nome.length();
+		for (auto i = 0; i < valor.length() && index + i < 16; i++)
+			txt.setCharAt(index + i, valor[i]); //*/
+		return txt;
+	}
+
+	inline int Linha::contCaracteres(const String& n1, const String& n2, const int nAlg)
+	{
+		return n1.length() + n2.length() + nAlg;
+	}
+
+	inline int Linha::contCaracteres() const
+	{
+		return contCaracteres(nome, unidade, nAlgarismos);
+	}
+
+	inline String Linha::printInt(const int valor, const uint8_t nAlg)
+	{
+		auto txt = static_cast<String>(valor);
+		while (txt.length() < nAlg)
+			txt = " " + txt;
+		return txt;
+	}
+
+	inline String Linha::printInt(const int valor) const
+	{
+		return printInt(valor, nAlgarismos);
+	}
+
+	inline String Linha::printInt() const
+	{
+		return printInt(*varInt);
+	}
+
+	inline String Linha::printFloat(const float varFloat, const float nDecimais, const uint8_t nAlgarismos)
+	{
+		String txt = "";
+		txt = String(varFloat, nDecimais);
+		while (txt.length() < nAlgarismos)
+			txt = " " + txt;
+		if (txt.length() > nAlgarismos)
+			return printInt(varFloat, nAlgarismos);
+		return txt;
+	}
+
+	inline String Linha::printFloat() const
+	{
+		return printFloat(*varFloat, nDecimais, nAlgarismos);
+	}
+
+	inline String Linha::printValor() const
+	{
+		if (varFloat != nullptr)
+			return printFloat();
+		if (varInt != nullptr)
+			return printInt();
+		String txt = "";
+		for (auto i = 0; i < nAlgarismos; i++)
+			txt = " " + txt;
+		return txt;
+	}
 
 	class Ihm
 	{
@@ -523,7 +561,6 @@ namespace IHMv1_2
 	};
 
 	Ihm* Ihm::instancia;
-
 
 	inline Linha* Ihm::linhaAtual(const byte linha) const
 	{
@@ -645,8 +682,6 @@ namespace IHMv1_2
 		lcd.print(linhaAtual(0)->texto(imprime || select != 1));
 		lcd.setCursor(0, 1);
 		lcd.print(linhaAtual(1)->texto(imprime || select != 2));
-
-
 	}
 }
 

@@ -64,9 +64,10 @@ namespace MenuExtensoes
 	{
 		byte interacao = 0;
 	public:
-		byte nAceso;
-		byte nApagado;
-
+		byte nAceso{};
+		byte nApagado{};
+		
+		PiscaCiclo();
 		PiscaCiclo(uint16_t aceso, uint16_t apagado, uint16_t tCiclo = 1);
 
 		void reseta();
@@ -150,6 +151,10 @@ namespace MenuExtensoes
 		String printValor() const;
 
 	public:
+		AdjGenerico<T>* varAdjGen = nullptr;
+
+		// ------- READONLY ------
+
 		/// <summary>
 		/// Classe que cria uma linha de tela para uma variável float.
 		/// </summary>
@@ -158,20 +163,23 @@ namespace MenuExtensoes
 		/// <param name="nDecimais">Número de casas decimais máximo.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		LinhaValor(const String& nome, T* var, int nDecimais, int nAlgarismos, const String& unidade);
-
 		LinhaValor(const String& nome, T& var, int nDecimais, int nAlgarismos, const String& unidade);
 
 		/// <summary>
-		/// Classe que cria uma linha de tela para uma variável float.
+		/// Classe que cria uma linha de tela para uma variável inteira.
 		/// </summary>
 		/// <param name="nome">Nome adotado pela variável.</param>
 		/// <param name="var">Variável inteira escolhida.</param>
 		/// <param name="nAlgarismos">Número de algarismos máximo.</param>
 		/// <param name="unidade">Unidade dimensional.</param>
-		LinhaValor(const String& nome, T* var, int nAlgarismos, const String& unidade);
-
 		LinhaValor(const String& nome, T& var, int nAlgarismos, const String& unidade);
+		
+		// ------- EDITÁVEL ------
+
+		LinhaValor(const String& nome, AdjGenerico<T>& var, int nDecimais, int nAlgarismos, const String& unidade);
+		LinhaValor(const String& nome, AdjGenerico<T>& var, int nAlgarismos, const String& unidade);
+
+		bool editavel() const;
 
 		String texto(bool imprimeValor) const;
 

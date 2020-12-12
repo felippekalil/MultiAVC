@@ -2,6 +2,8 @@
 
 namespace MenuExtensoes
 {
+	PiscaCiclo::PiscaCiclo() = default;
+
 	PiscaCiclo::PiscaCiclo(const uint16_t aceso, const uint16_t apagado, const uint16_t tCiclo)
 	{
 		nAceso = aceso / tCiclo;
@@ -12,10 +14,7 @@ namespace MenuExtensoes
 			nApagado = 1;
 	}
 
-	void PiscaCiclo::reseta()
-	{
-		interacao = 0;
-	}
+	void PiscaCiclo::reseta() { interacao = 0; }
 
 	void PiscaCiclo::redefine(const uint16_t aceso, const uint16_t apagado, const uint16_t tCiclo)
 	{
