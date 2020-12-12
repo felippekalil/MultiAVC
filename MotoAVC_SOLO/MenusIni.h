@@ -50,15 +50,23 @@ namespace Menus
     namespace MenuEmObras
     {
         uint8_t logoSize = 3, offset = logoSize + 0, offsetLogo = 2;
-        MenuBase::Logo logo;// = { reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo };
-        MenuMensagem menu;// ("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
-
-        inline void iniciaMenu()
-        {
-            logo = { reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo };
-        	menu.ini("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
-         }
+        MenuBase::Logo logo = { reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo };
+        MenuMensagem menu("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
     }
+
+
+    //namespace MenuEmObras
+    //{
+    //    uint8_t logoSize = 3, offset = logoSize + 0, offsetLogo = 2;
+    //    MenuBase::Logo logo;// = { reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo };
+    //    MenuMensagem menu;// ("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
+
+    //    inline void iniciaMenu()
+    //    {
+    //        logo = { reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo };
+    //        menu.ini("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
+    //    }
+    //}
 
     //namespace MenuExecucao
     //{
@@ -78,11 +86,6 @@ namespace Menus
     //        {"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Nada}};
     //    MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, portaisProc, logoSize, offset, tLoop);
     //}
-
-    inline void iniciaMenus()
-    {
-        MenuEmObras::iniciaMenu();
-    }
 
     MenuBase* menus[3] = { &MenuPrincipal::menu , &MenuProcessos::menu, &MenuEmObras::menu };//*/	
 }
