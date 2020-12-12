@@ -7,9 +7,11 @@
 
 struct Portal
 {
-    String nome;
-    MenuBase::Logo logo;
-    EnumMenus::Menus destino;
+    String nome{};
+    MenuBase::Logo logo{};
+    EnumMenus::Menus destino{};
+    //Portal() = default;
+    //Portal(String& nome, const MenuBase::Logo logo, const EnumMenus::Menus destino) : nome(nome), logo(logo), destino(destino) {}
 };
 
 class MenuPortal final : public MenuBase

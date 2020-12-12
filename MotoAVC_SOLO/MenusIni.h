@@ -50,8 +50,14 @@ namespace Menus
     namespace MenuEmObras
     {
         uint8_t logoSize = 3, offset = logoSize + 0, offsetLogo = 2;
-        MenuBase::Logo logo = {reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo};
-        MenuMensagem menu("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
+        MenuBase::Logo logo;// = { reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo };
+        MenuMensagem menu;// ("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
+
+        inline void iniciaMenu()
+        {
+            logo = { reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo };
+        	menu.ini("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
+         }
     }
 
     //namespace MenuExecucao
@@ -61,23 +67,22 @@ namespace Menus
     //    float ref = 0, zm = 0;
 
     //    AdjGenerico<float> referencia = { &ref, 0.1, 99.9, 0.1 };
-    //    LinhaValor<float> linhaRef = {"Ref: ", }
-
+    //    LinhaValor<float> linhaRef = { "Ref: ", referencia, 1, 2, "V" };
     //    AdjGenerico<float> zonaMorta = { &zm, 0.1, 99.9, 0.1 };
-    //    //LinhaValor linhas[] = { Linha("  Ref:", &referencia, 1, 5, "V"), // 0
-    //    //                    Linha("   In:", &Controle::valorTensaoDoArco, 1, 5, "V"), // 1
-    //    //                    Linha("  Out:", &Controle::valorSaida, 1, 5, "V"), // 2
-    //    //                    Linha("  Out:", &Controle::valorSaidaCorrente, 0, 5, "A"), // 3
-    //    //                    Linha("    Leitura"), // 4
-    //    //                    Linha("    Serial"), // 5
-    //    //                    Linha("  Serial+CRC"), // 6
-    //    //                    Linha("   Analogica") }; // 7
+    //    LinhaValor<float> linhaZM = { "Z.M.: ", zonaMorta, 1, 2, "V" };
+    //    LinhaValor<float> linhas[] = { linhaRef, // 0
+    //    								linhaZM }; // 1
 
     //    Portal portaisProc[] = {
     //        {"TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Obras},
     //        {"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Nada}};
     //    MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, portaisProc, logoSize, offset, tLoop);
     //}
+
+    inline void iniciaMenus()
+    {
+        MenuEmObras::iniciaMenu();
+    }
 
     MenuBase* menus[3] = { &MenuPrincipal::menu , &MenuProcessos::menu, &MenuEmObras::menu };//*/	
 }

@@ -15,8 +15,12 @@ class MenuMensagem final : public MenuBase
     void atualizaLogo() const;
 
 public:
+    MenuMensagem();
     MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual, 
 					Logo logo, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
+
+    void ini(const String& textoSuperior, const String& textoInferior, EnumMenus::Menus* menuAtual,
+        Logo logo, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
     void onMenuIni(void (*logoUpdate)(Logo logos)) override;
 

@@ -19,6 +19,7 @@ void setup() {
     Serial.begin(9600);
     Serial.println("Inicializado!");
     tLoop = TLOOP;
+    iniciaMenus();
     ihm.setup();
     ihm.atualizaMenu(menus[menuIhmIndex]);
 }
