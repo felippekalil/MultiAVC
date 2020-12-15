@@ -93,98 +93,98 @@ namespace MenuExtensoes // LINHA BASE
 
 namespace MenuExtensoes // LINHA VALOR
 {
-	template <typename T>
-	unsigned LinhaValor<T>::nCaracteres() const
-	{
-		return contCaracteres(nome, unidade, nAlgarismos);
-	}
+	//template <typename T>
+	//unsigned LinhaValor<T>::nCaracteres() const
+	//{
+	//	return contCaracteres(nome, unidade, nAlgarismos);
+	//}
 
-	template <typename T>
-	String LinhaValor<T>::printValor() const
-	{
-		if (var != nullptr)
-			return textoVar(*var, nDecimais, nAlgarismos);
-		String txt = "";
-		for (auto i = 0; i < nAlgarismos; i++)
-			txt = " " + txt;
-		return txt;
-	}
+	//template <typename T>
+	//String LinhaValor<T>::printValor() const
+	//{
+	//	if (var != nullptr)
+	//		return textoVar(*var, nDecimais, nAlgarismos);
+	//	String txt = "";
+	//	for (auto i = 0; i < nAlgarismos; i++)
+	//		txt = " " + txt;
+	//	return txt;
+	//}
 
-	// ------ READONLY ------
+	//// ------ READONLY ------
 
-	template <typename T>
-	LinhaValor<T>::LinhaValor(const String& nome, T& var, const int nDecimais, const int nAlgarismos,
-		const String& unidade) 
-	{
-		this->nome = nome;
-		this->var = &var;
-		this->nDecimais = nDecimais;
-		this->nAlgarismos = nAlgarismos;
-		this->unidade = unidade;
-	}
+	//template <typename T>
+	//LinhaValor<T>::LinhaValor(const String& nome, T& var, const int nDecimais, const int nAlgarismos,
+	//	const String& unidade) 
+	//{
+	//	this->nome = nome;
+	//	this->var = &var;
+	//	this->nDecimais = nDecimais;
+	//	this->nAlgarismos = nAlgarismos;
+	//	this->unidade = unidade;
+	//}
 
-	template <typename T>
-	LinhaValor<T>::LinhaValor(const String& nome, T& var, const int nAlgarismos, const String& unidade)
-	{
-		this->nome = nome;
-		this->var = &var;
-		this->nDecimais = 0;
-		this->nAlgarismos = nAlgarismos;
-		this->unidade = unidade;
-	}
+	//template <typename T>
+	//LinhaValor<T>::LinhaValor(const String& nome, T& var, const int nAlgarismos, const String& unidade)
+	//{
+	//	this->nome = nome;
+	//	this->var = &var;
+	//	this->nDecimais = 0;
+	//	this->nAlgarismos = nAlgarismos;
+	//	this->unidade = unidade;
+	//}
 
-	// ------ EDITÁVEL -------
+	//// ------ EDITÁVEL -------
 
-	template <typename T>
-	LinhaValor<T>::LinhaValor(const String& nome, AdjGenerico<T>& var, int nDecimais, int nAlgarismos,
-		const String& unidade)
-	{
-		this->nome = nome;
-		this->varAdjGen = &var;
-		this->var = var->get();
-		this->nDecimais = nDecimais;
-		this->nAlgarismos = nAlgarismos;
-		this->unidade = unidade;
-	}
+	//template <typename T>
+	//LinhaValor<T>::LinhaValor(const String& nome, AdjGenerico<T>& var, int nDecimais, int nAlgarismos,
+	//	const String& unidade)
+	//{
+	//	this->nome = nome;
+	//	this->varAdjGen = &var;
+	//	this->var = var->get();
+	//	this->nDecimais = nDecimais;
+	//	this->nAlgarismos = nAlgarismos;
+	//	this->unidade = unidade;
+	//}
 
-	template <typename T>
-	LinhaValor<T>::LinhaValor(const String& nome, AdjGenerico<T>& var, int nAlgarismos, const String& unidade)
-	{
-		this->nome = nome;
-		this->varAdjGen = &var;
-		this->var = var->get();
-		this->nDecimais = 0;
-		this->nAlgarismos = nAlgarismos;
-		this->unidade = unidade;
-	}
+	//template <typename T>
+	//LinhaValor<T>::LinhaValor(const String& nome, AdjGenerico<T>& var, int nAlgarismos, const String& unidade)
+	//{
+	//	this->nome = nome;
+	//	this->varAdjGen = &var;
+	//	this->var = var->get();
+	//	this->nDecimais = 0;
+	//	this->nAlgarismos = nAlgarismos;
+	//	this->unidade = unidade;
+	//}
 
-	template <typename T>
-	bool LinhaValor<T>::editavel() const
-	{
-		return varAdjGen != nullptr;
-	}
+	//template <typename T>
+	//bool LinhaValor<T>::editavel() const
+	//{
+	//	return varAdjGen != nullptr;
+	//}
 
-	template <typename T>
-	String LinhaValor<T>::texto(const bool imprimeValor) const
-	{
-		auto txt = nome;
-		for (auto i = 0; i < nAlgarismos; i++)
-			txt += " ";
-		if (nCaracteres() < 16)
-			txt += " ";
-		txt += unidade;
-		if (!imprimeValor)
-			return txt;
-		auto valor = printValor();
-		const auto index = nome.length();
-		for (auto i = 0; i < valor.length() && index + i < 16; i++)
-			txt.setCharAt(index + i, valor[i]); //*/
-		return txt;
-	}
+	//template <typename T>
+	//String LinhaValor<T>::texto(const bool imprimeValor) const
+	//{
+	//	auto txt = nome;
+	//	for (auto i = 0; i < nAlgarismos; i++)
+	//		txt += " ";
+	//	if (nCaracteres() < 16)
+	//		txt += " ";
+	//	txt += unidade;
+	//	if (!imprimeValor)
+	//		return txt;
+	//	auto valor = printValor();
+	//	const auto index = nome.length();
+	//	for (auto i = 0; i < valor.length() && index + i < 16; i++)
+	//		txt.setCharAt(index + i, valor[i]); //*/
+	//	return txt;
+	//}
 
-	template <typename T>
-	String LinhaValor<T>::texto() const
-	{
-		return texto(true);
-	}
+	//template <typename T>
+	//String LinhaValor<T>::texto() const
+	//{
+	//	return texto(true);
+	//}
 }

@@ -22,7 +22,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MenuPortal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MenuExecucao.cpp">
+    <ClCompile Include="G:\GoogleDrive2\Drive1\LAB\AVC\MultiAVC\Base\MenuLinhas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,7 +42,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MenuPortal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MenuExecucao.h">
+    <ClInclude Include="G:\GoogleDrive2\Drive1\LAB\AVC\MultiAVC\Base\MenuLinhas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

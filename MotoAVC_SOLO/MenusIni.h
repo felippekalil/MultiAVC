@@ -12,6 +12,7 @@
 #include "Icones.h"
 #include "MenuMensagem.h"
 #include "MenuPortal.h"
+#include "MenuLinhas.h"
 
 namespace Menus
 {
@@ -21,7 +22,7 @@ namespace Menus
     uint16_t tLoop = 50; // lembrar de ajustar no .ino
 #endif
 
-    EnumMenus::Menus menuIhmIndex = EnumMenus::Menus::Principal;
+    EnumMenus::Menus menuIhmIndex = EnumMenus::Menus::Processos;
     EnumMenus::Menus menuIndexAnterior = EnumMenus::Menus::Principal;
 
     namespace MenuPrincipal
@@ -40,8 +41,8 @@ namespace Menus
     {
         uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
         Portal portaisProc[] = {
+        	{"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charRaio), 2}, EnumMenus::Execucao},
             {"TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Obras},
-        	{"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charRaio), 2}, EnumMenus::Nada},
             {" MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charCurto), 2 }, EnumMenus::Obras},
             {" MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charPulse), 2 }, EnumMenus::Obras }};
         MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, portaisProc, logoSize, offset, tLoop);
@@ -68,26 +69,49 @@ namespace Menus
     //    }
     //}
 
-    //namespace MenuExecucao
-    //{
-    //    using namespace MenuExtensoes;
-    //    uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
-    //    float ref = 0, zm = 0;
+    namespace MenuExecucao
+    {
+        using namespace MenuExtensoes;
+        MenuLinhas menu;
+        float ref = 12.8, zm = 1.1; 
+        MenuBase::Logo logo;
+        AdjGenerico<float> referencia = { &ref, 0.1, 99.9, 0.1, false };
+        LinhaValor<float> linhaRef = {"Ref: ", referencia, 1, 4, "V" };
+        AdjGenerico<float> zonaMorta = { &zm, 0.1, 99.9, 0.1, false };
+        LinhaValor<float> linhaZM = { "Z.M: ", zonaMorta, 1, 4, "V" };
+        LinhaValor<float> linhaIn = { " In: ", ref, 1, 4, "V" };
+        LinhaValor<float> linhas[] = { linhaRef, // 0  // TODO: criar interface base pra linhas de diferentes tipos
+        								linhaZM,
+										linhaIn}; // 1
+        void atualizaCharLogo()
+        {
+	        
+        }
 
-    //    AdjGenerico<float> referencia = { &ref, 0.1, 99.9, 0.1 };
-    //    LinhaValor<float> linhaRef = { "Ref: ", referencia, 1, 2, "V" };
-    //    AdjGenerico<float> zonaMorta = { &zm, 0.1, 99.9, 0.1 };
-    //    LinhaValor<float> linhaZM = { "Z.M.: ", zonaMorta, 1, 2, "V" };
-    //    LinhaValor<float> linhas[] = { linhaRef, // 0
-    //    								linhaZM }; // 1
+        inline void iniciaMenu()
+        {
+            const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
+            logo = { reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo };
+            menu.inicializaMenu(logo, linhas, 3, atualizaCharLogo, logoSize, offset, tLoop);
+        }
 
-    //    Portal portaisProc[] = {
-    //        {"TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Obras},
-    //        {"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Nada}};
-    //    MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, portaisProc, logoSize, offset, tLoop);
-    //}
+        //uint8_t* charProcesso = reinterpret_cast<uint8_t*>(&Icones::charPulse);
+        //MenuBase::Logo logo = {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, charProcesso, 2 };
+       // MenuLinhas menu(&menuIhmIndex, linhas, 2, logo, logoSize, offset, tLoop);
+    }
 
-    MenuBase* menus[3] = { &MenuPrincipal::menu , &MenuProcessos::menu, &MenuEmObras::menu };//*/	
+    void iniciaMenus()
+    {
+        MenuExecucao::iniciaMenu();
+    }
+
+    MenuBase* menus[] = 
+    { 
+    	&MenuPrincipal::menu , 
+    	&MenuProcessos::menu, 
+    	&MenuEmObras::menu,
+        &MenuExecucao::menu
+    };//*/	
 }
 
 #endif
