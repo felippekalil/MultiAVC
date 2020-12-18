@@ -23,19 +23,19 @@ namespace Menus
 #endif
 
     EnumMenus::Menus menuIhmIndex = EnumMenus::Menus::Processos;
-    EnumMenus::Menus menuIndexAnterior = EnumMenus::Menus::Principal;
+    EnumMenus::Menus menuIndexAnterior = EnumMenus::Menus::Processos;
 
-    namespace MenuPrincipal
-    {
-        uint8_t logoSize = 3, offsetLogo = 15 - logoSize - 1;
-        Portal portalModo[] = {
-            {"MOTOMAN",  {reinterpret_cast<uint8_t*>(&Icones::logoRobo), offsetLogo}, EnumMenus::Processos},
-            { "CNC", {reinterpret_cast<uint8_t*>(&Icones::logoCnc), offsetLogo - 1}, EnumMenus::Obras},
-            {"Step&Dir", {reinterpret_cast<uint8_t*>(&Icones::logoStepDir), offsetLogo}, EnumMenus::Obras}
-        };
-        uint8_t offset = -(logoSize + 1);
-        MenuPortal menu("Modo", &menuIhmIndex, EnumMenus::Principal, 3, portalModo, logoSize, offset, tLoop);
-    }
+    //namespace MenuPrincipal
+    //{
+    //    uint8_t logoSize = 3, offsetLogo = 15 - logoSize - 1;
+    //    Portal portalModo[] = {
+    //        {"MOTOMAN",  {reinterpret_cast<uint8_t*>(&Icones::logoRobo), offsetLogo}, EnumMenus::Processos},
+    //        { "CNC", {reinterpret_cast<uint8_t*>(&Icones::logoCnc), offsetLogo - 1}, EnumMenus::Obras},
+    //        {"Step&Dir", {reinterpret_cast<uint8_t*>(&Icones::logoStepDir), offsetLogo}, EnumMenus::Obras}
+    //    };
+    //    uint8_t offset = -(logoSize + 1);
+    //    MenuPortal menu("Modo", &menuIhmIndex, EnumMenus::Principal, 3, portalModo, logoSize, offset, tLoop);
+    //}
 
     namespace MenuProcessos
     {
@@ -45,7 +45,7 @@ namespace Menus
             {"TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Obras},
             {" MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charCurto), 2 }, EnumMenus::Obras},
             {" MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charPulse), 2 }, EnumMenus::Obras }};
-        MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Principal, 4, portaisProc, logoSize, offset, tLoop);
+        MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Processos, 4, portaisProc, logoSize, offset, tLoop);
     }
 
     namespace MenuEmObras
@@ -107,7 +107,6 @@ namespace Menus
 
     MenuBase* menus[] = 
     { 
-    	&MenuPrincipal::menu , 
     	&MenuProcessos::menu, 
     	&MenuEmObras::menu,
         &MenuExecucao::menu

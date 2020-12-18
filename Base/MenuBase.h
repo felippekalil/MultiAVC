@@ -14,10 +14,11 @@ namespace EnumMenus
 	enum Menus
 	{
 		Nada = -1,
-		Principal = 0,
-		Processos,
+		//Principal = 0,
+		Processos = 0,
 		Obras,
-		Execucao
+		Execucao,
+		CountMenus
 	};
 }
 
