@@ -15,7 +15,7 @@ MenuPortal::MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, const 
 	menuIhm = menuAtual;
 	this->menuVoltar = menuVoltar;
 	this->nEnum = nEnum;
-	trocaEnum = { &enumerador, 0, nEnum - 1, 1 };
+	trocaEnum = { &enumerador, 0, nEnum - 1, 1, true };
 	portais = new Portal[nEnum];
 	for (uint8_t i = 0; i < nEnum; i++)
 		portais[i] = { nomeEnums[i], {nullptr, 0}, EnumMenus::Nada };
@@ -30,7 +30,7 @@ MenuPortal::MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, const 
 	menuIhm = menuAtual;
 	this->menuVoltar = menuVoltar;
 	this->nEnum = nEnum;
-	trocaEnum = { &enumerador, 0, nEnum - 1, 1 };
+	trocaEnum = { &enumerador, 0, nEnum - 1, 1, true };
 	this->portais = portais;
 	this->logoSize = logoSize;
 	this->offset = offset;
@@ -77,10 +77,7 @@ void MenuPortal::onEncdrInc()
 {
 	if (select)
 		return;
-	if (enumerador == trocaEnum.max)
-		enumerador = trocaEnum.min;
-	else
-		trocaEnum.inc();
+	trocaEnum.inc();
 	pisca.reseta();
 }
 

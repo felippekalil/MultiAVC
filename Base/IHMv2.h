@@ -21,7 +21,7 @@ namespace IHMv2
 		const uint16_t duracaoBuzzer = 50;
 		const uint16_t duracaoVoltar = 600;
 		const uint16_t duracaoAguardaMenu = 600;
-		byte(*logoIni)[8];
+		//byte(*logoIni)[8];
 
 		const int rs = A4, en = A5, d4 = A0, d5 = A1, d6 = A2, d7 = A3;
 		LiquidCrystal lcd;

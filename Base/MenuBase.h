@@ -90,13 +90,11 @@ namespace MenuExtensoes
 
 		void set(T vlr) const
 		{
-			Serial.println("Ant: " + String(vlr));
 			if (vlr < min 
-				|| vlr > max + incremento) // caso de uint descendo de zero
+				|| (vlr > max + incremento)) // caso de uint descendo de zero
 				vlr = ciclico ? max : min;
 			if (vlr > max)
 				vlr = ciclico ? min : max;
-			Serial.println("Pos: " + String(vlr));
 			*valor = vlr;
 		}
 
@@ -114,6 +112,7 @@ namespace MenuExtensoes
 			min = var.min;
 			max = var.max;
 			incremento = var.incremento;
+			ciclico = var.ciclico;
 			return { *this };
 		}
 	};

@@ -160,11 +160,16 @@ void MenuLinhas::onVoltar()
 	switch (indexEnum)
 	{
 		case EnumMain:
-		default:
-			//Serial.println("ihm ant: " + String(*menuIhm));
-			*menuIhm = menuAnterior;
-		//	Serial.println("ihm: " + String(*menuIhm));
-			break;
+			switch (enums[EnumMain])
+			{
+			default:
+				*menuIhm = menuAnterior;
+				break;
+			case 1:
+			case 2:
+				enums[EnumMain] = 0;
+				break;
+			}
 		case EnumIndexSup:
 		case EnumIndexInf:
 			if (editValorLinha)

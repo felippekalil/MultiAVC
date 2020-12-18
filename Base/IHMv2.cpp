@@ -91,7 +91,7 @@ namespace IHMv2
 
 	void Ihm::handleEncoder()
 	{
-		if (aguardaMenu)
+		if (aguardaMenu || clickVoltar > 0)
 			return;
 		apitarBuzzerInc();
 		if (digitalRead(encoderPinB) == digitalRead(encoderPinA)) //dec
@@ -109,7 +109,7 @@ namespace IHMv2
 		else
 		{
 			apitarBuzzerEnter(); 
-			aguardaMenu = tempoAguardaMenu / 2;
+			aguardaMenu = tempoAguardaMenu;
 			if (clickVoltar) // se ainda está contando
 			{
 				clickVoltar = 0;
@@ -139,7 +139,6 @@ namespace IHMv2
 		tempoAguardaMenu = duracaoAguardaMenu / tLoop;
 		if (!tempoAguardaMenu)
 			tempoAguardaMenu = 1;
-		this->logoIni = logoIni;
 	}
 
 	Ihm::Ihm(MenuBase* menu, const uint16_t tLoop): lcd(rs, en, d4, d5, d6, d7)
@@ -154,7 +153,6 @@ namespace IHMv2
 		if (!tempoAguardaMenu)
 			tempoAguardaMenu = 1;
 		atualizaMenu(menu);
-		this->logoIni = logoIni;
 	}
 
 	void Ihm::atualizaMenu(MenuBase* menu)
@@ -256,6 +254,7 @@ namespace IHMv2
 			if (clickVoltar == 1)
 			{
 				apitarBuzzerVoltar();
+				aguardaMenu = tempoAguardaMenu;
 				menuAtual->onVoltar();
 			}
 			clickVoltar--;
