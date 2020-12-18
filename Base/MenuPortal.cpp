@@ -7,7 +7,7 @@ void MenuPortal::atualizaLogo() const
 	updateLogo(portais[enumerador].logo);
 }
 
-MenuPortal::MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
+MenuPortal::MenuPortal(const String& titulo, EnumMenus* menuAtual, const EnumMenus menuVoltar,
 						const uint8_t nEnum, String nomeEnums[], const uint16_t tLoop) :
 						tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
 {
@@ -21,7 +21,7 @@ MenuPortal::MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, const 
 		portais[i] = { nomeEnums[i], {nullptr, 0}, EnumMenus::Nada };
 }
 
-MenuPortal::MenuPortal(const String& titulo, EnumMenus::Menus* menuAtual, const EnumMenus::Menus menuVoltar,
+MenuPortal::MenuPortal(const String& titulo, EnumMenus* menuAtual, const EnumMenus menuVoltar,
 						const uint8_t nEnum, Portal* portais, const uint8_t logoSize, const uint8_t offset,
 						const uint16_t tLoop) :
 						tLoop(tLoop), pisca(tAceso, tApagado, tLoop)

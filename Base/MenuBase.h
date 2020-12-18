@@ -9,19 +9,15 @@
 	#include "WProgram.h"
 #endif
 
-namespace EnumMenus
+enum EnumMenus
 {
-	enum Menus
-	{
-		Nada = -1,
-		//Principal = 0,
-		Processos = 0,
-		Obras,
-		Execucao,
-		CountMenus
-	};
-}
-
+	Nada = -1,
+	//Principal = 0,
+	Processos = 0,
+	Obras,
+	Execucao,
+	CountMenus
+};
 
 class MenuBase
 {
@@ -40,8 +36,8 @@ public:
 		Logo(uint8_t* logo, const uint8_t off, uint8_t* extra, const uint8_t pos) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(pos) {}
 	};
 
-	EnumMenus::Menus* menuIhm = nullptr;
-	EnumMenus::Menus menuAnterior;
+	EnumMenus* menuIhm = nullptr;
+	EnumMenus menuAnterior;
 	uint8_t apitar = 0;
 	virtual void onMenuIni(void(*logoUpdate)(Logo logo)) = 0;
 	virtual void onLoop() = 0;

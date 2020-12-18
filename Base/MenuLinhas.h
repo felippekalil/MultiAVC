@@ -53,7 +53,7 @@ public:
 
     void(*loopMenu)() = nullptr;
 
-    void inicializaMenu(Logo logo, LinhaValor<float> linhas[], uint8_t nLinhas, void(*loopMenu)(), 
+    void inicializaMenu(EnumMenus* menuAtual, Logo logo, LinhaValor<float> linhas[], uint8_t nLinhas, void(*loopMenu)(),
 						uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
     void onMenuIni(void (*logoUpdate)(Logo logos)) override;

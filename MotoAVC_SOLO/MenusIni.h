@@ -22,8 +22,8 @@ namespace Menus
     uint16_t tLoop = 50; // lembrar de ajustar no .ino
 #endif
 
-    EnumMenus::Menus menuIhmIndex = EnumMenus::Menus::Processos;
-    EnumMenus::Menus menuIndexAnterior = EnumMenus::Menus::Processos;
+    EnumMenus menuIhmIndex = Processos;
+    EnumMenus menuIndexAnterior = Processos;
 
     //namespace MenuPrincipal
     //{
@@ -92,12 +92,8 @@ namespace Menus
         {
             const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
             logo = { reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo };
-            menu.inicializaMenu(logo, linhas, 3, atualizaCharLogo, logoSize, offset, tLoop);
+            menu.inicializaMenu(&menuIhmIndex, logo, linhas, 3, atualizaCharLogo, logoSize, offset, tLoop);
         }
-
-        //uint8_t* charProcesso = reinterpret_cast<uint8_t*>(&Icones::charPulse);
-        //MenuBase::Logo logo = {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, charProcesso, 2 };
-       // MenuLinhas menu(&menuIhmIndex, linhas, 2, logo, logoSize, offset, tLoop);
     }
 
     void iniciaMenus()
