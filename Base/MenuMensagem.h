@@ -15,7 +15,7 @@ class MenuMensagem final : public MenuBase
     void atualizaLogo() const;
 
 public:
-    MenuMensagem();
+    MenuMensagem() = default;
     MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus* menuAtual, 
 					Logo logo, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 

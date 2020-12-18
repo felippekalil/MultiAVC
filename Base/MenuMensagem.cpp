@@ -7,8 +7,6 @@ void MenuMensagem::atualizaLogo() const
 	updateLogo(logo);
 }
 
-MenuMensagem::MenuMensagem() = default;
-
 MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus* menuAtual,
                            const Logo logo, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) 
 							: pisca(tAceso, tApagado, tLoop)

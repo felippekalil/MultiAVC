@@ -214,7 +214,7 @@ namespace IHMv2
 		{
 			lcd.setCursor(iniLcd, 1);
 			lcd.print(inst.substring(i, i + lenght + 1));
-			delay(200);
+			delay(150);
 		}
 	}
 
@@ -231,18 +231,21 @@ namespace IHMv2
 		attachInterrupt(1, []() { instancia->handleSwitch(); }, CHANGE);
 
 		lcd.begin(16, 2);
-		const MenuBase::Logo logoLab = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
-		createLogo(logoLab);
+		MenuBase::Logo logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
+		createLogo(logoIni);
 
 		//telaInicialLabsolda();
+
+		logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoRobo), 11 };
+		createLogo(logoIni);
 
 		lcd.clear();
 		imprimeLogo();
 
-		lcd.setCursor(5, 0);
-		lcd.print(" MultiAVC");
-		lcd.setCursor(5, 1);
-		lcd.print("   v1.0");
+		lcd.setCursor(2, 0);
+		lcd.print("MultiAVC");
+		lcd.setCursor(2, 1);
+		lcd.print("  v1.0");
 		delay(1500);
 	}
 

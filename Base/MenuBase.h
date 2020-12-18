@@ -34,6 +34,14 @@ public:
 		Logo() = default;
 		Logo(uint8_t* logo, const uint8_t off) : logoPtr(logo), offset(off){}
 		Logo(uint8_t* logo, const uint8_t off, uint8_t* extra, const uint8_t pos) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(pos) {}
+		Logo& operator = (const Logo var)
+		{
+			this->logoPtr = var.logoPtr;
+			this->offset = var.offset;
+			this->charExtra = var.charExtra;
+			this->posCharExtra = var.posCharExtra;
+			return { *this };
+		}
 	};
 
 	EnumMenus* menuIhm = nullptr;

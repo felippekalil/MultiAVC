@@ -67,7 +67,7 @@ String MenuLinhas::atualizaLinha(const bool linhaSup)
 	}
 }
 
-void MenuLinhas::inicializaMenu(EnumMenus* menuAtual, const Logo logo, LinhaValor<float> linhas[], const uint8_t nLinhas, void(*loopMenu)(),
+void MenuLinhas::ini(EnumMenus* menuAtual, const Logo logo, LinhaValor<float> linhas[], const uint8_t nLinhas, void(*loopMenu)(),
 								const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop)
 {
 	this->menuIhm = menuAtual;

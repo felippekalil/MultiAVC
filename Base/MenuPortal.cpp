@@ -23,8 +23,13 @@ MenuPortal::MenuPortal(const String& titulo, EnumMenus* menuAtual, const EnumMen
 
 MenuPortal::MenuPortal(const String& titulo, EnumMenus* menuAtual, const EnumMenus menuVoltar,
 						const uint8_t nEnum, Portal* portais, const uint8_t logoSize, const uint8_t offset,
-						const uint16_t tLoop) :
-						tLoop(tLoop), pisca(tAceso, tApagado, tLoop)
+						const uint16_t tLoop) : pisca(tAceso, tApagado, tLoop)
+{
+	ini(titulo, menuAtual, menuVoltar, nEnum, portais, logoSize, offset, tLoop);
+}
+
+void MenuPortal::ini(const String& titulo, EnumMenus* menuAtual, EnumMenus menuVoltar, uint8_t nEnum, Portal* portais,
+	uint8_t logoSize, uint8_t offset, uint16_t tLoop)
 {
 	this->titulo = titulo;
 	menuIhm = menuAtual;
@@ -34,6 +39,8 @@ MenuPortal::MenuPortal(const String& titulo, EnumMenus* menuAtual, const EnumMen
 	this->portais = portais;
 	this->logoSize = logoSize;
 	this->offset = offset;
+	this->tLoop = tLoop;
+	pisca.redefine(tAceso, tApagado, tLoop);
 }
 
 void MenuPortal::onMenuIni(void (*logoUpdate)(Logo logos))
