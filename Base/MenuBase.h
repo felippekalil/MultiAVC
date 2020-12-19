@@ -85,11 +85,15 @@ namespace MenuExtensoes
 	};
 
 	template <typename T>
-	struct AdjGenerico
+	class AdjGenerico
 	{
-		T* valor;
-		T min, max, incremento;
-		bool ciclico;
+	public:
+		AdjGenerico<T>() = default;
+		AdjGenerico<T>(T* vlr, T mn, T mx, T inc, bool clc);
+
+		T* valor = nullptr;
+		T min = 0, max = 1, incremento = 1;
+		bool ciclico = false;
 
 		T get() const { return *valor; }
 
@@ -159,10 +163,9 @@ namespace MenuExtensoes
 		String printValor() const;
 
 	public:
-		AdjGenerico<T>* varAdjGen = nullptr;
+		LinhaValor() = default;
 
 		// ------- READONLY ------
-
 		/// <summary>
 		/// Classe que cria uma linha de tela para uma variável float.
 		/// </summary>
@@ -183,9 +186,10 @@ namespace MenuExtensoes
 		LinhaValor(const String& nome, T& var, int nAlgarismos, const String& unidade);
 		
 		// ------- EDITÁVEL ------
-
 		LinhaValor(const String& nome, AdjGenerico<T>& var, int nDecimais, int nAlgarismos, const String& unidade);
 		LinhaValor(const String& nome, AdjGenerico<T>& var, int nAlgarismos, const String& unidade);
+
+		AdjGenerico<T>* varAdjGen = nullptr;
 
 		bool editavel() const;
 
@@ -195,6 +199,16 @@ namespace MenuExtensoes
 
 		String texto() const;
 	};
+
+	template <typename T>
+	AdjGenerico<T>::AdjGenerico(T* vlr, T mn, T mx, T inc, bool clc)
+	{
+		valor = vlr;
+		min = mn;
+		max = mx;
+		incremento = inc;
+		ciclico = clc;
+	}
 
 	template <typename T>
 	unsigned LinhaValor<T>::nCaracteres() const

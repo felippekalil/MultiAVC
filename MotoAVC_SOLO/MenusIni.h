@@ -43,8 +43,8 @@ namespace MenusIni
 
     namespace MenuEmObras
     {
-        MenuBase::Logo logo;// = { reinterpret_cast<uint8_t*>(&Icones::logoMartelo), offsetLogo };
-        MenuMensagem menu;// ("EM", "OBRAS!", &menuIhmIndex, logo, logoSize, offset, tLoop);
+        MenuBase::Logo logo;
+        MenuMensagem menu;
 
         inline void iniciaMenu()
         {
@@ -60,28 +60,27 @@ namespace MenusIni
         MenuLinhas menu;
         float ref = 12.8, zm = 1.1; 
         MenuBase::Logo logo;
-        AdjGenerico<float> referencia = { &ref, 0.1, 99.9, 0.1, false };
-        LinhaValor<float> linhaRef = {"Ref: ", referencia, 1, 4, "V" };
-        AdjGenerico<float> zonaMorta = { &zm, 0.1, 99.9, 0.1, false };
-        LinhaValor<float> linhaZM = { "Z.M: ", zonaMorta, 1, 4, "V" };
-        LinhaValor<float> linhaIn = { " In: ", ref, 1, 4, "V" };
-        LinhaValor<float> linhas[] = { linhaRef, // 0  // TODO: criar interface base pra linhas de diferentes tipos
-        								linhaZM,
-										linhaIn}; // 1
-        void atualizaCharLogo()
+        LinhaValor<float> linhas[3];// TODO: criar interface base pra linhas de diferentes tipos
+
+        inline void atualizaCharLogo()
         {
 	        
         }
 
         inline void iniciaMenu()
         {
+            AdjGenerico<float>  referencia = { &ref, 0.1, 99.9, 0.1, false };
+            AdjGenerico<float> zonaMorta = { &zm, 0.1, 99.9, 0.1, false };
+            linhas[0] = { "Ref: ", referencia, 1, 4, "V" };
+            linhas[1] = { "Z.M: ", zonaMorta, 1, 4, "V" };
+            linhas[2] = { " In: ", ref, 1, 4, "V" };
             const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
             logo = { reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo };
             menu.ini(&menuIhmIndex, logo, linhas, 3, atualizaCharLogo, logoSize, offset, tLoop);
         }
     }
 
-    void iniciaMenus()
+    inline void iniciaMenus()
     {
         MenuProcessos::iniciaMenu();
         MenuEmObras::iniciaMenu();
@@ -93,7 +92,7 @@ namespace MenusIni
     	&MenuProcessos::menu, 
     	&MenuEmObras::menu,
         &MenuExecucao::menu
-    };//*/	
+    };	
 }
 
 #endif
