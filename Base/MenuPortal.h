@@ -8,7 +8,7 @@
 class Portal
 {
 public:
-    String nome = "               ";
+    String nome = "                ";
     MenuBase::Logo logo{};
     EnumMenus destino = Processos;
 
@@ -34,14 +34,14 @@ class MenuPortal final : public MenuBase
 {
     String titulo = "";
     Portal* portais = nullptr;
-    uint8_t nEnum;
+    uint8_t nEnum = 1;
     uint16_t enumerador = 0, enumeradorAnt = 0;
     MenuExtensoes::AdjGenerico<uint16_t> trocaEnum{};
     volatile byte select = 0;
     const uint16_t tAceso = 800, tApagado = 500;
 	uint16_t tLoop = 50;
     MenuExtensoes::PiscaCiclo pisca;
-    EnumMenus menuVoltar;
+    EnumMenus menuVoltar = Processos;
 
     void(*updateLogo)(Logo logo) = nullptr;
 
