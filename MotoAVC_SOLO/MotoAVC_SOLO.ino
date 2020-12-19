@@ -4,6 +4,7 @@
  Author:	Kalil
 */
 
+#include "Menus.h"
 #define TLOOP 50
 
 #include <LiquidCrystal.h>
@@ -11,7 +12,7 @@
 #include "IHMv2.h"
 
 using namespace IHMv2;
-using namespace Menus;
+using namespace MenusIni;
 
 Ihm ihm(TLOOP);
 

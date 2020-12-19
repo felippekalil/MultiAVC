@@ -14,7 +14,7 @@
 #include "MenuPortal.h"
 #include "MenuLinhas.h"
 
-namespace Menus
+namespace MenusIni
 {
 #ifdef TLOOP
     uint16_t tLoop = TLOOP; 
@@ -25,17 +25,6 @@ namespace Menus
     EnumMenus menuIhmIndex = Processos;
     EnumMenus menuIndexAnterior = Processos;
 
-    //namespace MenuProcessos
-    //{
-    //    uint8_t logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
-    //    Portal portaisProc[] = {
-    //    	{"TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charRaio), 2}, EnumMenus::Execucao},
-    //        {"TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Obras},
-    //        {" MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charCurto), 2 }, EnumMenus::Obras},
-    //        {" MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charPulse), 2 }, EnumMenus::Obras }};
-    //    MenuPortal menu("Processo", &menuIhmIndex, EnumMenus::Processos, 4, portaisProc, logoSize, offset, tLoop);
-    //}
-
     namespace MenuProcessos
     {
         Portal portaisProc[4];
@@ -44,11 +33,11 @@ namespace Menus
         inline void iniciaMenu()
         {
             const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
-            portaisProc[0] = { "TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charRaio), 2}, EnumMenus::Execucao };
-            portaisProc[1] = { "TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, EnumMenus::Obras };
-            portaisProc[2] = { " MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charCurto), 2 }, EnumMenus::Obras };
-            portaisProc[3] = {" MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charPulse), 2 }, EnumMenus::Obras };
-            menu.ini("Processo", &menuIhmIndex, EnumMenus::Processos, 4, portaisProc, logoSize, offset, tLoop);
+            portaisProc[0] = { "TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charRaio), 2}, Execucao };
+            portaisProc[1] = { "TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, Obras };
+            portaisProc[2] = { " MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charCurto), 2 }, Obras };
+            portaisProc[3] = {" MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charPulse), 2 }, Obras };
+            menu.ini("Processo", &menuIhmIndex, Processos, 4, portaisProc, logoSize, offset, tLoop);
         }
     }
 
@@ -94,6 +83,7 @@ namespace Menus
 
     void iniciaMenus()
     {
+        MenuProcessos::iniciaMenu();
         MenuEmObras::iniciaMenu();
         MenuExecucao::iniciaMenu();
     }

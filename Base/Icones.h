@@ -8,12 +8,12 @@ class Icones
 {
 public:
 	static byte fim[];
-	static byte logoTeste[][8];
+	//static byte logoTeste[][8];
 	static byte logoLabsolda[][8];
 	static byte logoRobo[][8];
-	static byte logoCnc[][8];
-	static byte logoCncOld[][8];
-	static byte logoStepDir[][8];
+	//static byte logoCnc[][8];
+	//static byte logoCncOld[][8];
+	//static byte logoStepDir[][8];
 	static byte logoTig[][8];
 	static byte logoMig[][8];
 	static byte logoMartelo[][8];

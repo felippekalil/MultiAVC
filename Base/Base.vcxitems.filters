@@ -22,7 +22,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MenuPortal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MenuLinhas.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MenuLinhas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Icones.h">
@@ -40,7 +42,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MenuPortal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MenuLinhas.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MenuLinhas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

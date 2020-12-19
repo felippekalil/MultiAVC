@@ -1,7 +1,7 @@
 // Menus.h
 
-#ifndef _MENUS_h
-#define _MENUS_h
+#ifndef _MENUPORTAL_h
+#define _MENUPORTAL_h
 
 #include "MenuBase.h"
 
@@ -10,8 +10,6 @@ struct Portal
     String nome;
     MenuBase::Logo logo;
     EnumMenus destino;
-    //Portal() = default;
-    //Portal(String& nome, const MenuBase::Logo logo, const EnumMenus::Menus destino) : nome(nome), logo(logo), destino(destino) {}
 };
 
 class MenuPortal final : public MenuBase
