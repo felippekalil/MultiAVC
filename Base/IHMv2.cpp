@@ -108,11 +108,12 @@ namespace IHMv2
 			clickVoltar = tempoVoltar;
 		else
 		{
-			apitarBuzzerEnter(); 
 			aguardaMenu = tempoAguardaMenu;
 			if (clickVoltar) // se ainda está contando
 			{
 				clickVoltar = 0;
+				apitarBuzzerEnter(); 
+				possivelAjusteVar = true;
 				menuAtual->onClick();
 			}
 		}
@@ -258,6 +259,7 @@ namespace IHMv2
 			{
 				apitarBuzzerVoltar();
 				aguardaMenu = tempoAguardaMenu;
+				possivelAjusteVar = true;
 				menuAtual->onVoltar();
 			}
 			clickVoltar--;
@@ -271,5 +273,12 @@ namespace IHMv2
 		}
 		menuAtual->onLoop();
 		imprimeInterface();
+	}
+
+	bool Ihm::varAjustadas()
+	{
+		const auto ajst = possivelAjusteVar;
+		possivelAjusteVar = false;
+		return ajst;
 	}
 }

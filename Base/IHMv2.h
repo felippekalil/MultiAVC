@@ -29,6 +29,7 @@ namespace IHMv2
 		volatile uint16_t aguardaMenu = 0, apitaBuzzer = 0, freqBuzzer = 0, clickVoltar = 0;
 		volatile uint8_t modoBuzzer = 0;
 		uint8_t nCharLogo = 0, offsetLogo = 0;
+		bool possivelAjusteVar = false;
 
 		static void setFreqBuzzer(uint8_t nFreq);
 
@@ -56,8 +57,6 @@ namespace IHMv2
 
 		void atualizaMenu(MenuBase* menu);
 
-		bool varAjustadas() const;
-
 		void imprimeLogo();
 
 		void createChar(uint8_t index, uint8_t customChar[]);
@@ -69,6 +68,8 @@ namespace IHMv2
 		void setup();
 
 		void loop();
+
+		bool varAjustadas();
 	};
 }
 #endif

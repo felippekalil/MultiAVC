@@ -2,6 +2,7 @@
 // 
 // 
 #include "Menus.h"
+#include "ControleAVC.h"
 
 void MenusClass::iniciaMenuProc()
 {
@@ -27,14 +28,17 @@ void MenusClass::atualizaCharExec()
 
 void MenusClass::iniciaMenuExec()
 {
-    AdjGenerico<float>  referencia = { &ref, 0.1, 99.9, 0.1, false };
-    AdjGenerico<float> zonaMorta = { &zm, 0.1, 99.9, 0.1, false };
-    linhas[0] = { "Ref: ", referencia, 1, 4, "V" };
-    linhas[1] = { "Z.M: ", zonaMorta, 1, 4, "V" };
-    linhas[2] = { " In: ", ref, 1, 4, "V" };
+    AdjGenerico<float>  referencia = { &Controle.referencia, 0.1, 99.9, 0.1, false };
+    AdjGenerico<float> zonaMorta = { &Controle.zonaMorta, 0.1, 99.9, 0.1, false };
+    uint8_t i = 0;
+    linhas[i++] = { "Ref: ", referencia, 1, 4, "V" };
+    linhas[i++] = { " In: ", Controle.valorTensaoDoArco, 1, 4, "V" };
+    linhas[i++] = { "Z.M: ", zonaMorta, 1, 4, "V" };
+    linhas[i++] = { "Out: ", Controle.valorSaidaCorrente, 1, 4, "A" };
+    linhas[i++] = { "Out: ", Controle.valorSaida, 1, 4, "V" };
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
     logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo };
-    menuExecucao.ini(&menuIhmIndex, logoExec, linhas, 3, atualizaCharExec, logoSize, offset, tLoop);
+    menuExecucao.ini(&menuIhmIndex, logoExec, linhas, nLinhasProc, atualizaCharExec, logoSize, offset, tLoop);
 }
 
 MenusClass::MenusClass()

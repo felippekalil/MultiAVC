@@ -20,12 +20,11 @@ class MenusClass
 	void iniciaMenuObras();
 
 	MenuBase::Logo logoExec{};
-	LinhaValor<float> linhas[3];
+	const int nLinhasProc = 5;
+	LinhaValor<float> linhas[5];
 	static void atualizaCharExec();
 	MenuLinhas menuExecucao;
 	void iniciaMenuExec();
-
-	float ref = 12.8, zm = 1.1;
 
 public:
 	MenusClass();
