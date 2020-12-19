@@ -116,11 +116,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Menus.h" />
+    <ClInclude Include="src\Menus.h" />
     <ClInclude Include="__vm\.MotoAVC_SOLO.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Menus.cpp" />
+    <ClCompile Include="src\Menus.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

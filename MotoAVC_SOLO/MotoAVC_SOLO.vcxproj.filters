@@ -24,12 +24,12 @@
     <ClInclude Include="__vm\.MotoAVC_SOLO.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Menus.h">
+    <ClInclude Include="src\Menus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Menus.cpp">
+    <ClCompile Include="src\Menus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -8,7 +8,7 @@
 
 #include <LiquidCrystal.h>
 #include "IHMv2.h"
-#include "Menus.h"
+#include "src/Menus.h"
 
 using namespace IHMv2;
 
