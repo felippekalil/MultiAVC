@@ -7,35 +7,33 @@
 #define TLOOP 50
 
 #include <LiquidCrystal.h>
-#include "MenusIni.h"
 #include "IHMv2.h"
+#include "Menus.h"
 
 using namespace IHMv2;
-using namespace MenusIni;
 
 Ihm ihm(TLOOP);
 
 void setup() {
     Serial.begin(9600);
     Serial.println("Inicializado!");
-    tLoop = TLOOP;
-    iniciaMenus();
+    Menus.init(TLOOP);
     ihm.setup();
-    ihm.atualizaMenu(menus[menuIhmIndex]);
+    ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
 }
 
 void loop() {
     if (millis() % TLOOP == 0)
     {
-        if (menuIhmIndex != menuIndexAnterior)
+        if (Menus.menuIhmIndex != Menus.menuIndexAnterior)
         {
             //Serial.println("MenuAnt = " + String(menuIndexAnterior));
             //Serial.println("MenuAtual = " + String(menuIhmIndex));
-            menus[menuIhmIndex]->menuAnterior = menuIndexAnterior;
-            ihm.atualizaMenu(menus[menuIhmIndex]);
+            Menus.menus[Menus.menuIhmIndex]->menuAnterior = Menus.menuIndexAnterior;
+            ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
         }
-        if(menuIhmIndex != Nada)
-            menuIndexAnterior = menuIhmIndex;
+        if(Menus.menuIhmIndex != Nada)
+            Menus.menuIndexAnterior = Menus.menuIhmIndex;
         ihm.loop();
     }
 }

@@ -25,8 +25,9 @@ public:
 	virtual ~MenuBase() = default;
 	MenuBase() = default;
 
-	struct Logo
+	class Logo
 	{
+	public:
 		uint8_t *logoPtr{};
 		uint8_t offset{};
 		uint8_t* charExtra{};
@@ -40,7 +41,7 @@ public:
 			this->offset = var.offset;
 			this->charExtra = var.charExtra;
 			this->posCharExtra = var.posCharExtra;
-			return { *this };
+			return *this;
 		}
 	};
 

@@ -28,8 +28,8 @@ MenuPortal::MenuPortal(const String& titulo, EnumMenus* menuAtual, const EnumMen
 	ini(titulo, menuAtual, menuVoltar, nEnum, portais, logoSize, offset, tLoop);
 }
 
-void MenuPortal::ini(const String& titulo, EnumMenus* menuAtual, EnumMenus menuVoltar, uint8_t nEnum, Portal* portais,
-	uint8_t logoSize, uint8_t offset, uint16_t tLoop)
+void MenuPortal::ini(const String& titulo, EnumMenus* menuAtual, const EnumMenus menuVoltar, const uint8_t nEnum, Portal* portais,
+                     const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop)
 {
 	this->titulo = titulo;
 	menuIhm = menuAtual;
@@ -56,7 +56,7 @@ void MenuPortal::onLoop()
 		select--;
 		if (!select)
 		{
-			if(portais[enumerador].destino != EnumMenus::Nada)
+			if(portais[enumerador].destino != Nada)
 				*menuIhm = portais[enumerador].destino;
 			pisca.redefine(tAceso, tApagado, tLoop);
 		}

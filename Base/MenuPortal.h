@@ -5,16 +5,34 @@
 
 #include "MenuBase.h"
 
-struct Portal
+class Portal
 {
-    String nome;
-    MenuBase::Logo logo;
-    EnumMenus destino;
+public:
+    String nome = "               ";
+    MenuBase::Logo logo{};
+    EnumMenus destino = Processos;
+
+    Portal() = default;
+
+    Portal(const String& nm, const MenuBase::Logo lg, const EnumMenus dest)
+    {
+        nome = nm;
+        logo = lg;
+        destino = dest;
+    }
+
+    Portal& operator = (const Portal& var)
+    {
+        this->nome = var.nome;
+        this->logo = var.logo;
+        this->destino = var.destino;
+        return *this;
+    }
 };
 
 class MenuPortal final : public MenuBase
 {
-    String titulo;
+    String titulo = "";
     Portal* portais = nullptr;
     uint8_t nEnum;
     uint16_t enumerador = 0, enumeradorAnt = 0;
