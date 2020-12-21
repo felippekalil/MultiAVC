@@ -25,8 +25,8 @@ namespace Eeprom
     void inicializaVarsEeprom()
     {
         uint8_t i = 0;
-        varEeprom[i++] = /*reinterpret_cast<int*>*/(&Controle.referencia);
-        varEeprom[i++] = /*reinterpret_cast<int*>*/(&Controle.zonaMorta);
+        varEeprom[i++] = &Controle.referencia;
+        varEeprom[i++] = &Controle.zonaMorta;
         varEeprom[i++] = reinterpret_cast<float*>(Menus.linhasMenuExec());
     }
 

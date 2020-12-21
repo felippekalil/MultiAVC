@@ -9,12 +9,22 @@
 	#include "WProgram.h"
 #endif
 
+enum StatusControle
+{
+    Off,
+    Abrindo,
+    Descendo,
+    Subindo,
+    Ok
+};
+
 class ControleAVC
 {
     const int tensaoDoArco = A6;  // Entrada analogica, leitura da tensao do arco
     const int saidaComarc = 6;  // sinal enviado ao motoman
 
     float leTensaoArco() const;
+    void atualizaStatusControle(float leitura);
 
  public:
     void setupControle() const;
@@ -25,12 +35,11 @@ class ControleAVC
 
     float leituraEntradaAnalogica = 0;
     float referencia = 12.6;
-    float zonaMorta = 1.1;
+    float zonaMorta = 0;
+    StatusControle statusControle = Off;
 
     void setaSaida(float leitura);
-
     String imprime() const;
-
     void atua();
 };
 

@@ -7,6 +7,7 @@
 #include "MenuMensagem.h"
 #include "MenuPortal.h"
 #include "MenuLinhas.h"
+#include "ControleAVC.h"
 
 class MenusClass
 {
@@ -32,6 +33,8 @@ public:
 	EnumMenus menuIhmIndex = Processos;
 	EnumMenus menuIndexAnterior = Processos;
 	MenuBase* menus[3]{};
+	//static MenusClass* pntExterno;
+
 	int* linhasMenuExec();
 };
 
