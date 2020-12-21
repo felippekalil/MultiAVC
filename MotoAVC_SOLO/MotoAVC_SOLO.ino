@@ -4,7 +4,8 @@
  Author:	Kalil
 */
 
-#define TLOOP 50 // ms
+constexpr auto TLOOP = 50; // ms;
+constexpr auto saidaLoop = 12;
 
 #include "EEPROM.h"
 #include <LiquidCrystal.h>
@@ -58,14 +59,15 @@ namespace Eeprom
 
 
 void setup() {
-    Serial.begin(9600);
-    Serial.println("Inicializado!");
+    Serial.begin(115200);
+    Serial.println(F("Inicializado!"));
+    pinMode(saidaLoop, OUTPUT);
     Controle.setupControle();
     Menus.init(TLOOP);
     ihm.setup();
     ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
-    Eeprom::inicializaVarsEeprom();
-    Eeprom::loadEeprom();
+  //  Eeprom::inicializaVarsEeprom();
+   // Eeprom::loadEeprom();
 }
 
 void loop() {
@@ -83,6 +85,7 @@ void loop() {
             Menus.menuIndexAnterior = Menus.menuIhmIndex;
         ihm.loop();
     }
-    if(ihm.varAjustadas())
-	    Eeprom::atualizaEeprom();
+   // if(ihm.varAjustadas())
+	//    Eeprom::atualizaEeprom();
+    //digitalWrite(saidaLoop, !digitalRead(saidaLoop));
 }

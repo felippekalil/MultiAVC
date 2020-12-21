@@ -11,13 +11,6 @@ void MenuLinhas::resetaEnums()
 	editValorLinha = false;
 }
 
-void MenuLinhas::atualizaLogo() const
-{
-	if (updateLogo == nullptr)
-		return;
-	updateLogo(logo);
-}
-
 void MenuLinhas::atualizaPisca()
 {
 	switch (indexEnum) 
@@ -67,7 +60,7 @@ String MenuLinhas::atualizaLinha(const bool linhaSup)
 	}
 }
 
-void MenuLinhas::ini(EnumMenus* menuAtual, const Logo logo, LinhaValor<float> linhas[], const uint8_t nLinhas, void(*loopMenu)(),
+void MenuLinhas::ini(EnumMenus* menuAtual, Logo* logo, LinhaValor<float> linhas[], const uint8_t nLinhas, void(*loopMenu)(),
 								const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop)
 {
 	this->menuIhm = menuAtual;
@@ -88,7 +81,13 @@ void MenuLinhas::onMenuIni(void(* logoUpdate)(Logo logos))
 	updateLogo = logoUpdate;
 	atualizaLogo();
 	resetaEnums();
-	//Serial.println("ini - anterior: " + String(menuAnterior));
+}
+
+void MenuLinhas::atualizaLogo() const
+{
+	if (updateLogo == nullptr)
+		return;
+	updateLogo(*logo);
 }
 
 void MenuLinhas::onLoop()
@@ -98,6 +97,12 @@ void MenuLinhas::onLoop()
 	linhaInferior = atualizaLinha(false);
 	if (loopMenu != nullptr)
 		loopMenu();
+	Serial.print(F("IndexEnum: "));
+	Serial.println(indexEnum);
+	Serial.print(F("enums[indexEnum]: "));
+	Serial.println(enums[indexEnum]);
+	Serial.print(F("editValorLinha: "));
+	Serial.println(editValorLinha);
 }
 
 void MenuLinhas::onEncdrDec()
@@ -142,6 +147,7 @@ void MenuLinhas::onClick()
 		default:
 		case EnumIndexSup:
 		case EnumIndexInf:
+			digitalWrite(12, false);// !digitalRead(12));
 			if (editValorLinha)
 			{
 				indexEnum = EnumMain;

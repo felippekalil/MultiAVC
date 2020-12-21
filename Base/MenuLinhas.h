@@ -31,8 +31,6 @@ class MenuLinhas final : public MenuBase
 					tAceso2 = 300, tApagado2 = 200;
     uint16_t tLoop = 50;
     PiscaCiclo pisca;
-    //Logo
-    Logo logo;
     void(*updateLogo)(Logo logo) = nullptr;
     uint8_t logoSize = 0;
     uint8_t offset = 0;
@@ -41,8 +39,6 @@ class MenuLinhas final : public MenuBase
     uint8_t nLinhas = 0;
 
     void resetaEnums();
-
-    void atualizaLogo() const;
 
     void atualizaPisca();
 
@@ -53,10 +49,15 @@ public:
 
     void(*loopMenu)() = nullptr;
 
-    void ini(EnumMenus* menuAtual, Logo logo, LinhaValor<float> linhas[], uint8_t nLinhas, void(*loopMenu)(),
+    void ini(EnumMenus* menuAtual, Logo* logo, LinhaValor<float> linhas[], uint8_t nLinhas, void(*loopMenu)(),
 						uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
     void onMenuIni(void (*logoUpdate)(Logo logos)) override;
+
+    //Logo
+    Logo* logo;
+
+    void atualizaLogo() const;
 
     void onLoop() override;
 

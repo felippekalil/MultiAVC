@@ -23,7 +23,7 @@ class MenusClass
 	MenuBase::Logo logoExec{};
 	const int nLinhasProc = 5;
 	LinhaValor<float> linhas[5];
-	static void atualizaCharExec();
+	void atualizaCharExec();
 	MenuLinhas menuExecucao;
 	void iniciaMenuExec();
 
@@ -33,7 +33,7 @@ public:
 	EnumMenus menuIhmIndex = Processos;
 	EnumMenus menuIndexAnterior = Processos;
 	MenuBase* menus[3]{};
-	//static MenusClass* pntExterno;
+	static MenusClass* pntExterno;
 
 	int* linhasMenuExec();
 };

@@ -9,14 +9,14 @@
 	#include "WProgram.h"
 #endif
 
-//enum StatusControle
-//{
-//    Off,
-//    Abrindo,
-//    Descendo,
-//    Subindo,
-//    Ok
-//};
+enum StatusControle
+{
+    Off,
+    Abrindo,
+    Descendo,
+    Subindo,
+    Ok
+};
 
 class ControleAVC
 {
@@ -24,7 +24,8 @@ class ControleAVC
     const int saidaComarc = 6;  // sinal enviado ao motoman
 
     float leTensaoArco() const;
-   // void atualizaStatusControle(float leitura);
+    void atualizaStatusControle(float leitura);
+    StatusControle statusControle = Off;
 
  public:
     void setupControle() const;
@@ -36,7 +37,7 @@ class ControleAVC
     float leituraEntradaAnalogica = 0;
     float referencia = 12.6;
     float zonaMorta = 0;
-   // StatusControle statusControle = Off;
+    StatusControle getStatusControle() const;
 
     void setaSaida(float leitura);
     String imprime() const;

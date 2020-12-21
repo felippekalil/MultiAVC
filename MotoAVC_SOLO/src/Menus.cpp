@@ -2,7 +2,7 @@
 // 
 // 
 #include "Menus.h"
-//MenusClass* MenusClass::pntExterno;
+MenusClass* MenusClass::pntExterno;
 
 void MenusClass::iniciaMenuProc()
 {
@@ -23,32 +23,34 @@ void MenusClass::iniciaMenuObras()
 
 
 void MenusClass::atualizaCharExec()
-{/*
-	switch (Controle.statusControle) 
+{
+    //Serial.println("Status: " + String(Controle.getStatusControle()));
+	switch (Controle.getStatusControle()) 
     { 
 		case Off:
-            logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), 0 };
+            logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charNone);
 			break;
-		case Abrindo: //(uint8_t* logo, const uint8_t off, uint8_t* extra, const uint8_t pos) 
-            logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), 0, reinterpret_cast<uint8_t*>(&Icones::charRaio), 2 };
-			break;
+		case Abrindo: 
+            logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charRaio);
+            break;
 		case Descendo:
-            logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), 0, reinterpret_cast<uint8_t*>(&Icones::charDwn), 2 };
-			break;
+            logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charDwn);
+            break;
 		case Subindo:
-            logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), 0, reinterpret_cast<uint8_t*>(&Icones::charUp), 2 };
-			break;
+            logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charUp);
+            break;
 		case Ok:
-            logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), 0, reinterpret_cast<uint8_t*>(&Icones::charOk), 2 };
-			break;
+            logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charOk);
+            break;
 		default: ;
-	}*/
+	}
+    menuExecucao.atualizaLogo();    
 }
 
 void MenusClass::iniciaMenuExec()
 {
     AdjGenerico<float>  referencia = { &Controle.referencia, 0.1, 99.9, 0.1, false };
-    AdjGenerico<float> zonaMorta = { &Controle.zonaMorta, 0.1, 99.9, 0.1, false };
+    AdjGenerico<float> zonaMorta = { &Controle.zonaMorta, 0, 99.9, 0.1, false };
     uint8_t i = 0;
     linhas[i++] = { "Ref: ", referencia, 1, 4, "V" };
     linhas[i++] = { " In: ", Controle.valorTensaoDoArco, 1, 4, "V" };
@@ -56,9 +58,9 @@ void MenusClass::iniciaMenuExec()
     linhas[i++] = { "Out: ", Controle.valorSaidaCorrente, 1, 4, "A" };
     linhas[i++] = { "Out: ", Controle.valorSaida, 1, 4, "V" };
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
-    logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo };
-    //pntExterno = this;
-    menuExecucao.ini(&menuIhmIndex, logoExec, linhas, nLinhasProc, /*[]() { pntExterno->atualizaCharExec(); }*/ atualizaCharExec, logoSize, offset, tLoop);
+    logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, nullptr, 2 };
+    pntExterno = this;
+    menuExecucao.ini(&menuIhmIndex, &logoExec, linhas, nLinhasProc, []() { pntExterno->atualizaCharExec(); }, logoSize, offset, tLoop);
 }
 
 MenusClass::MenusClass()
