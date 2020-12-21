@@ -3,7 +3,7 @@
 
 namespace IHMv2
 {
-	Ihm* Ihm::instancia;
+	Ihm* Ihm::pntrEstatico;
 
 	void Ihm::setFreqBuzzer(const uint8_t nFreq)
 	{

@@ -25,7 +25,7 @@ namespace IHMv2
 
 		const int rs = A4, en = A5, d4 = A0, d5 = A1, d6 = A2, d7 = A3;
 		LiquidCrystal lcd;
-		static Ihm* instancia;
+		static Ihm* pntrEstatico;
 		volatile uint16_t aguardaMenu = 0, apitaBuzzer = 0, freqBuzzer = 0, clickVoltar = 0;
 		volatile uint8_t modoBuzzer = 0;
 		uint8_t nCharLogo = 0, offsetLogo = 0;

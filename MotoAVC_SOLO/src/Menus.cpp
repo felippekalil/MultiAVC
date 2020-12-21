@@ -2,7 +2,8 @@
 // 
 // 
 #include "Menus.h"
-MenusClass* MenusClass::pntExterno;
+#include "ControleAVC.h"
+MenusClass* MenusClass::pntrEstatico;
 
 void MenusClass::iniciaMenuProc()
 {
@@ -24,6 +25,9 @@ void MenusClass::iniciaMenuObras()
 
 void MenusClass::atualizaCharExec()
 {
+    pisca++;
+    if (pisca == tPisca * 2)
+        pisca = 0;
 	switch (Controle.getStatusControle()) 
     { 
 		case Off:
@@ -31,12 +35,18 @@ void MenusClass::atualizaCharExec()
 			break;
 		case Abrindo: 
             logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charRaio);
+            if (pisca > tPisca)
+                logoExec.charExtra += 1;
             break;
 		case Descendo:
             logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charDwn);
+            if (pisca > tPisca)
+                logoExec.charExtra += 1;
             break;
 		case Subindo:
             logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charUp);
+            if (pisca > tPisca)
+                logoExec.charExtra += 1;
             break;
 		case Ok:
             logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charOk);
@@ -58,8 +68,8 @@ void MenusClass::iniciaMenuExec()
     linhas[i++] = { "Out: ", Controle.valorSaida, 1, 4, "V" };
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
     logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, nullptr, 2 };
-    pntExterno = this;
-    menuExecucao.ini(&menuIhmIndex, &logoExec, linhas, nLinhasProc, []() { pntExterno->atualizaCharExec(); }, logoSize, offset, tLoop);
+    pntrEstatico = this;
+    menuExecucao.ini(&menuIhmIndex, &logoExec, linhas, nLinhasProc, []() { pntrEstatico->atualizaCharExec(); }, logoSize, offset, tLoop);
 }
 
 MenusClass::MenusClass()
@@ -71,6 +81,7 @@ MenusClass::MenusClass()
 
 void MenusClass::init(const int tLoop)
 {
+    tPisca /= tLoop;
     this->tLoop = tLoop;
     iniciaMenuProc();
     iniciaMenuObras();

@@ -642,7 +642,7 @@ byte Icones::logoMartelo[][8] = { {
 }
 };
 
-byte Icones::charRaio[8] = {
+byte Icones::charRaio[9] = {
 	B00111,
 	B01110,
 	B01100,
@@ -650,6 +650,7 @@ byte Icones::charRaio[8] = {
 	B00110,
 	B00100,
 	B01000,
+	B00000,
 	B00000
 };
 
@@ -719,7 +720,8 @@ byte Icones::charNone[8] = {
 //	B00000
 //};
 
-byte Icones::charUp[8] = {
+byte Icones::charUp[9] = {
+	B00000,
 	B00100,
 	B01010,
 	B11011,
@@ -730,7 +732,7 @@ byte Icones::charUp[8] = {
 	B00000
 };
 
-byte Icones::charDwn[8] = {
+byte Icones::charDwn[9] = {
 	B00000,
 	B00000,
 	B01110,
@@ -738,5 +740,6 @@ byte Icones::charDwn[8] = {
 	B01010,
 	B11011,
 	B01010,
-	B00100
+	B00100,
+	B00000
 };

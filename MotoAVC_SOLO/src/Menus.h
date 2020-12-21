@@ -7,7 +7,6 @@
 #include "MenuMensagem.h"
 #include "MenuPortal.h"
 #include "MenuLinhas.h"
-#include "ControleAVC.h"
 
 class MenusClass
 {
@@ -23,6 +22,8 @@ class MenusClass
 	MenuBase::Logo logoExec{};
 	const int nLinhasProc = 5;
 	LinhaValor<float> linhas[5];
+	uint16_t tPisca = 1000; //ms
+	uint16_t pisca = 0;
 	void atualizaCharExec();
 	MenuLinhas menuExecucao;
 	void iniciaMenuExec();
@@ -33,7 +34,7 @@ public:
 	EnumMenus menuIhmIndex = Processos;
 	EnumMenus menuIndexAnterior = Processos;
 	MenuBase* menus[3]{};
-	static MenusClass* pntExterno;
+	static MenusClass* pntrEstatico;
 
 	int* linhasMenuExec();
 };

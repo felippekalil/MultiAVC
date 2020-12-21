@@ -17,13 +17,13 @@ public:
 	static byte logoTig[][8];
 	static byte logoMig[][8];
 	static byte logoMartelo[][8];
-	static byte charRaio[8];
+	static byte charRaio[9];
 	static byte charCurto[8];
 	static byte charPulse[8];
 	static byte charOk[8];
 	static byte charNone[8];
-	static byte charUp[8];
-	static byte charDwn[8];
+	static byte charUp[9];
+	static byte charDwn[9];
 };
 
 #endif

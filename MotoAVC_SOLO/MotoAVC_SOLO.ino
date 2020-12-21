@@ -28,7 +28,7 @@ namespace Eeprom
         uint8_t i = 0;
         varEeprom[i++] = &Controle.referencia;
         varEeprom[i++] = &Controle.zonaMorta;
-        //varEeprom[i++] = reinterpret_cast<float*>(Menus.linhasMenuExec());
+      //  varEeprom[i++] = reinterpret_cast<float*>(Menus.linhasMenuExec());
     }
 
     void loadEeprom()
