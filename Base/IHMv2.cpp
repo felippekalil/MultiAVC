@@ -108,7 +108,7 @@ namespace IHMv2
 			clickVoltar = tempoVoltar;
 		else
 		{
-			aguardaMenu = tempoAguardaMenu;
+			aguardaMenu = tempoAguardaMenu / 2;
 			if (clickVoltar) // se ainda está contando
 			{
 				clickVoltar = 0;
