@@ -18,22 +18,40 @@ Ihm ihm(TLOOP);
 
 namespace Eeprom
 {
-    float refEeprom;
+    constexpr uint8_t nVar = 3;
+    float refEeprom[nVar];
+    float* varEeprom[nVar];
+
+    void inicializaVarsEeprom()
+    {
+        uint8_t i = 0;
+        varEeprom[i++] = /*reinterpret_cast<int*>*/(&Controle.referencia);
+        varEeprom[i++] = /*reinterpret_cast<int*>*/(&Controle.zonaMorta);
+        varEeprom[i++] = reinterpret_cast<float*>(Menus.linhasMenuExec());
+    }
 
     void loadEeprom()
     {
-        EEPROM.get(0, Controle.referencia);
-        refEeprom = Controle.referencia;
+        //return;
+        for (auto i = 0; i < nVar; i++)
+        {
+            EEPROM.get(i * 4, *varEeprom[i]);
+            refEeprom[i] = *varEeprom[i];
+        }
     }
 
     void atualizaEeprom() // se não for lenta a leitura da eeprom, dá pra rodar o update diretamente, e deletar o refEeprom
     {
-        if (refEeprom != Controle.referencia)
+        //return;
+        for (auto i = 0; i < nVar; i++)
         {
-            EEPROM.put(0, Controle.referencia);
-            refEeprom = Controle.referencia;
-            Serial.println("Referencia Atualizada!");
-            Serial.println("Ref: " + String(Controle.referencia, 1) + " V");
+            if (refEeprom[i] != *varEeprom[i])
+            {
+                EEPROM.put(i * 4, *varEeprom[i]);
+                refEeprom[i] = *varEeprom[i];
+            //    Serial.println("VarEeprom Atualizada!");
+            //    Serial.println("Var " + String(i) + ": " + String(*varEeprom[i]));
+            }
         }
     }
 }
@@ -46,9 +64,8 @@ void setup() {
     Menus.init(TLOOP);
     ihm.setup();
     ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
+    Eeprom::inicializaVarsEeprom();
     Eeprom::loadEeprom();
-    Serial.println("Referencia Atualizada!");
-    Serial.println("Ref: " + String(Controle.referencia, 1) + " V");
 }
 
 void loop() {

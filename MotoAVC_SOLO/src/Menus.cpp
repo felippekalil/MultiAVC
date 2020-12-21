@@ -55,6 +55,11 @@ void MenusClass::init(int tLoop)
     iniciaMenuExec();
 }
 
+int* MenusClass::linhasMenuExec()
+{
+	return menuExecucao.pntrLinhas();
+}
+
 
 MenusClass Menus;
 

@@ -32,6 +32,7 @@ public:
 	EnumMenus menuIhmIndex = Processos;
 	EnumMenus menuIndexAnterior = Processos;
 	MenuBase* menus[3]{};
+	int* linhasMenuExec();
 };
 
 extern MenusClass Menus;

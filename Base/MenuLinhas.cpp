@@ -180,3 +180,8 @@ void MenuLinhas::onVoltar()
 			break;
 	}
 }
+
+int* MenuLinhas::pntrLinhas()
+{
+	return reinterpret_cast<int*>(&enums[EnumIndexSup]);
+}

@@ -67,6 +67,8 @@ public:
     void onClick() override;
 
     void onVoltar() override;
+
+    int* pntrLinhas();
 };
 
 #endif
