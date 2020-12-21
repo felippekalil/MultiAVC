@@ -97,12 +97,12 @@ void MenuLinhas::onLoop()
 	linhaInferior = atualizaLinha(false);
 	if (loopMenu != nullptr)
 		loopMenu();
-	Serial.print(F("IndexEnum: "));
-	Serial.println(indexEnum);
-	Serial.print(F("enums[indexEnum]: "));
-	Serial.println(enums[indexEnum]);
-	Serial.print(F("editValorLinha: "));
-	Serial.println(editValorLinha);
+	//Serial.print(F("IndexEnum: "));
+	//Serial.println(indexEnum);
+	//Serial.print(F("enums[indexEnum]: "));
+	//Serial.println(enums[indexEnum]);
+	//Serial.print(F("editValorLinha: "));
+	//Serial.println(editValorLinha);
 }
 
 void MenuLinhas::onEncdrDec()

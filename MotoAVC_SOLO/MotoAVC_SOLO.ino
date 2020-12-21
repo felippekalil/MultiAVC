@@ -19,7 +19,7 @@ Ihm ihm(TLOOP);
 
 namespace Eeprom
 {
-    constexpr uint8_t nVar = 3;
+    constexpr uint8_t nVar = 2;
     float refEeprom[nVar];
     float* varEeprom[nVar];
 
@@ -28,7 +28,7 @@ namespace Eeprom
         uint8_t i = 0;
         varEeprom[i++] = &Controle.referencia;
         varEeprom[i++] = &Controle.zonaMorta;
-        varEeprom[i++] = reinterpret_cast<float*>(Menus.linhasMenuExec());
+        //varEeprom[i++] = reinterpret_cast<float*>(Menus.linhasMenuExec());
     }
 
     void loadEeprom()
@@ -66,8 +66,8 @@ void setup() {
     Menus.init(TLOOP);
     ihm.setup();
     ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
-  //  Eeprom::inicializaVarsEeprom();
-   // Eeprom::loadEeprom();
+    Eeprom::inicializaVarsEeprom();
+    Eeprom::loadEeprom();
 }
 
 void loop() {
@@ -85,7 +85,7 @@ void loop() {
             Menus.menuIndexAnterior = Menus.menuIhmIndex;
         ihm.loop();
     }
-   // if(ihm.varAjustadas())
-	//    Eeprom::atualizaEeprom();
+    if(ihm.varAjustadas())
+	    Eeprom::atualizaEeprom();
     //digitalWrite(saidaLoop, !digitalRead(saidaLoop));
 }
