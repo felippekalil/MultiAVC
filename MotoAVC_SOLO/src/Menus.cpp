@@ -24,7 +24,6 @@ void MenusClass::iniciaMenuObras()
 
 void MenusClass::atualizaCharExec()
 {
-    //Serial.println("Status: " + String(Controle.getStatusControle()));
 	switch (Controle.getStatusControle()) 
     { 
 		case Off:
@@ -70,8 +69,9 @@ MenusClass::MenusClass()
      menus[Execucao] = &menuExecucao;
 }
 
-void MenusClass::init(int tLoop)
+void MenusClass::init(const int tLoop)
 {
+    this->tLoop = tLoop;
     iniciaMenuProc();
     iniciaMenuObras();
     iniciaMenuExec();
