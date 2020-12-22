@@ -161,7 +161,7 @@ namespace IHMv2
 		menuAtual = menu;
 		nCharLogo = 0;
 		aguardaMenu = tempoAguardaMenu;
-		menuAtual->onMenuIni([](const MenuBase::Logo logo) { instancia->createLogo(logo); });
+		menuAtual->onMenuIni([](const MenuBase::Logo logo) { pntrEstatico->createLogo(logo); });
 	}
 
 	void Ihm::imprimeLogo()
@@ -227,9 +227,9 @@ namespace IHMv2
 		pinMode(encoderPinB, INPUT);
 		pinMode(SWITCH, INPUT);
 
-		instancia = this;
-		attachInterrupt(0, []() { instancia->handleEncoder(); }, CHANGE);
-		attachInterrupt(1, []() { instancia->handleSwitch(); }, CHANGE);
+		pntrEstatico = this;
+		attachInterrupt(0, []() { pntrEstatico->handleEncoder(); }, CHANGE);
+		attachInterrupt(1, []() { pntrEstatico->handleSwitch(); }, CHANGE);
 
 		lcd.begin(16, 2);
 		MenuBase::Logo logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };

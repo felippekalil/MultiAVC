@@ -22,7 +22,7 @@ class MenusClass
 	MenuBase::Logo logoExec{};
 	const int nLinhasProc = 5;
 	LinhaValor<float> linhas[5];
-	uint16_t tPisca = 1000; //ms
+	uint16_t tPisca = 400; //ms
 	uint16_t pisca = 0;
 	void atualizaCharExec();
 	MenuLinhas menuExecucao;
@@ -36,7 +36,7 @@ public:
 	MenuBase* menus[3]{};
 	static MenusClass* pntrEstatico;
 
-	int* linhasMenuExec();
+	uint8_t* linhasMenuExec();
 };
 
 extern MenusClass Menus;

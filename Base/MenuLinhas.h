@@ -69,7 +69,7 @@ public:
 
     void onVoltar() override;
 
-    int* pntrLinhas();
+    uint8_t* pntrLinhas();
 };
 
 #endif

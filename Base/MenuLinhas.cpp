@@ -187,7 +187,7 @@ void MenuLinhas::onVoltar()
 	}
 }
 
-int* MenuLinhas::pntrLinhas()
+uint8_t* MenuLinhas::pntrLinhas()
 {
-	return reinterpret_cast<int*>(&enums[EnumIndexSup]);
+	return &enums[EnumIndexSup];
 }

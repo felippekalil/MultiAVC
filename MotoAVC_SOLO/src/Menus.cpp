@@ -28,25 +28,22 @@ void MenusClass::atualizaCharExec()
     pisca++;
     if (pisca == tPisca * 2)
         pisca = 0;
-	switch (Controle.getStatusControle()) 
+    if (pisca > tPisca * 1.5)
+        logoExec.charExtra = nullptr; //desaparece
+       // logoExec.charExtra += 1; //movimenta
+    else switch (Controle.getStatusControle()) 
     { 
 		case Off:
             logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charNone);
 			break;
 		case Abrindo: 
             logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charRaio);
-            if (pisca > tPisca)
-                logoExec.charExtra += 1;
             break;
 		case Descendo:
             logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charDwn);
-            if (pisca > tPisca)
-                logoExec.charExtra += 1;
             break;
 		case Subindo:
             logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charUp);
-            if (pisca > tPisca)
-                logoExec.charExtra += 1;
             break;
 		case Ok:
             logoExec.charExtra = reinterpret_cast<uint8_t*>(&Icones::charOk);
@@ -88,7 +85,7 @@ void MenusClass::init(const int tLoop)
     iniciaMenuExec();
 }
 
-int* MenusClass::linhasMenuExec()
+uint8_t* MenusClass::linhasMenuExec()
 {
 	return menuExecucao.pntrLinhas();
 }
