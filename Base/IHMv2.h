@@ -23,17 +23,21 @@ namespace IHMv2
 		const uint16_t duracaoAguardaMenu = 600;
 		//byte(*logoIni)[8];
 
-		const int rs = A4, en = A5, d4 = A0, d5 = A1, d6 = A2, d7 = A3;
+		const int rs = A5, en = A4, d4 = A3, d5 = A2, d6 = A1, d7 = A0;
 		LiquidCrystal lcd;
 		static Ihm* pntrEstatico;
 		volatile uint16_t aguardaMenu = 0, apitaBuzzer = 0, freqBuzzer = 0, clickVoltar = 0;
 		volatile uint8_t modoBuzzer = 0;
 		uint8_t nCharLogo = 0, offsetLogo = 0;
 		bool possivelAjusteVar = false;
+		bool lockControles = false;
+		int velEncoder = 0;
 
 		static void setFreqBuzzer(uint8_t nFreq);
 
 		void apitarBuzzerInc();
+
+		void apitarBuzzerDec();
 
 		void apitarBuzzerEnter();
 
@@ -70,6 +74,10 @@ namespace IHMv2
 		void loop();
 
 		bool varAjustadas();
+
+		void bloqueiaControles();
+
+		void liberaControles();
 	};
 }
 #endif

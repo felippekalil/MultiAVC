@@ -55,18 +55,20 @@ void MenusClass::atualizaCharExec()
 
 void MenusClass::iniciaMenuExec()
 {
-    AdjGenerico<float>  referencia = { &Controle.referencia, 0.1, 99.9, 0.1, false };
-    AdjGenerico<float> zonaMorta = { &Controle.zonaMorta, 0, 99.9, 0.1, false };
+    AdjGenerico<float>  referencia = { Controle.referencia, 0.1, 99.9, 0.1, false };
+    AdjGenerico<float> zonaMorta = { Controle.zonaMorta, 0, 99.9, 0.1, false };
+    AdjGenerico<float> multEntrada = { Controle.multEntradaAnalogica, 1, 99.9, 0.1, false };
     uint8_t i = 0;
     linhas[i++] = { "Ref: ", referencia, 1, 4, "V" };
-    linhas[i++] = { " In: ", Controle.valorTensaoDoArco, 1, 4, "V" };
+    linhas[i++] = { " In: ", Controle.mediaTensaoDoArco, 1, 4, "V" };
+    linhas[i++] = { "Mult: ", multEntrada, 1, 4, "" };
     linhas[i++] = { "Z.M: ", zonaMorta, 1, 4, "V" };
     linhas[i++] = { "Out: ", Controle.valorSaidaCorrente, 1, 4, "A" };
     linhas[i++] = { "Out: ", Controle.valorSaida, 1, 4, "V" };
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
     logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, nullptr, 2 };
     pntrEstatico = this;
-    menuExecucao.ini(&menuIhmIndex, &logoExec, linhas, nLinhasProc, []() { pntrEstatico->atualizaCharExec(); }, logoSize, offset, tLoop);
+    menuExecucao.ini(&menuIhmIndex, &logoExec, linhas, i, []() { pntrEstatico->atualizaCharExec(); }, logoSize, offset, tLoop);
 }
 
 MenusClass::MenusClass()

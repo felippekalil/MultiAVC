@@ -28,8 +28,8 @@ public:
 
     void onVoltar() override;
 
-    void onEncdrDec() override {}
-    void onEncdrInc() override {}
+    void onEncdrDec(int mult) override {}
+    void onEncdrInc(int mult) override {}
     void onClick() override {}
 };
 

@@ -19,9 +19,9 @@ class MenuLinhas final : public MenuBase
     uint8_t enums[3] = {0, 0, 1};
     AdjGenerico<uint8_t> trocaEnum[3] = 
     { 
-    	{ &enums[EnumMain], 0, 2, 1, true }, 
-    	{ &enums[EnumIndexSup], 0, 1, 1, true }, 
-    	{ &enums[EnumIndexInf], 0, 1, 1, true }
+    	{ enums[EnumMain], 0, 2, 1, true }, 
+    	{ enums[EnumIndexSup], 0, 1, 1, true }, 
+    	{ enums[EnumIndexInf], 0, 1, 1, true }
     };
     EstadoIndex indexEnum = EnumMain;
     bool editValorLinha = false;
@@ -61,9 +61,9 @@ public:
 
     void onLoop() override;
 
-    void onEncdrDec() override;
+    void onEncdrDec(int mult) override;
 
-    void onEncdrInc() override;
+    void onEncdrInc(int mult) override;
 
     void onClick() override;
 

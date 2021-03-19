@@ -44,6 +44,7 @@ namespace Eeprom //TODO Criar a classe SalvarDados
         uint8_t i = 0;
         refEeprom[i++].ini(&Controle.referencia, sizeof(Controle.referencia));
         refEeprom[i++].ini(&Controle.zonaMorta, sizeof(Controle.zonaMorta));
+        refEeprom[i++].ini(&Controle.multEntradaAnalogica, sizeof(Controle.multEntradaAnalogica));
     }
 
     void printRef()

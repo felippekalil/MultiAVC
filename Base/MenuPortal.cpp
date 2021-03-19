@@ -72,7 +72,7 @@ void MenuPortal::onLoop()
 	enumeradorAnt = enumerador;
 }
 
-void MenuPortal::onEncdrDec()
+void MenuPortal::onEncdrDec(const int mult = 1)
 {
 	if (select)
 		return;
@@ -80,7 +80,7 @@ void MenuPortal::onEncdrDec()
 	pisca.reseta();
 }
 
-void MenuPortal::onEncdrInc()
+void MenuPortal::onEncdrInc(const int mult = 1)
 {
 	if (select)
 		return;

@@ -6,7 +6,7 @@
 
 const int encoderPinA = 2;
 const int encoderPinB = 4;
-const int SWITCH = 3;
+const int SWITCH = 11;
 #define LED_2 9
 
 volatile int encoder0Pos;

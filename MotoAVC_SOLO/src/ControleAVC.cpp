@@ -8,7 +8,8 @@ ControleAVC Controle;
 
 float ControleAVC::leTensaoArco() const
 {
-	return static_cast<float>(500.0 * (analogRead(tensaoDoArco)) / (11264.0));
+	return static_cast<float>( multEntradaAnalogica * b * powf(1.0 / (analogRead(tensaoDoArco)*ajuste5V),a));
+	//return static_cast<float>(500.0 * (analogRead(tensaoDoArco)) / (11264.0));
 }
 
 void ControleAVC::atualizaStatusControle(const float leitura)
@@ -64,6 +65,7 @@ String ControleAVC::imprime() const
 void ControleAVC::atua()
 {
 	valorTensaoDoArco = leTensaoArco();
+	mediaTensaoDoArco = valorTensaoDoArco * alpha + mediaTensaoDoArco * (1-alpha);
 	if (valorTensaoDoArco < 3 || valorTensaoDoArco > 30)
 	{
 		setaSaida(referencia);

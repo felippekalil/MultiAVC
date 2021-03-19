@@ -105,22 +105,22 @@ void MenuLinhas::onLoop()
 	//Serial.println(editValorLinha);
 }
 
-void MenuLinhas::onEncdrDec()
+void MenuLinhas::onEncdrDec(const int mult = 1)
 {
 	if (select)
 		return;
 	if (editValorLinha)
-		linhas[enums[indexEnum]].varAdjGen->dec();
+		linhas[enums[indexEnum]].varAdjGen->dec(mult);
 	else
 		trocaEnum[indexEnum].dec();
 }
 
-void MenuLinhas::onEncdrInc()
+void MenuLinhas::onEncdrInc(const int mult = 1)
 {
 	if (select)
 		return;
 	if (editValorLinha)
-		linhas[enums[indexEnum]].varAdjGen->inc();
+		linhas[enums[indexEnum]].varAdjGen->inc(mult);
 	else
 		trocaEnum[indexEnum].inc();
 }

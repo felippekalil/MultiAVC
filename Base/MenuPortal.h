@@ -65,9 +65,9 @@ public:
 
     void onLoop() override;
 
-    void onEncdrDec() override;
+    void onEncdrDec(int mult) override;
 
-    void onEncdrInc() override;
+    void onEncdrInc(int mult) override;
 
     void onClick() override;
 

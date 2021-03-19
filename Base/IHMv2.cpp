@@ -30,6 +30,12 @@ namespace IHMv2
 		apitaBuzzer = tempoBuzzerInc;
 	}
 
+	void Ihm::apitarBuzzerDec()
+	{
+		modoBuzzer = 3;
+		apitaBuzzer = tempoBuzzerInc;
+	}
+
 	void Ihm::apitarBuzzerEnter()
 	{
 		modoBuzzer = 1;
@@ -81,28 +87,41 @@ namespace IHMv2
 				if (apitaBuzzer == tempoBuzzerInc * 3)
 					setFreqBuzzer(2);
 				break;
+			case 3:
+				setFreqBuzzer(2);
+				break;
 			}
 			analogWrite(buzzer, 10);
 			apitaBuzzer--;
 		}
 		else
 			digitalWrite(buzzer, false);
-	}
+	};
 
 	void Ihm::handleEncoder()
 	{
-		if (aguardaMenu || clickVoltar > 0)
+		if (aguardaMenu || clickVoltar > 0 || lockControles)
 			return;
-		apitarBuzzerInc();
+		auto mult = velEncoder;
+		if (mult < 1)
+			mult = 1;
 		if (digitalRead(encoderPinB) == digitalRead(encoderPinA)) //dec
-			menuAtual->onEncdrDec();
+		{
+			apitarBuzzerDec();
+			menuAtual->onEncdrDec(mult);
+		}
 		else //inc
-			menuAtual->onEncdrInc();
+		{
+			apitarBuzzerInc();
+			menuAtual->onEncdrInc(mult);
+		}
+		if(velEncoder < 10)
+			velEncoder ++;
 	}
 
 	void Ihm::handleSwitch()
 	{
-		if (aguardaMenu)
+		if (aguardaMenu || lockControles)
 			return;
 		if (digitalRead(SWITCH))
 			clickVoltar = tempoVoltar;
@@ -232,10 +251,13 @@ namespace IHMv2
 		attachInterrupt(1, []() { pntrEstatico->handleSwitch(); }, CHANGE);
 
 		lcd.begin(16, 2);
+
+		bloqueiaControles();
+
 		MenuBase::Logo logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
 		createLogo(logoIni);
 
-		//telaInicialLabsolda();
+		/*telaInicialLabsolda();
 
 		logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoRobo), 11 };
 		createLogo(logoIni);
@@ -247,7 +269,8 @@ namespace IHMv2
 		lcd.print("MultiAVC");
 		lcd.setCursor(2, 1);
 		lcd.print("  v1.0");
-		delay(1500);
+		delay(1500);//*/
+		liberaControles();
 	}
 
 	void Ihm::loop()
@@ -273,6 +296,9 @@ namespace IHMv2
 		}
 		menuAtual->onLoop();
 		imprimeInterface();
+		if (velEncoder > 0) 
+			velEncoder--;
+		//Serial.println("Vel Enc:" + static_cast<String>(velEncoder));
 	}
 
 	bool Ihm::varAjustadas()
@@ -280,5 +306,15 @@ namespace IHMv2
 		const auto ajst = possivelAjusteVar;
 		possivelAjusteVar = false;
 		return ajst;
+	}
+
+	void Ihm::bloqueiaControles()
+	{
+		lockControles = true;
+	}
+
+	void Ihm::liberaControles()
+	{
+		lockControles = false;
 	}
 }
