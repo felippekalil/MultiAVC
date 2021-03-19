@@ -62,7 +62,7 @@ void MenusClass::iniciaMenuExec()
     linhas[i++] = { "Ref: ", referencia, 1, 4, "V" };
     linhas[i++] = { " In: ", Controle.mediaTensaoDoArco, 1, 4, "V" };
     linhas[i++] = { "Mult: ", multEntrada, 1, 4, "" };
-    linhas[i++] = { "Z.M: ", zonaMorta, 1, 4, "V" };
+    linhas[i++] = { "Z.M: ", zonaMorta, 1, 4, "V" };//*/
     linhas[i++] = { "Out: ", Controle.valorSaidaCorrente, 1, 4, "A" };
     linhas[i++] = { "Out: ", Controle.valorSaida, 1, 4, "V" };
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;

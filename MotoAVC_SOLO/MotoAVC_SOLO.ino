@@ -43,7 +43,8 @@ Ihm ihm(TLOOP);
 
 void plot()
 {
-	Serial.print(Controle.referencia + String(" "));
+	Serial.print(Controle.referencia);
+	Serial.print(" ");
 	Serial.println(Controle.valorTensaoDoArco);//*/
 	digitalWrite(saidaLoop, !digitalRead(saidaLoop));
 }
@@ -75,7 +76,7 @@ void loop() {
 			Menus.menuIndexAnterior = Menus.menuIhmIndex;
 		ihm.loop();
 	}
-	/*if (ihm.varAjustadas())
+	if (ihm.varAjustadas())
 		Eeprom::atualizaEeprom();//*/
 	IOs::atualizaIOs();
 	if (tAtual % TPLOT == 0)
