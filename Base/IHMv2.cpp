@@ -1,6 +1,8 @@
 #include "IHMv2.h"
 #include "Icones.h"
 
+//#define PRINT_SERIAL
+
 namespace IHMv2
 {
 	Ihm* Ihm::pntrEstatico;
@@ -10,7 +12,7 @@ namespace IHMv2
 		switch (nFreq)
 		{
 		default:
-			TCCR2B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) | 
+			TCCR2B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) |
 				(0 << CS02) | (1 << CS01) | (1 << CS00);
 			break;
 		case 1:
@@ -18,7 +20,7 @@ namespace IHMv2
 				(0 << CS02) | (1 << CS01) | (0 << CS00);
 			break;
 		case 2:
-			TCCR2B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) | 
+			TCCR2B = (0 << FOC0A) | (0 << FOC0B) | (0 << WGM02) |
 				(1 << CS02) | (0 << CS01) | (1 << CS00);
 			break;
 		}
@@ -91,7 +93,7 @@ namespace IHMv2
 				setFreqBuzzer(2);
 				break;
 			}
-			analogWrite(buzzer, 10);
+			analogWrite(buzzer, 200);
 			apitaBuzzer--;
 		}
 		else
@@ -115,8 +117,8 @@ namespace IHMv2
 			apitarBuzzerInc();
 			menuAtual->onEncdrInc(mult);
 		}
-		if(velEncoder < 10)
-			velEncoder ++;
+		if (velEncoder < 10)
+			velEncoder++;
 	}
 
 	void Ihm::handleSwitch()
@@ -131,7 +133,7 @@ namespace IHMv2
 			if (clickVoltar) // se ainda está contando
 			{
 				clickVoltar = 0;
-				apitarBuzzerEnter(); 
+				apitarBuzzerEnter();
 				possivelAjusteVar = true;
 				menuAtual->onClick();
 			}
@@ -145,10 +147,14 @@ namespace IHMv2
 		lcd.print(menuAtual->linhaSuperior);
 		lcd.setCursor(0, 1);
 		lcd.print(menuAtual->linhaInferior);
+#ifdef PRINT_SERIAL
+		Serial.println(menuAtual->linhaSuperior);
+		Serial.println(menuAtual->linhaInferior);
+#endif
 		imprimeLogo();
 	}
 
-	Ihm::Ihm(const uint16_t tLoop): lcd(rs, en, d4, d5, d6, d7)
+	Ihm::Ihm(const uint16_t tLoop) : lcd(rs, en, d4, d5, d6, d7)
 	{
 		tempoBuzzerInc = duracaoBuzzer / tLoop;
 		if (!tempoBuzzerInc)
@@ -161,10 +167,10 @@ namespace IHMv2
 			tempoAguardaMenu = 1;
 	}
 
-	Ihm::Ihm(MenuBase* menu, const uint16_t tLoop): lcd(rs, en, d4, d5, d6, d7)
+	Ihm::Ihm(MenuBase* menu, const uint16_t tLoop) : lcd(rs, en, d4, d5, d6, d7)
 	{
 		tempoBuzzerInc = duracaoBuzzer / tLoop;
-		if (!tempoBuzzerInc) 
+		if (!tempoBuzzerInc)
 			tempoBuzzerInc = 1;
 		tempoVoltar = duracaoVoltar / tLoop;
 		if (!tempoVoltar)
@@ -210,7 +216,7 @@ namespace IHMv2
 		}
 		nCharLogo = i;
 
-		if(logo.charExtra != nullptr)
+		if (logo.charExtra != nullptr)
 		{
 			createChar(logo.posCharExtra, logo.charExtra);
 			if (logo.posCharExtra > i)
@@ -225,15 +231,15 @@ namespace IHMv2
 		imprimeLogo();
 		lcd.setCursor(5, 0);
 		lcd.print(" LABSOLDA");
-		const String inst = "Instituto de Soldagem e Mecatronica";
+		auto inst = "Instituto de Soldagem e Mecatronica";
 		const auto iniLcd = 5;
 		const auto lenght = 15 - iniLcd;
-		const auto lastLcd = inst.length() - lenght;
+		const auto lastLcd = strlen(inst) - lenght;
 		delay(1000);
 		for (auto i = 0; i < lastLcd; i++)
 		{
 			lcd.setCursor(iniLcd, 1);
-			lcd.print(inst.substring(i, i + lenght + 1));
+			lcd.print(inst++);
 			delay(150);
 		}
 	}
@@ -254,10 +260,10 @@ namespace IHMv2
 
 		bloqueiaControles();
 
-		MenuBase::Logo logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
+		MenuBase::Logo/* logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
 		createLogo(logoIni);
 
-		/*telaInicialLabsolda();
+		telaInicialLabsolda();//*/
 
 		logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoRobo), 11 };
 		createLogo(logoIni);
@@ -271,6 +277,7 @@ namespace IHMv2
 		lcd.print("  v1.0");
 		delay(1500);//*/
 		liberaControles();
+		apitarBuzzerEnter();
 	}
 
 	void Ihm::loop()
@@ -296,7 +303,7 @@ namespace IHMv2
 		}
 		menuAtual->onLoop();
 		imprimeInterface();
-		if (velEncoder > 0) 
+		if (velEncoder > 0)
 			velEncoder--;
 		//Serial.println("Vel Enc:" + static_cast<String>(velEncoder));
 	}
@@ -308,13 +315,30 @@ namespace IHMv2
 		return ajst;
 	}
 
-	void Ihm::bloqueiaControles()
-	{
-		lockControles = true;
-	}
+	void Ihm::bloqueiaControles() { lockControles = true; }
 
-	void Ihm::liberaControles()
+	void Ihm::liberaControles() { lockControles = false; }
+
+	void Ihm::interfaceSerial(const char c) const
 	{
-		lockControles = false;
+		switch (c)
+		{
+		case 'D':
+		case 'd':
+			menuAtual->onEncdrDec(1);
+			break;
+		case 'I':
+		case 'i':
+			menuAtual->onEncdrInc(1);
+			break;
+		case 'E':
+		case 'e':
+			menuAtual->onClick();
+			break;
+		case 'V':
+		case 'v':
+			menuAtual->onVoltar();
+			break;
+		}
 	}
 }

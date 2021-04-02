@@ -40,14 +40,15 @@ void ControleAVC::setaSaida(float leitura)
 
 	atualizaStatusControle(leitura);
 
-	valorSaida = leitura * (-5) / (2 * referencia) + 5;
+	valorSaida = (leitura * (-tensaoSaidaMax) / (2 * referencia) + tensaoSaidaMax);
 
 	if (valorSaida < 0)
 		valorSaida = 0;
-	if (valorSaida > 5)
-		valorSaida = 5;
+	if (valorSaida > tensaoSaidaMax)
+		valorSaida = tensaoSaidaMax;
+
 	valorSaidaCorrente = valorSaida * 100;
-	analogWrite(saidaComarc, static_cast<int>(255 * (valorSaida) / 5));
+	analogWrite(saidaComarc, static_cast<int>(255 - 255 * (valorSaida) / tensaoSaidaMax));
 }
 
 String ControleAVC::imprime() const
@@ -66,12 +67,13 @@ void ControleAVC::atua()
 {
 	valorTensaoDoArco = leTensaoArco();
 	mediaTensaoDoArco = valorTensaoDoArco * alpha + mediaTensaoDoArco * (1-alpha);
-	if (valorTensaoDoArco < 3 || valorTensaoDoArco > 30)
+	erro = mediaTensaoDoArco - referencia;
+	if (valorTensaoDoArco < referencia / 3.0 || valorTensaoDoArco > 2 * referencia)
 	{
 		setaSaida(referencia);
-		if(valorTensaoDoArco > 30)
+		if(valorTensaoDoArco > 2 * referencia)
 			statusControle = Abrindo;
-		else if (valorTensaoDoArco < 3)
+		else if (valorTensaoDoArco < referencia / 3.0)
 			statusControle = Off;
 	}
 	else

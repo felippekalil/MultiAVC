@@ -56,11 +56,16 @@ void MenusClass::atualizaCharExec()
 void MenusClass::iniciaMenuExec()
 {
     AdjGenerico<float>  referencia = { Controle.referencia, 0.1, 99.9, 0.1, false };
+    referencia.atualiza();
     AdjGenerico<float> zonaMorta = { Controle.zonaMorta, 0, 99.9, 0.1, false };
+    zonaMorta.atualiza();
     AdjGenerico<float> multEntrada = { Controle.multEntradaAnalogica, 1, 99.9, 0.1, false };
+    multEntrada.atualiza();
+
     uint8_t i = 0;
     linhas[i++] = { "Ref: ", referencia, 1, 4, "V" };
     linhas[i++] = { " In: ", Controle.mediaTensaoDoArco, 1, 4, "V" };
+    linhas[i++] = { "Erro:", Controle.erro, 1, 4, "V" };
     linhas[i++] = { "Mult: ", multEntrada, 1, 4, "" };
     linhas[i++] = { "Z.M: ", zonaMorta, 1, 4, "V" };//*/
     linhas[i++] = { "Out: ", Controle.valorSaidaCorrente, 1, 4, "A" };

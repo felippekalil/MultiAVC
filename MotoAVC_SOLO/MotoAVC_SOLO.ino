@@ -8,11 +8,14 @@ constexpr auto TLOOP = 50; // ms;
 constexpr auto TPLOT = 100; // ms;
 constexpr auto saidaLoop = 12;
 
+//#define PRINT_SERIAL
+
 #include <LiquidCrystal.h>
 #include "IHMv2.h"
 #include "src/Menus.h"
 #include "src/ControleAVC.h"
 #include "src/SalvarDados.h"
+
 
 using namespace IHMv2;
 
@@ -53,13 +56,13 @@ void setup() {
 	Serial.begin(9600);
 	//Serial.println(F("Inicializado!"));
 	IOs::inicializaIOs();
+	Eeprom::inicializaVarsEeprom();
+	Eeprom::carregaEeprom();
 	pinMode(saidaLoop, OUTPUT);
 	Controle.setupControle();
 	Menus.init(TLOOP);
 	ihm.setup();
 	ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
-	Eeprom::inicializaVarsEeprom();
-	Eeprom::carregaEeprom();
 }
 
 void loop() {
@@ -79,6 +82,16 @@ void loop() {
 	if (ihm.varAjustadas())
 		Eeprom::atualizaEeprom();//*/
 	IOs::atualizaIOs();
+#ifndef PRINT_SERIAL
 	if (tAtual % TPLOT == 0)
 		plot();//*/
+#endif
 }
+
+#ifdef PRINT_SERIAL
+void serialEvent() {
+	while (Serial.available()) {
+		ihm.interfaceSerial(static_cast<char>(Serial.read()));
+	}
+}
+#endif

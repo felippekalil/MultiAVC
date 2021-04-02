@@ -24,8 +24,8 @@ class ControleAVC
     const int saidaComarc = 6;  // sinal enviado ao motoman
     const float ajuste5V = 5 / 1024.0;
     const float a = -1.003671372f, b = 0.990497072f;
-    const float alpha = 0.05;
-
+    const float alpha = 0.01;
+    const float tensaoSaidaMax = 8.8;
 
     float leTensaoArco() const;
     void atualizaStatusControle(float leitura);
@@ -43,6 +43,7 @@ class ControleAVC
     float multEntradaAnalogica = 1;
     float referencia = 12.6;
     float zonaMorta = 0;
+    float erro = 0;
     StatusControle getStatusControle() const;
 
     void setaSaida(float leitura);

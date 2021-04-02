@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>LogoLabsolda.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="StructsDados">
       <HintPath>..\..\..\ADAPTATIVO\SupervCSI\BIBLIOTECAS\Modulos Adicionais\StructsDados.dll</HintPath>
@@ -94,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\simbolo_labsolda.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LogoLabsolda.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

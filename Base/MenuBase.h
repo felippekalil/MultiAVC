@@ -90,7 +90,7 @@ namespace MenuExtensoes
 	{
 	public:
 		AdjGenerico<T>() = default;
-		AdjGenerico<T>(T& vlr, T mn, T mx, T inc, bool clc);
+		AdjGenerico<T>(T& vlr, T mn, T mx, T inc, const bool clc);
 
 		T* valor = nullptr;
 		T min = 0, max = 1, incremento = 1;
@@ -100,12 +100,26 @@ namespace MenuExtensoes
 
 		void set(T vlr) const
 		{
+			const auto size = sizeof(vlr);
+			if (size >= 4)
+			{
+				const uint8_t* temp = reinterpret_cast<uint8_t*>(&vlr);
+				for (auto i = 0; i < size; i++)
+				{
+					if (temp[i] != 0xFF)
+						break;
+					if (i == size - 1)
+						vlr = min;
+				}
+			}
 			if (vlr < min)
 				vlr = ciclico ? max : min;
 			if (vlr > max)
 				vlr = ciclico ? min : max;
 			*valor = vlr;
 		}
+
+		void atualiza() const { set(*valor); }
 
 		void inc(const int mult = 1) const
 		{

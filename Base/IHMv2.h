@@ -78,6 +78,8 @@ namespace IHMv2
 		void bloqueiaControles();
 
 		void liberaControles();
+
+		void interfaceSerial(char c) const;
 	};
 }
 #endif

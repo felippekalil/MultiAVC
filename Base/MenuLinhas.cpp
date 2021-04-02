@@ -4,7 +4,6 @@
 
 #include "MenuLinhas.h"
 
-
 void MenuLinhas::resetaEnums()
 {
 	enums[EnumMain] = 0;
