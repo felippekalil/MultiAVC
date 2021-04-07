@@ -8,8 +8,7 @@ ControleAVC Controle;
 
 float ControleAVC::leTensaoArco() const
 {
-	return static_cast<float>( multEntradaAnalogica * b * powf(1.0 / (analogRead(tensaoDoArco)*ajuste5V),a));
-	//return static_cast<float>(500.0 * (analogRead(tensaoDoArco)) / (11264.0));
+	return static_cast<float>(multEntradaAnalogica * b * powf(1.0 / (analogRead(tensaoDoArco) * ajuste5V), a));
 }
 
 void ControleAVC::atualizaStatusControle(const float leitura)
@@ -22,8 +21,11 @@ void ControleAVC::atualizaStatusControle(const float leitura)
 		statusControle = Subindo;
 }
 
-void ControleAVC::setupControle() const
+void ControleAVC::setupControle(const uint8_t pinArco = 255)
 {
+	pinArcoAberto = pinArco;
+	if (pinArcoAberto != 255)
+		pinMode(pinArcoAberto, OUTPUT);
 	pinMode(tensaoDoArco, INPUT);
 	pinMode(saidaComarc, OUTPUT);
 }
@@ -66,18 +68,19 @@ String ControleAVC::imprime() const
 void ControleAVC::atua()
 {
 	valorTensaoDoArco = leTensaoArco();
-	mediaTensaoDoArco = valorTensaoDoArco * alpha + mediaTensaoDoArco * (1-alpha);
+	mediaTensaoDoArco = valorTensaoDoArco * alpha + mediaTensaoDoArco * (1 - alpha);
 	erro = mediaTensaoDoArco - referencia;
 	if (valorTensaoDoArco < referencia / 3.0 || valorTensaoDoArco > 2 * referencia)
 	{
 		setaSaida(referencia);
-		if(valorTensaoDoArco > 2 * referencia)
+		if (valorTensaoDoArco > 2 * referencia)
 			statusControle = Abrindo;
 		else if (valorTensaoDoArco < referencia / 3.0)
 			statusControle = Off;
 	}
 	else
 		setaSaida(valorTensaoDoArco);
+	digitalWrite(pinArcoAberto, statusControle == Abrindo);
 }
 
 

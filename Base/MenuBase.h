@@ -19,31 +19,68 @@ enum EnumMenus
 	CountMenus
 };
 
+class Logo
+{
+public:
+	uint8_t* logoPtr{};
+	uint8_t offset{};
+	uint8_t* charExtra{};
+	uint8_t posCharExtra{};
+	Logo() = default;
+	Logo(uint8_t* logo, const uint8_t off) : logoPtr(logo), offset(off) {}
+	Logo(uint8_t* logo, const uint8_t off, uint8_t* extra, const uint8_t pos) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(pos) {}
+
+
+	Logo& operator = (const Logo oldLogo)   // copy operator
+	{
+		this->logoPtr = oldLogo.logoPtr;
+		this->offset = oldLogo.offset;
+		this->charExtra = oldLogo.charExtra;
+		this->posCharExtra = oldLogo.posCharExtra;
+		return *this;
+	}//*/
+
+	/*	~Logo() //destructor
+		{
+			delete[] logoPtr;// = nullptr;
+			delete[] charExtra;// = nullptr;
+		}//*/
+
+/*	Logo(const Logo& oldLogo) // copy constructor
+	{
+		this->logoPtr = oldLogo.logoPtr;
+		this->offset = oldLogo.offset;
+		this->charExtra = oldLogo.charExtra;
+		this->posCharExtra = oldLogo.posCharExtra;
+	}//*/
+
+/*	Logo(Logo&& source) noexcept  // Move Constructor
+	{
+		this->logoPtr = source.logoPtr;
+		this->offset = source.offset;
+		this->charExtra = source.charExtra;
+		this->posCharExtra = source.posCharExtra;
+		source.logoPtr = nullptr;
+		source.charExtra = nullptr;
+	}//*/
+
+	/*Logo& operator = (const Logo& var) = default;  // copy operator
+
+	Logo& operator = (Logo&& oldLogo) noexcept // Move operator
+	{
+		this->logoPtr = oldLogo.logoPtr;
+		this->offset = oldLogo.offset;
+		this->charExtra = oldLogo.charExtra;
+		this->posCharExtra = oldLogo.posCharExtra;
+		return *this;
+	}//*/
+};
+
 class MenuBase
 {
 public:
 	virtual ~MenuBase() = default;
 	MenuBase() = default;
-
-	class Logo
-	{
-	public:
-		uint8_t* logoPtr{};
-		uint8_t offset{};
-		uint8_t* charExtra{};
-		uint8_t posCharExtra{};
-		Logo() = default;
-		Logo(uint8_t* logo, const uint8_t off) : logoPtr(logo), offset(off) {}
-		Logo(uint8_t* logo, const uint8_t off, uint8_t* extra, const uint8_t pos) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(pos) {}
-		Logo& operator = (const Logo var)
-		{
-			this->logoPtr = var.logoPtr;
-			this->offset = var.offset;
-			this->charExtra = var.charExtra;
-			this->posCharExtra = var.posCharExtra;
-			return *this;
-		}
-	};
 
 	EnumMenus* menuIhm = nullptr;
 	EnumMenus menuAnterior = Processos;

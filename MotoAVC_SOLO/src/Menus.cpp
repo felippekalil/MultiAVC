@@ -9,7 +9,7 @@ void MenusClass::iniciaMenuProc()
 {
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
     portaisProc[0] = { "TIG HF", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charRaio), 2}, Execucao };
-    portaisProc[1] = { "TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, Obras };
+    portaisProc[1] = { "TIG", {reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo}, Execucao };
     portaisProc[2] = { " MIG Conv.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charCurto), 2 }, Obras };
     portaisProc[3] = { " MIG Puls.", {reinterpret_cast<uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charPulse), 2 }, Obras };
     menuProcessos.ini("Processo", &menuIhmIndex, Processos, 4, portaisProc, logoSize, offset, tLoop);
@@ -65,8 +65,8 @@ void MenusClass::iniciaMenuExec()
     uint8_t i = 0;
     linhas[i++] = { "Ref: ", referencia, 1, 4, "V" };
     linhas[i++] = { " In: ", Controle.mediaTensaoDoArco, 1, 4, "V" };
-    linhas[i++] = { "Erro:", Controle.erro, 1, 4, "V" };
-    linhas[i++] = { "Mult: ", multEntrada, 1, 4, "" };
+    linhas[i++] = { "Err:", Controle.erro, 1, 5, "V" };
+    linhas[i++] = { "Mlt: ", multEntrada, 1, 4, "x" };
     linhas[i++] = { "Z.M: ", zonaMorta, 1, 4, "V" };//*/
     linhas[i++] = { "Out: ", Controle.valorSaidaCorrente, 1, 4, "A" };
     linhas[i++] = { "Out: ", Controle.valorSaida, 1, 4, "V" };

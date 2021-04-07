@@ -42,5 +42,4 @@ namespace MenuExtensoes
 		interacao = 0;
 		return true;
 	}
-
 }

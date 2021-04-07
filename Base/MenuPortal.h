@@ -9,12 +9,12 @@ class Portal
 {
 public:
     String nome = "                ";
-    MenuBase::Logo logo{};
+    Logo logo{};
     EnumMenus destino = Processos;
 
     Portal() = default;
 
-    Portal(const String& nm, const MenuBase::Logo lg, const EnumMenus dest)
+    Portal(const String& nm, const Logo lg, const EnumMenus dest)
     {
         nome = nm;
         logo = lg;

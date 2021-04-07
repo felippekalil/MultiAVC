@@ -6,6 +6,7 @@
 
 constexpr auto TLOOP = 50; // ms;
 constexpr auto TPLOT = 100; // ms;
+constexpr auto TLCDRESET = 4000; // ms;
 constexpr auto saidaLoop = 12;
 
 //#define PRINT_SERIAL
@@ -21,10 +22,10 @@ using namespace IHMv2;
 
 namespace IOs
 {
-	constexpr int IN_1 = 7;
-	constexpr int IN_2 = 8;
-	constexpr int OUT_1 = 9;
-	constexpr int OUT_2 = 10;
+	constexpr uint8_t IN_1 = 7;
+	constexpr uint8_t IN_2 = 8;
+	constexpr uint8_t OUT_1 = 9;
+	constexpr uint8_t OUT_2 = 10;
 
 	void inicializaIOs()
 	{
@@ -36,7 +37,7 @@ namespace IOs
 
 	void atualizaIOs()
 	{
-		digitalWrite(OUT_1, !digitalRead(IN_1));
+		//digitalWrite(OUT_1, !digitalRead(IN_1));
 		digitalWrite(OUT_2, !digitalRead(IN_2));
 	}
 }
@@ -59,7 +60,7 @@ void setup() {
 	Eeprom::inicializaVarsEeprom();
 	Eeprom::carregaEeprom();
 	pinMode(saidaLoop, OUTPUT);
-	Controle.setupControle();
+	Controle.setupControle(IOs::OUT_1);
 	Menus.init(TLOOP);
 	ihm.setup();
 	ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
@@ -82,6 +83,8 @@ void loop() {
 	if (ihm.varAjustadas())
 		Eeprom::atualizaEeprom();//*/
 	IOs::atualizaIOs();
+	if (tAtual % TLCDRESET == 0)
+		ihm.iniLcd();
 #ifndef PRINT_SERIAL
 	if (tAtual % TPLOT == 0)
 		plot();//*/

@@ -15,11 +15,11 @@ class MenusClass
 	MenuPortal menuProcessos;
 	void iniciaMenuProc();
 
-	MenuBase::Logo logoObras{};
+	Logo logoObras{};
 	MenuMensagem menuEmObras;
 	void iniciaMenuObras();
 
-	MenuBase::Logo logoExec{};
+	Logo logoExec{};
 	const int nLinhasProc = 7;
 	LinhaValor<float> linhas[7];
 	uint16_t tPisca = 400; //ms

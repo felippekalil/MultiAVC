@@ -70,6 +70,7 @@ namespace IHMv2
 
 	void Ihm::processaBuzzer()
 	{
+		//return;
 		if (apitaBuzzer)
 		{
 			switch (modoBuzzer)
@@ -186,7 +187,7 @@ namespace IHMv2
 		menuAtual = menu;
 		nCharLogo = 0;
 		aguardaMenu = tempoAguardaMenu;
-		menuAtual->onMenuIni([](const MenuBase::Logo logo) { pntrEstatico->createLogo(logo); });
+		menuAtual->onMenuIni([](const Logo logo) { pntrEstatico->createLogo(logo); });
 	}
 
 	void Ihm::imprimeLogo()
@@ -205,7 +206,7 @@ namespace IHMv2
 		lcd.createChar(index, customChar);
 	}
 
-	void Ihm::createLogo(const MenuBase::Logo logo)
+	void Ihm::createLogo(const Logo logo)
 	{
 		uint8_t i;
 		for (i = 0; i < 8; i++)
@@ -235,13 +236,18 @@ namespace IHMv2
 		const auto iniLcd = 5;
 		const auto lenght = 15 - iniLcd;
 		const auto lastLcd = strlen(inst) - lenght;
-		delay(1000);
+		//delay(1000);
 		for (auto i = 0; i < lastLcd; i++)
 		{
 			lcd.setCursor(iniLcd, 1);
 			lcd.print(inst++);
 			delay(150);
 		}
+	}
+
+	void Ihm::iniLcd()
+	{
+		lcd.begin(16, 2);
 	}
 
 	void Ihm::setup()
@@ -256,11 +262,11 @@ namespace IHMv2
 		attachInterrupt(0, []() { pntrEstatico->handleEncoder(); }, CHANGE);
 		attachInterrupt(1, []() { pntrEstatico->handleSwitch(); }, CHANGE);
 
-		lcd.begin(16, 2);
+		iniLcd();
 
 		bloqueiaControles();
 
-		MenuBase::Logo/* logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
+		Logo/* logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
 		createLogo(logoIni);
 
 		telaInicialLabsolda();//*/
