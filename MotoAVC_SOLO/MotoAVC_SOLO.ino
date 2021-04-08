@@ -84,7 +84,7 @@ void loop() {
 		Eeprom::atualizaEeprom();//*/
 	IOs::atualizaIOs();
 	if (tAtual % TLCDRESET == 0)
-		ihm.iniLcd();
+		ihm.iniLcd();//*/
 #ifndef PRINT_SERIAL
 	if (tAtual % TPLOT == 0)
 		plot();//*/

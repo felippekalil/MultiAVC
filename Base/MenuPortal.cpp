@@ -15,7 +15,7 @@ MenuPortal::MenuPortal(const String& titulo, EnumMenus* menuAtual, const EnumMen
 	menuIhm = menuAtual;
 	this->menuVoltar = menuVoltar;
 	this->nEnum = nEnum;
-	trocaEnum = { &enumerador, 0, nEnum - 1, 1, true };
+	trocaEnum = { enumerador, 0, nEnum - 1, 1, true };
 	portais = new Portal[nEnum];
 	for (uint8_t i = 0; i < nEnum; i++)
 		portais[i] = { nomeEnums[i], {nullptr, 0}, EnumMenus::Nada };
@@ -35,7 +35,7 @@ void MenuPortal::ini(const String& titulo, EnumMenus* menuAtual, const EnumMenus
 	menuIhm = menuAtual;
 	this->menuVoltar = menuVoltar;
 	this->nEnum = nEnum;
-	trocaEnum = { &enumerador, 0, nEnum - 1, 1, true };
+	trocaEnum = { enumerador, 0, nEnum - 1, 1, true };
 	this->portais = portais;
 	this->logoSize = logoSize;
 	this->offset = offset;

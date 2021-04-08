@@ -46,34 +46,34 @@ public:
 			delete[] charExtra;// = nullptr;
 		}//*/
 
-/*	Logo(const Logo& oldLogo) // copy constructor
-	{
-		this->logoPtr = oldLogo.logoPtr;
-		this->offset = oldLogo.offset;
-		this->charExtra = oldLogo.charExtra;
-		this->posCharExtra = oldLogo.posCharExtra;
-	}//*/
+		/*	Logo(const Logo& oldLogo) // copy constructor
+			{
+				this->logoPtr = oldLogo.logoPtr;
+				this->offset = oldLogo.offset;
+				this->charExtra = oldLogo.charExtra;
+				this->posCharExtra = oldLogo.posCharExtra;
+			}//*/
 
-/*	Logo(Logo&& source) noexcept  // Move Constructor
-	{
-		this->logoPtr = source.logoPtr;
-		this->offset = source.offset;
-		this->charExtra = source.charExtra;
-		this->posCharExtra = source.posCharExtra;
-		source.logoPtr = nullptr;
-		source.charExtra = nullptr;
-	}//*/
+			/*	Logo(Logo&& source) noexcept  // Move Constructor
+				{
+					this->logoPtr = source.logoPtr;
+					this->offset = source.offset;
+					this->charExtra = source.charExtra;
+					this->posCharExtra = source.posCharExtra;
+					source.logoPtr = nullptr;
+					source.charExtra = nullptr;
+				}//*/
 
-	/*Logo& operator = (const Logo& var) = default;  // copy operator
+				/*Logo& operator = (const Logo& var) = default;  // copy operator
 
-	Logo& operator = (Logo&& oldLogo) noexcept // Move operator
-	{
-		this->logoPtr = oldLogo.logoPtr;
-		this->offset = oldLogo.offset;
-		this->charExtra = oldLogo.charExtra;
-		this->posCharExtra = oldLogo.posCharExtra;
-		return *this;
-	}//*/
+				Logo& operator = (Logo&& oldLogo) noexcept // Move operator
+				{
+					this->logoPtr = oldLogo.logoPtr;
+					this->offset = oldLogo.offset;
+					this->charExtra = oldLogo.charExtra;
+					this->posCharExtra = oldLogo.posCharExtra;
+					return *this;
+				}//*/
 };
 
 class MenuBase
@@ -127,7 +127,14 @@ namespace MenuExtensoes
 	{
 	public:
 		AdjGenerico<T>() = default;
-		AdjGenerico<T>(T& vlr, T mn, T mx, T inc, const bool clc);
+		AdjGenerico<T>(T& vlr, T mn, T mx, T inc, const bool clc)
+		{
+			valor = &vlr;
+			min = mn;
+			max = mx;
+			incremento = inc;
+			ciclico = clc;
+		}
 
 		T* valor = nullptr;
 		T min = 0, max = 1, incremento = 1;
@@ -176,13 +183,39 @@ namespace MenuExtensoes
 			set(ajuste);
 		}
 
-		AdjGenerico& operator = (const AdjGenerico var)
+		~AdjGenerico() //destructor
+		{
+			valor = nullptr;
+		}
+
+		AdjGenerico(const AdjGenerico& var) // copy constructor
 		{
 			valor = var.valor;
 			min = var.min;
 			max = var.max;
 			incremento = var.incremento;
 			ciclico = var.ciclico;
+		}
+
+		AdjGenerico& operator = (const AdjGenerico& var) = default;  // copy operator
+
+		AdjGenerico(AdjGenerico&& source) noexcept  // Move Constructor
+		{
+			valor = source.valor;
+			min = source.min;
+			max = source.max;
+			incremento = source.incremento;
+			source.valor = nullptr;
+		}
+
+		AdjGenerico& operator = (AdjGenerico&& old) noexcept // Move operator
+		{
+			valor = old.valor;
+			min = old.min;
+			max = old.max;
+			incremento = old.incremento;
+			ciclico = old.ciclico;
+			old.valor = nullptr;
 			return { *this };
 		}
 	};
@@ -260,16 +293,6 @@ namespace MenuExtensoes
 
 		String texto() const;
 	};
-
-	template <typename T>
-	AdjGenerico<T>::AdjGenerico(T& vlr, T mn, T mx, T inc, const bool clc)
-	{
-		valor = &vlr;
-		min = mn;
-		max = mx;
-		incremento = inc;
-		ciclico = clc;
-	}
 
 	template <typename T>
 	unsigned LinhaValor<T>::nCaracteres() const
