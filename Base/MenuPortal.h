@@ -14,20 +14,13 @@ public:
 
     Portal() = default;
 
-    Portal(const String& nm, const Logo lg, const EnumMenus dest)
+    Portal(const String& nm, const Logo& lg, const EnumMenus dest)
     {
         nome = nm;
         logo = lg;
         destino = dest;
     }
-
-    Portal& operator = (const Portal& var)
-    {
-        this->nome = var.nome;
-        this->logo = var.logo;
-        this->destino = var.destino;
-        return *this;
-    }
+    //Portal& operator = (const Portal& var) = default;
 };
 
 class MenuPortal final : public MenuBase
