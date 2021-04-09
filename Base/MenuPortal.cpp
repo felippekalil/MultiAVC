@@ -43,7 +43,7 @@ void MenuPortal::ini(const String& titulo, EnumMenus* menuAtual, const EnumMenus
 	pisca.redefine(tAceso, tApagado, tLoop);
 }
 
-void MenuPortal::onMenuIni(void (*logoUpdate)(Logo logos))
+void MenuPortal::onMenuIni(void (*logoUpdate)(const Logo& logo))
 {
 	updateLogo = logoUpdate;
 	atualizaLogo();

@@ -8,7 +8,7 @@ class MenuMensagem final : public MenuBase
     uint16_t tDuracao = 1400, contDuracao = 0;
     MenuExtensoes::PiscaCiclo pisca;
 
-    void(*updateLogo)(Logo logo) = nullptr;
+    void(*updateLogo)(const Logo& logo) = nullptr;
     Logo logo{nullptr, 0};
     uint8_t logoSize = 0;
     uint8_t offset = 0;
@@ -16,13 +16,13 @@ class MenuMensagem final : public MenuBase
 
 public:
     MenuMensagem() = default;
-    MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus* menuAtual, 
-					Logo logo, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
+    MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus* menuAtual,
+                 const Logo& logo, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
     void ini(const String& textoSuperior, const String& textoInferior, EnumMenus* menuAtual,
-        Logo logo, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
+             const Logo& logo, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
-    void onMenuIni(void (*logoUpdate)(Logo logos)) override;
+    void onMenuIni(void (*logoUpdate)(const Logo& logo)) override;
 
     void onLoop() override;
 

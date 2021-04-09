@@ -31,7 +31,7 @@ class MenuLinhas final : public MenuBase
 					tAceso2 = 300, tApagado2 = 200;
     uint16_t tLoop = 50;
     PiscaCiclo pisca;
-    void(*updateLogo)(Logo logo) = nullptr;
+    void(*updateLogo)(const Logo& logo) = nullptr;
     uint8_t logoSize = 0;
     uint8_t offset = 0;
     //LINHAS
@@ -52,7 +52,7 @@ public:
     void ini(EnumMenus* menuAtual, Logo* logo, LinhaValor<float> linhas[], uint8_t nLinhas, void(*loopMenu)(),
 						uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
-    void onMenuIni(void (*logoUpdate)(Logo logos)) override;
+    void onMenuIni(void (*logoUpdate)(const Logo& logo)) override;
 
     //Logo
     Logo* logo;

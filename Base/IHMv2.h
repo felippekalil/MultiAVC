@@ -66,7 +66,7 @@ namespace IHMv2
 
 		void createChar(uint8_t index, uint8_t customChar[]);
 
-		void createLogo(Logo logo);
+		void createLogo(const Logo& logo);
 
 		void telaInicialLabsolda();
 

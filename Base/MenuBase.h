@@ -85,7 +85,7 @@ public:
 	EnumMenus* menuIhm = nullptr;
 	EnumMenus menuAnterior = Processos;
 	uint8_t apitar = 0;
-	virtual void onMenuIni(void(*logoUpdate)(Logo logo)) = 0;
+	virtual void onMenuIni(void(*logoUpdate)(const Logo& logo)) = 0;
 	virtual void onLoop() = 0;
 	virtual void onEncdrDec(int mult = 1) = 0;
 	virtual void onEncdrInc(int mult = 1) = 0;

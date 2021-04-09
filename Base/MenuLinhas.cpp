@@ -75,7 +75,7 @@ void MenuLinhas::ini(EnumMenus* menuAtual, Logo* logo, LinhaValor<float> linhas[
 	trocaEnum[EnumIndexInf].max = nLinhas - 1;
 }
 
-void MenuLinhas::onMenuIni(void(* logoUpdate)(Logo logos))
+void MenuLinhas::onMenuIni(void(* logoUpdate)(const Logo& logo))
 {
 	updateLogo = logoUpdate;
 	atualizaLogo();

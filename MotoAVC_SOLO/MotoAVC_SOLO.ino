@@ -17,7 +17,6 @@ constexpr auto saidaLoop = 12;
 #include "src/ControleAVC.h"
 #include "src/SalvarDados.h"
 
-
 using namespace IHMv2;
 
 namespace IOs

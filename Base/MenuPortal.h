@@ -43,7 +43,7 @@ class MenuPortal final : public MenuBase
     MenuExtensoes::PiscaCiclo pisca;
     EnumMenus menuVoltar = Processos;
 
-    void(*updateLogo)(Logo logo) = nullptr;
+    void(*updateLogo)(const Logo& logo) = nullptr;
 
     uint8_t logoSize = 0;
     uint8_t offset = 0;
@@ -61,7 +61,7 @@ public:
     void ini(const String& titulo, EnumMenus* menuAtual, EnumMenus menuVoltar, uint8_t nEnum,
         Portal* portais, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
-    void onMenuIni(void (*logoUpdate)(Logo logos)) override;
+    void onMenuIni(void (*logoUpdate)(const Logo& logo)) override;
 
     void onLoop() override;
 

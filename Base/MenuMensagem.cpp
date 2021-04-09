@@ -8,13 +8,13 @@ void MenuMensagem::atualizaLogo() const
 }
 
 MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus* menuAtual,
-                           const Logo logo, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) 
+                           const Logo& logo, const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) 
 							: pisca(tAceso, tApagado, tLoop)
 {
 	ini(textoSuperior, textoInferior, menuAtual, logo, logoSize, offset, tLoop);
 }
 
-void MenuMensagem::ini(const String& textoSuperior, const String& textoInferior, EnumMenus* menuAtual, const Logo logo,
+void MenuMensagem::ini(const String& textoSuperior, const String& textoInferior, EnumMenus* menuAtual, const Logo& logo,
                        const uint8_t logoSize, const uint8_t offset, const uint16_t tLoop) 
 {
 	this->textoSuperior = textoSuperior;
@@ -27,7 +27,7 @@ void MenuMensagem::ini(const String& textoSuperior, const String& textoInferior,
 	pisca.redefine(tAceso, tApagado, tLoop);
 }
 
-void MenuMensagem::onMenuIni(void(*logoUpdate)(Logo logos))
+void MenuMensagem::onMenuIni(void(*logoUpdate)(const Logo& logo))
 {
 	updateLogo = logoUpdate;
 	atualizaLogo();

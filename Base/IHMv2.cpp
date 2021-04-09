@@ -187,7 +187,7 @@ namespace IHMv2
 		menuAtual = menu;
 		nCharLogo = 0;
 		aguardaMenu = tempoAguardaMenu;
-		menuAtual->onMenuIni([](const Logo logo) { pntrEstatico->createLogo(logo); });
+		menuAtual->onMenuIni([](const Logo& logo) { pntrEstatico->createLogo(logo); });
 	}
 
 	void Ihm::imprimeLogo()
@@ -206,7 +206,7 @@ namespace IHMv2
 		lcd.createChar(index, customChar);
 	}
 
-	void Ihm::createLogo(const Logo logo)
+	void Ihm::createLogo(const Logo& logo)
 	{
 		uint8_t i;
 		for (i = 0; i < 8; i++)
@@ -232,7 +232,6 @@ namespace IHMv2
 		imprimeLogo();
 		lcd.setCursor(5, 0);
 		lcd.print(" LABSOLDA");
-		//const auto inst = F("Instituto de Soldagem e Mecatro");//nica";
 		const auto iniLcd = 5;
 		const auto lenght = 15 - iniLcd;
 		const auto lastLcd = strlen_P(inst) - lenght;
