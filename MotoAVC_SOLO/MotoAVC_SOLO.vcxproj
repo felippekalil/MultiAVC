@@ -107,6 +107,7 @@
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="MotoAVC_SOLO.ino">
       <FileType>CppCode</FileType>
     </None>

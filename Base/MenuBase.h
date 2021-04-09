@@ -31,7 +31,7 @@ public:
 	Logo(uint8_t* logo, const uint8_t off, uint8_t* extra, const uint8_t pos) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(pos) {}
 
 
-	Logo& operator = (const Logo oldLogo)   // copy operator
+	/*Logo& operator = (const Logo oldLogo)   // copy operator
 	{
 		this->logoPtr = oldLogo.logoPtr;
 		this->offset = oldLogo.offset;
@@ -46,34 +46,34 @@ public:
 			delete[] charExtra;// = nullptr;
 		}//*/
 
-		/*	Logo(const Logo& oldLogo) // copy constructor
-			{
-				this->logoPtr = oldLogo.logoPtr;
-				this->offset = oldLogo.offset;
-				this->charExtra = oldLogo.charExtra;
-				this->posCharExtra = oldLogo.posCharExtra;
-			}//*/
+	Logo(const Logo& oldLogo) // copy constructor
+	{
+		this->logoPtr = oldLogo.logoPtr;
+		this->offset = oldLogo.offset;
+		this->charExtra = oldLogo.charExtra;
+		this->posCharExtra = oldLogo.posCharExtra;
+	}
 
-			/*	Logo(Logo&& source) noexcept  // Move Constructor
-				{
-					this->logoPtr = source.logoPtr;
-					this->offset = source.offset;
-					this->charExtra = source.charExtra;
-					this->posCharExtra = source.posCharExtra;
-					source.logoPtr = nullptr;
-					source.charExtra = nullptr;
-				}//*/
+	Logo& operator = (const Logo& var) = default;  // copy operator */
 
-				/*Logo& operator = (const Logo& var) = default;  // copy operator
+/*	Logo(Logo&& source) noexcept  // Move Constructor
+	{
+		this->logoPtr = source.logoPtr;
+		this->offset = source.offset;
+		this->charExtra = source.charExtra;
+		this->posCharExtra = source.posCharExtra;
+		source.logoPtr = nullptr;
+		source.charExtra = nullptr;
+	}
 
-				Logo& operator = (Logo&& oldLogo) noexcept // Move operator
-				{
-					this->logoPtr = oldLogo.logoPtr;
-					this->offset = oldLogo.offset;
-					this->charExtra = oldLogo.charExtra;
-					this->posCharExtra = oldLogo.posCharExtra;
-					return *this;
-				}//*/
+	Logo& operator = (Logo&& oldLogo) noexcept // Move operator
+	{
+		this->logoPtr = oldLogo.logoPtr;
+		this->offset = oldLogo.offset;
+		this->charExtra = oldLogo.charExtra;
+		this->posCharExtra = oldLogo.posCharExtra;
+		return *this;
+	}//*/
 };
 
 class MenuBase

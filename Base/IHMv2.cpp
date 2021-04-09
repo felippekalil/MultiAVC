@@ -232,15 +232,17 @@ namespace IHMv2
 		imprimeLogo();
 		lcd.setCursor(5, 0);
 		lcd.print(" LABSOLDA");
-		auto inst = "Instituto de Soldagem e Mecatronica";
+		//const auto inst = F("Instituto de Soldagem e Mecatro");//nica";
 		const auto iniLcd = 5;
 		const auto lenght = 15 - iniLcd;
-		const auto lastLcd = strlen(inst) - lenght;
-		//delay(1000);
+		const auto lastLcd = strlen_P(inst) - lenght;
+		char texto[36];
+		memcpy_P(&texto, &inst, 36);
+
 		for (auto i = 0; i < lastLcd; i++)
 		{
 			lcd.setCursor(iniLcd, 1);
-			lcd.print(inst++);
+			lcd.print(texto+i);
 			delay(150);
 		}
 	}
@@ -266,7 +268,7 @@ namespace IHMv2
 
 		bloqueiaControles();
 
-		Logo/* logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
+		Logo logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
 		createLogo(logoIni);
 
 		telaInicialLabsolda();//*/
@@ -278,7 +280,7 @@ namespace IHMv2
 		imprimeLogo();
 
 		lcd.setCursor(2, 0);
-		lcd.print("MultiAVC");
+		lcd.print("MotoAVC");
 		lcd.setCursor(2, 1);
 		lcd.print("  v1.0");
 		delay(1500);//*/

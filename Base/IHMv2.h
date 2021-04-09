@@ -3,11 +3,12 @@
 #include <LiquidCrystal.h>
 #include "MenuBase.h"
 #ifndef _IHMV2_H
-	#define _IHMV2_H
+#define _IHMV2_H
 
 namespace IHMv2
 {
 	inline void pause() { while (true) {} }
+	const char inst[] PROGMEM = "Instituto de Soldagem e Mecatronica";
 
 	class Ihm
 	{
