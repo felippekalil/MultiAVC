@@ -41,8 +41,6 @@ class MenuPortal final : public MenuBase
     uint8_t logoSize = 0;
     uint8_t offset = 0;
 
-    void atualizaLogo() const;
-
 public:
     MenuPortal() = default;
     MenuPortal(const String& titulo, EnumMenus* menuAtual, EnumMenus menuVoltar, uint8_t nEnum,
@@ -55,6 +53,8 @@ public:
         Portal* portais, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
     void onMenuIni(void (*logoUpdate)(const Logo& logo)) override;
+
+    void atualizaLogo() override;
 
     void onLoop() override;
 

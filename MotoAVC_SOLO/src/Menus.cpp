@@ -73,7 +73,7 @@ void MenusClass::iniciaMenuExec()
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
     logoExec = { reinterpret_cast<uint8_t*>(&Icones::logoTig), offsetLogo, nullptr, 2 };
     pntrEstatico = this;
-    menuExecucao.ini(&menuIhmIndex, &logoExec, linhas, i, []() { pntrEstatico->atualizaCharExec(); }, logoSize, offset, tLoop);
+    menuExecucao.ini(&menuIhmIndex, logoExec, linhas, i, []() { pntrEstatico->atualizaCharExec(); }, logoSize, offset, tLoop);
 }
 
 MenusClass::MenusClass()

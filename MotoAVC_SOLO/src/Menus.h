@@ -20,7 +20,6 @@ class MenusClass
 	void iniciaMenuObras();
 
 	Logo logoExec{};
-	const int nLinhasProc = 7;
 	LinhaValor<float> linhas[7];
 	uint16_t tPisca = 400; //ms
 	uint16_t pisca = 0;

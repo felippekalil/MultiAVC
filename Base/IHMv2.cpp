@@ -241,7 +241,7 @@ namespace IHMv2
 		for (auto i = 0; i < lastLcd; i++)
 		{
 			lcd.setCursor(iniLcd, 1);
-			lcd.print(texto+i);
+			lcd.print(texto + i);
 			delay(150);
 		}
 	}
@@ -249,6 +249,8 @@ namespace IHMv2
 	void Ihm::iniLcd()
 	{
 		lcd.begin(16, 2);
+		if (menuAtual != nullptr)
+			menuAtual->atualizaLogo();
 	}
 
 	void Ihm::setup()
@@ -312,7 +314,6 @@ namespace IHMv2
 		imprimeInterface();
 		if (velEncoder > 0)
 			velEncoder--;
-		//Serial.println("Vel Enc:" + static_cast<String>(velEncoder));
 	}
 
 	bool Ihm::varAjustadas()
@@ -346,6 +347,8 @@ namespace IHMv2
 		case 'v':
 			menuAtual->onVoltar();
 			break;
+		default: 
+			break;;
 		}
 	}
 }

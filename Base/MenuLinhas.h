@@ -49,15 +49,15 @@ public:
 
     void(*loopMenu)() = nullptr;
 
-    void ini(EnumMenus* menuAtual, Logo* logo, LinhaValor<float> linhas[], uint8_t nLinhas, void(*loopMenu)(),
+    void ini(EnumMenus* menuAtual, const Logo& logo, LinhaValor<float> linhas[], uint8_t nLinhas, void(*loopMenu)(),
 						uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
     void onMenuIni(void (*logoUpdate)(const Logo& logo)) override;
 
     //Logo
-    Logo* logo;
+    const Logo* logo = nullptr;
 
-    void atualizaLogo() const;
+    void atualizaLogo() override;
 
     void onLoop() override;
 

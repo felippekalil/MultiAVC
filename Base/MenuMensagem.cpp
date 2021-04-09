@@ -1,10 +1,10 @@
 #include "MenuMensagem.h"
 
-void MenuMensagem::atualizaLogo() const
+void MenuMensagem::atualizaLogo()
 {
-	if (updateLogo == nullptr || logo.logoPtr == nullptr)
+	if (updateLogo == nullptr || (*logo).logoPtr == nullptr)
 		return;
-	updateLogo(logo);
+	updateLogo(*logo);
 }
 
 MenuMensagem::MenuMensagem(const String& textoSuperior, const String& textoInferior, EnumMenus* menuAtual,
@@ -20,7 +20,7 @@ void MenuMensagem::ini(const String& textoSuperior, const String& textoInferior,
 	this->textoSuperior = textoSuperior;
 	this->textoInferior = textoInferior;
 	menuIhm = menuAtual;
-	this->logo = logo;
+	this->logo = &logo;
 	this->logoSize = logoSize;
 	this->offset = offset;
 	tDuracao = tDuracao / tLoop;

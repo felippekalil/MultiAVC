@@ -9,10 +9,9 @@ class MenuMensagem final : public MenuBase
     MenuExtensoes::PiscaCiclo pisca;
 
     void(*updateLogo)(const Logo& logo) = nullptr;
-    Logo logo{nullptr, 0};
+    const Logo* logo = nullptr;
     uint8_t logoSize = 0;
     uint8_t offset = 0;
-    void atualizaLogo() const;
 
 public:
     MenuMensagem() = default;
@@ -23,6 +22,8 @@ public:
              const Logo& logo, uint8_t logoSize, uint8_t offset, uint16_t tLoop);
 
     void onMenuIni(void (*logoUpdate)(const Logo& logo)) override;
+
+    void atualizaLogo() override;
 
     void onLoop() override;
 

@@ -1,6 +1,6 @@
 #include "MenuPortal.h"
 
-void MenuPortal::atualizaLogo() const
+void MenuPortal::atualizaLogo()
 {
 	if (updateLogo == nullptr || portais[enumerador].logo.logoPtr == nullptr)
 		return;
