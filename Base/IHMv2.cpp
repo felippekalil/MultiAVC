@@ -70,7 +70,7 @@ namespace IHMv2
 
 	void Ihm::processaBuzzer()
 	{
-		//return;
+		return;
 		if (apitaBuzzer)
 		{
 			switch (modoBuzzer)

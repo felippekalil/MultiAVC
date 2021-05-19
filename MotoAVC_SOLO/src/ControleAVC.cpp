@@ -49,7 +49,7 @@ void ControleAVC::setaSaida(float leitura)
 	if (valorSaida > tensaoSaidaMax)
 		valorSaida = tensaoSaidaMax;
 
-	valorSaidaCorrente = valorSaida * 100;
+	valorSaidaCorrente = valorSaida * 100 * 300 / 440.0f;
 	analogWrite(saidaComarc, static_cast<int>(255 - 255 * (valorSaida) / tensaoSaidaMax));
 }
 

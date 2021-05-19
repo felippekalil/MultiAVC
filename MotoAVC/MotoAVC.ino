@@ -19,7 +19,7 @@ Linha linhas[] = {  Linha("  Ref:", &referencia, 1, 5, "V"), // 0
                     Linha("  Serial+CRC"), // 6
 					Linha("   Analogica") }; // 7
 
-//Ihm(LinhaSetFloat* linhas, byte (*seqTelas)[2], int nLinhas);
+//Ihm(LinhaSetFloat* linhasExec, byte (*seqTelas)[2], int nLinhas);
 constexpr byte nTelas = 7;
 byte telas[nTelas][2] = { {0,0},{ 0,1 },{0,2},{0,3},{4,5},{4,6},{4,7} };
 Ihm ihm(linhas, telas, nTelas);

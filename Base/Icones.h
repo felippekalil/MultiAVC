@@ -16,6 +16,7 @@ public:
 	//static byte logoStepDir[][8];
 	static byte logoTig[][8];
 	static byte logoMig[][8];
+	static byte logoConfig[][8];
 	static byte logoMartelo[][8];
 	static byte charRaio[9];
 	static byte charCurto[8];

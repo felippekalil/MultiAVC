@@ -16,6 +16,7 @@ enum EnumMenus
 	Processos = 0,
 	Obras,
 	Execucao,
+	Config,
 	CountMenus
 };
 

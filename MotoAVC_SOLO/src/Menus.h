@@ -11,7 +11,7 @@
 class MenusClass
 {
 	uint16_t tLoop = 50;
-	Portal portaisProc[4];
+	Portal portaisProc[3];
 	MenuPortal menuProcessos;
 	void iniciaMenuProc();
 
@@ -19,20 +19,26 @@ class MenusClass
 	MenuMensagem menuEmObras;
 	void iniciaMenuObras();
 
-	Logo logoExec{};
-	LinhaValor<float> linhas[7];
 	uint16_t tPisca = 400; //ms
 	uint16_t pisca = 0;
+
+	Logo logoExec{};
+	LinhaValor<float> linhasExec[4];
 	void atualizaCharExec();
 	MenuLinhas menuExecucao;
 	void iniciaMenuExec();
+
+	Logo logoConfig{};
+	LinhaValor<float> linhasConfig[4];
+	MenuLinhas menuConfig;
+	void iniciaMenuConfig();//*/
 
 public:
 	MenusClass();
 	void init(int tLoop);
 	EnumMenus menuIhmIndex = Processos;
 	EnumMenus menuIndexAnterior = Processos;
-	MenuBase* menus[3]{};
+	MenuBase* menus[4]{};
 	static MenusClass* pntrEstatico;
 
 	uint8_t* linhasMenuExec();
