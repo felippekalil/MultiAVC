@@ -23,13 +23,13 @@ enum EnumMenus
 class Logo
 {
 public:
-	uint8_t* logoPtr{};
+	const uint8_t* logoPtr{};
 	uint8_t offset{};
-	uint8_t* charExtra{};
+	const uint8_t* charExtra{};
 	uint8_t posCharExtra{};
 	Logo() = default;
-	Logo(uint8_t* logo, const uint8_t off) : logoPtr(logo), offset(off) {}
-	Logo(uint8_t* logo, const uint8_t off, uint8_t* extra, const uint8_t pos) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(pos) {}
+	Logo(const uint8_t* logo, const uint8_t off) : logoPtr(logo), offset(off) {}
+	Logo(const uint8_t* logo, const uint8_t off, const uint8_t* extra, const uint8_t pos) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(pos) {}
 
 
 	/*Logo& operator = (const Logo oldLogo)   // copy operator

@@ -213,13 +213,13 @@ namespace IHMv2
 		{
 			if (*(logo.logoPtr + i * 8) >= B100000 || logo.logoPtr == nullptr)
 				break;
-			createChar(i, logo.logoPtr + i * 8);
+			createChar(i, const_cast<uint8_t*>(logo.logoPtr + i * 8));
 		}
 		nCharLogo = i;
 
 		if (logo.charExtra != nullptr)
 		{
-			createChar(logo.posCharExtra, logo.charExtra);
+			createChar(logo.posCharExtra, const_cast<uint8_t*>(logo.charExtra));
 			if (logo.posCharExtra > i)
 				nCharLogo = logo.posCharExtra;
 		}
@@ -269,12 +269,12 @@ namespace IHMv2
 
 		bloqueiaControles();
 
-		Logo logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoLabsolda), 1 };
+		Logo logoIni = { reinterpret_cast<const uint8_t*>(&Icones::logoLabsolda), 1 };
 		createLogo(logoIni);
 
 		telaInicialLabsolda();//*/
 
-		logoIni = { reinterpret_cast<uint8_t*>(&Icones::logoRobo), 11 };
+		logoIni = { reinterpret_cast<const uint8_t*>(&Icones::logoRobo), 11 };
 		createLogo(logoIni);
 
 		lcd.clear();
