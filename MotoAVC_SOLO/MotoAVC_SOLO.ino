@@ -4,12 +4,12 @@
  Author:	Kalil
 */
 
-constexpr auto TLOOP = 50; // ms;
-constexpr auto TPLOT = 100; // ms;
-constexpr auto TLCDRESET = 4000; // ms;
+constexpr auto T_LOOP = 50; // ms;
+constexpr auto T_PLOT = 100; // ms;
+constexpr auto T_LCD_RESET = 4000; // ms;
 constexpr auto saidaLoop = 12;
 
-#define PRINT_SERIAL
+//#define PRINT_SERIAL
 
 #include <LiquidCrystal.h>
 #include "IHMv2.h"
@@ -42,7 +42,7 @@ namespace IOs
 }
 
 
-Ihm ihm(TLOOP);
+Ihm ihm(T_LOOP);
 
 void plot()
 {
@@ -60,7 +60,7 @@ void setup() {
 	Eeprom::carregaEeprom();
 	pinMode(saidaLoop, OUTPUT);
 	Controle.setupControle(IOs::OUT_1, IOs::OUT_2);
-	Menus.init(TLOOP);
+	Menus.init(T_LOOP);
 	ihm.setup();
 	ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
 }
@@ -68,7 +68,7 @@ void setup() {
 void loop() {
 	Controle.atua();
 	const auto tAtual = millis();
-	if (tAtual % TLOOP == 0)
+	if (tAtual % T_LOOP == 0)
 	{
 		if (Menus.menuIhmIndex != Menus.menuIndexAnterior)
 		{
@@ -82,10 +82,10 @@ void loop() {
 	if (ihm.varAjustadas())
 		Eeprom::atualizaEeprom();//*/
 	//IOs::atualizaIOs();
-	if (tAtual % TLCDRESET == 0)
+	if (tAtual % T_LCD_RESET == 0)
 		ihm.iniLcd();//*/
 #ifndef PRINT_SERIAL
-	if (tAtual % TPLOT == 0)
+	if (tAtual % T_PLOT == 0)
 		plot();//*/
 #endif
 }

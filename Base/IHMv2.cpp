@@ -2,7 +2,7 @@
 #include "Icones.h"
 
 //#define PRINT_SERIAL
-#define MEMORIA
+//#define MEMORIA
 
 int availableMemory() {
 	auto size = 1024; // Use 2048 with ATmega328
