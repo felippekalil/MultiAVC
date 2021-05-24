@@ -9,11 +9,11 @@ constexpr auto TPLOT = 100; // ms;
 constexpr auto TLCDRESET = 4000; // ms;
 constexpr auto saidaLoop = 12;
 
-//#define PRINT_SERIAL
+#define PRINT_SERIAL
 
 #include <LiquidCrystal.h>
 #include "IHMv2.h"
-#include "src/Menus.h"
+#include "src/Menus.h"	
 #include "src/ControleAVC.h"
 #include "src/SalvarDados.h"
 
@@ -37,7 +37,7 @@ namespace IOs
 	void atualizaIOs()
 	{
 		//digitalWrite(OUT_1, !digitalRead(IN_1));
-		digitalWrite(OUT_2, !digitalRead(IN_2));
+		//digitalWrite(OUT_2, !digitalRead(IN_2));
 	}
 }
 
@@ -59,7 +59,7 @@ void setup() {
 	Eeprom::inicializaVarsEeprom();
 	Eeprom::carregaEeprom();
 	pinMode(saidaLoop, OUTPUT);
-	Controle.setupControle(IOs::OUT_1);
+	Controle.setupControle(IOs::OUT_1, IOs::OUT_2);
 	Menus.init(TLOOP);
 	ihm.setup();
 	ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
@@ -81,7 +81,7 @@ void loop() {
 	}
 	if (ihm.varAjustadas())
 		Eeprom::atualizaEeprom();//*/
-	IOs::atualizaIOs();
+	//IOs::atualizaIOs();
 	if (tAtual % TLCDRESET == 0)
 		ihm.iniLcd();//*/
 #ifndef PRINT_SERIAL

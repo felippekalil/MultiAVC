@@ -7,24 +7,20 @@
 class Icones
 {
 public:
-	static const uint8_t fim[];
-	//static const uint8_t logoTeste[][8];
-	static const uint8_t logoLabsolda[][8];
-	static const uint8_t logoRobo[][8];
-	//static const uint8_t logoCnc[][8];
-	//static const uint8_t logoCncOld[][8];
-	//static const uint8_t logoStepDir[][8];
-	static const uint8_t logoTig[][8];
-	static const uint8_t logoMig[][8];
-	static const uint8_t logoConfig[][8];
-	static const uint8_t logoMartelo[][8];
-	static const uint8_t charRaio[9];
-	static const uint8_t charCurto[8];
-	static const uint8_t charPulse[8];
-	static const uint8_t charOk[8];
-	static const uint8_t charNone[8];
-	static const uint8_t charUp[9];
-	static const uint8_t charDwn[9];
+	static const uint8_t PROGMEM FIM[];
+	static const uint8_t PROGMEM LOGO_LABSOLDA[][8];
+	static const uint8_t PROGMEM LOGO_ROBO[][8];
+	static const uint8_t PROGMEM LOGO_TIG[][8];
+	static const uint8_t PROGMEM LOGO_MIG[][8];
+	static const uint8_t PROGMEM LOGO_CONFIG[][8];
+	static const uint8_t PROGMEM LOGO_MARTELO[][8];
+	static const uint8_t PROGMEM CHAR_RAIO[8];
+	static const uint8_t PROGMEM CHAR_CURTO[8];
+	static const uint8_t PROGMEM CHAR_PULSE[8];
+	static const uint8_t PROGMEM CHAR_OK[8];
+	static const uint8_t PROGMEM CHAR_NONE[8];
+	static const uint8_t PROGMEM CHAR_UP[8];
+	static const uint8_t PROGMEM CHAR_DWN[8];
 };
 
 #endif

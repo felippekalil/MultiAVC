@@ -2,6 +2,19 @@
 #include "Icones.h"
 
 //#define PRINT_SERIAL
+#define MEMORIA
+
+int availableMemory() {
+	auto size = 1024; // Use 2048 with ATmega328
+	byte* buf;
+
+	while ((buf = static_cast<byte*>(malloc(--size))) == nullptr)
+		;
+
+	free(buf);
+
+	return size;
+}
 
 namespace IHMv2
 {
@@ -153,6 +166,10 @@ namespace IHMv2
 		Serial.println(menuAtual->linhaInferior);
 #endif
 		imprimeLogo();
+#ifdef MEMORIA
+		Serial.print("Free:");
+		Serial.println(availableMemory());
+#endif
 	}
 
 	Ihm::Ihm(const uint16_t tLoop) : lcd(rs, en, d4, d5, d6, d7)
@@ -208,18 +225,24 @@ namespace IHMv2
 
 	void Ihm::createLogo(const Logo& logo)
 	{
+		uint8_t temp[64];
+		memcpy_P(temp, logo.logoPtr, 64);
+		const uint8_t* logoPtr = reinterpret_cast<uint8_t*>(&temp);
+
 		uint8_t i;
 		for (i = 0; i < 8; i++)
 		{
-			if (*(logo.logoPtr + i * 8) >= B100000 || logo.logoPtr == nullptr)
+			if (*(logoPtr + i * 8) >= B100000 || logoPtr == nullptr)
 				break;
-			createChar(i, const_cast<uint8_t*>(logo.logoPtr + i * 8));
+			createChar(i, const_cast<uint8_t*>(logoPtr + i * 8));
 		}
 		nCharLogo = i;
 
+		memcpy_P(temp, logo.charExtra, 8);
+
 		if (logo.charExtra != nullptr)
 		{
-			createChar(logo.posCharExtra, const_cast<uint8_t*>(logo.charExtra));
+			createChar(logo.posCharExtra, const_cast<uint8_t*>(logoPtr));
 			if (logo.posCharExtra > i)
 				nCharLogo = logo.posCharExtra;
 		}
@@ -269,12 +292,12 @@ namespace IHMv2
 
 		bloqueiaControles();
 
-		Logo logoIni = { reinterpret_cast<const uint8_t*>(&Icones::logoLabsolda), 1 };
+		Logo /*logoIni = { reinterpret_cast<const uint8_t*>(&Icones::LOGO_LABSOLDA), 1 };
 		createLogo(logoIni);
 
 		telaInicialLabsolda();//*/
 
-		logoIni = { reinterpret_cast<const uint8_t*>(&Icones::logoRobo), 11 };
+		logoIni = { reinterpret_cast<const uint8_t*>(&Icones::LOGO_ROBO), 11 };
 		createLogo(logoIni);
 
 		lcd.clear();

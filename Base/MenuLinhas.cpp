@@ -73,6 +73,8 @@ void MenuLinhas::ini(EnumMenus* menuAtual, const Logo& logo, LinhaValor<float> l
 	pisca.redefine(tAceso1, tApagado1, tLoop);
 	trocaEnum[EnumIndexSup].max = nLinhas - 1;
 	trocaEnum[EnumIndexInf].max = nLinhas - 1;
+	if (trocaEnum[EnumIndexInf].max > 2)
+		trocaEnum[EnumIndexInf].set(2);
 }
 
 void MenuLinhas::onMenuIni(void(* logoUpdate)(const Logo& logo))

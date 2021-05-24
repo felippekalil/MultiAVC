@@ -5,6 +5,12 @@
 #ifndef _IHMV2_H
 #define _IHMV2_H
 
+
+// this function will return the number of bytes currently free in RAM
+// written by David A. Mellis
+// based on code by Rob Faludi https://www.faludi.com
+int availableMemory();
+
 namespace IHMv2
 {
 	inline void pause() { while (true) {} }

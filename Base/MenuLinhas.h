@@ -16,7 +16,7 @@ class MenuLinhas final : public MenuBase
     };
 
     //Enums
-    uint8_t enums[3] = {0, 0, 1};
+    uint8_t enums[3] = {0, 0, 1}; //valores do enum da ihm, enum da linha de cima, e enum da linha de baixo
     AdjGenerico<uint8_t> trocaEnum[3] = 
     { 
     	{ enums[EnumMain], 0, 2, 1, true }, 

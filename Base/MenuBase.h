@@ -15,7 +15,8 @@ enum EnumMenus
 	//Principal = 0,
 	Processos = 0,
 	Obras,
-	Execucao,
+	Tig,
+	Mig,
 	Config,
 	CountMenus
 };

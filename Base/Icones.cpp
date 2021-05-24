@@ -1,7 +1,7 @@
 #include "Icones.h"
 
 // usar B100000 como identificador de final
-const uint8_t Icones::fim[] = {
+const uint8_t Icones::FIM[] = {
 	B100000,
 	B00000,
 	B00000,
@@ -96,7 +96,7 @@ const uint8_t Icones::fim[] = {
 //}
 //};
 
-const uint8_t Icones::logoLabsolda[][8] = { {
+const uint8_t Icones::LOGO_LABSOLDA[][8] = { {
 	B00000,
 	B00000,
 	B00000,
@@ -180,7 +180,7 @@ const uint8_t Icones::logoLabsolda[][8] = { {
 }
 };
 
-const uint8_t Icones::logoRobo[][8] = { {
+const uint8_t Icones::LOGO_ROBO[][8] = { {
 	B00000,
 	B00000,
 	B00000,
@@ -444,7 +444,7 @@ const uint8_t Icones::logoRobo[][8] = { {
 //}
 //};
 
-const uint8_t Icones::logoTig[][8] = { {
+const uint8_t Icones::LOGO_TIG[][8] = { {
 	B11000,
 	B11100,
 	B01110,
@@ -510,7 +510,7 @@ const uint8_t Icones::logoTig[][8] = { {
 }
 };
 
-const uint8_t Icones::logoMig[][8] = { {
+const uint8_t Icones::LOGO_MIG[][8] = { {
 	B00000,
 	B00000,
 	B11100,
@@ -576,7 +576,7 @@ const uint8_t Icones::logoMig[][8] = { {
 }
 };
 
-const uint8_t Icones::logoConfig[][8] = { {
+const uint8_t Icones::LOGO_CONFIG[][8] = { {
 	B00000,
 	B00000,
 	B00000,
@@ -642,7 +642,7 @@ const uint8_t Icones::logoConfig[][8] = { {
 }
 };
 
-const uint8_t Icones::logoMartelo[][8] = { {
+const uint8_t Icones::LOGO_MARTELO[][8] = { {
 	B00000,
 	B00000,
 	B00000,
@@ -708,7 +708,7 @@ const uint8_t Icones::logoMartelo[][8] = { {
 }
 };
 
-const uint8_t Icones::charRaio[9] = {
+const uint8_t Icones::CHAR_RAIO[8] = {
 	B00111,
 	B01110,
 	B01100,
@@ -716,11 +716,10 @@ const uint8_t Icones::charRaio[9] = {
 	B00110,
 	B00100,
 	B01000,
-	B00000,
 	B00000
 };
 
-const uint8_t Icones::charCurto[8] = {
+const uint8_t Icones::CHAR_CURTO[8] = {
 	B00010,
 	B00100,
 	B01100,
@@ -731,7 +730,7 @@ const uint8_t Icones::charCurto[8] = {
 	B00000
 };
 
-const uint8_t Icones::charPulse[8] = {
+const uint8_t Icones::CHAR_PULSE[8] = {
 	B00000,
 	B00000,
 	B01110,
@@ -742,7 +741,7 @@ const uint8_t Icones::charPulse[8] = {
 	B00000
 };
 
-const uint8_t Icones::charOk[8] = {
+const uint8_t Icones::CHAR_OK[8] = {
 	B00000,
 	B00000,
 	B00001,
@@ -753,7 +752,7 @@ const uint8_t Icones::charOk[8] = {
 	B00000 
 };
 
-const uint8_t Icones::charNone[8] = {
+const uint8_t Icones::CHAR_NONE[8] = {
 	B00000,
 	B10001,
 	B01010,
@@ -764,7 +763,7 @@ const uint8_t Icones::charNone[8] = {
 	B00000
 };
 
-const uint8_t Icones::charUp[9] = {
+const uint8_t Icones::CHAR_UP[8] = {
 	B00000,
 	B00100,
 	B01010,
@@ -772,11 +771,10 @@ const uint8_t Icones::charUp[9] = {
 	B01010,
 	B01010,
 	B01110,
-	B00000,
 	B00000
 };
 
-const uint8_t Icones::charDwn[9] = {
+const uint8_t Icones::CHAR_DWN[8] = {
 	B00000,
 	B00000,
 	B01110,
@@ -784,6 +782,5 @@ const uint8_t Icones::charDwn[9] = {
 	B01010,
 	B11011,
 	B01010,
-	B00100,
-	B00000
+	B00100
 };

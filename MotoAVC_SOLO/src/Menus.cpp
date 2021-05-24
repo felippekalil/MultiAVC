@@ -7,86 +7,94 @@ MenusClass* MenusClass::pntrEstatico;
 
 void MenusClass::iniciaMenuProc()
 {
+    static Portal portaisProc[5];
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 2;
     auto i = 0;
-    portaisProc[i++] = { "TIG HF", {reinterpret_cast<const uint8_t*>(&Icones::logoTig), offsetLogo, reinterpret_cast<const uint8_t*>(&Icones::charRaio), 2}, Execucao };
-    portaisProc[i++] = { "TIG", {reinterpret_cast<const uint8_t*>(&Icones::logoTig), offsetLogo}, Execucao };
-  //  portaisProc[i++] = { " MIG Conv.", {reinterpret_cast<const uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<const uint8_t*>(&Icones::charCurto), 2 }, Obras };
- //   portaisProc[i++] = { " MIG Puls.", {reinterpret_cast<const uint8_t*>(&Icones::logoMig), offsetLogo, reinterpret_cast<uint8_t*>(&Icones::charPulse), 2 }, Obras };
-    portaisProc[i++] = { "CONFIG", {reinterpret_cast<const uint8_t*>(&Icones::logoConfig), offsetLogo}, Config };
+    portaisProc[i++] = { "TIG HF", {reinterpret_cast<const uint8_t*>(&Icones::LOGO_TIG), offsetLogo, reinterpret_cast<const uint8_t*>(&Icones::CHAR_RAIO), 2}, Tig };
+    portaisProc[i++] = { "TIG", {reinterpret_cast<const uint8_t*>(&Icones::LOGO_TIG), offsetLogo}, Tig };
+    portaisProc[i++] = { " MIG Conv.", {reinterpret_cast<const uint8_t*>(&Icones::LOGO_MIG), offsetLogo, reinterpret_cast<const uint8_t*>(&Icones::CHAR_CURTO), 2 }, Obras };
+    portaisProc[i++] = { " MIG Puls.", {reinterpret_cast<const uint8_t*>(&Icones::LOGO_MIG), offsetLogo, reinterpret_cast<const uint8_t*>(&Icones::CHAR_PULSE), 2 }, Mig };
+    portaisProc[i++] = { "Config", {reinterpret_cast<const uint8_t*>(&Icones::LOGO_CONFIG), offsetLogo}, Config };
     menuProcessos.ini("Processo", &menuIhmIndex, Processos, i, portaisProc, logoSize, offset, tLoop);
 }
 
 void MenusClass::iniciaMenuObras()
 {
     const auto logoSize = 3, offset = logoSize + 0, offsetLogo = 2;
-    logoObras = { reinterpret_cast<const uint8_t*>(&Icones::logoMartelo), offsetLogo };
+    static Logo logoObras = { reinterpret_cast<const uint8_t*>(&Icones::LOGO_MARTELO), offsetLogo };
     menuEmObras.ini("EM", "OBRAS!", &menuIhmIndex, logoObras, logoSize, offset, tLoop);
 }
 
 
-void MenusClass::atualizaCharExec()
+void MenusClass::atualizaCharExec(Logo &logo)
 {
+    static uint16_t pisca = 0;
     pisca++;
     if (pisca == tPisca * 2)
         pisca = 0;
     if (pisca > tPisca * 1.5)
-        logoExec.charExtra = nullptr; //desaparece
-       // logoExec.charExtra += 1; //movimenta
+        logo.charExtra = nullptr; //desaparece
     else switch (Controle.getStatusControle()) 
     { 
 		case Off:
-            logoExec.charExtra = reinterpret_cast<const uint8_t*>(&Icones::charNone);
+            logo.charExtra = reinterpret_cast<const uint8_t*>(&Icones::CHAR_NONE);
 			break;
 		case Abrindo: 
-            logoExec.charExtra = reinterpret_cast<const uint8_t*>(&Icones::charRaio);
+            logo.charExtra = reinterpret_cast<const uint8_t*>(&Icones::CHAR_RAIO);
             break;
 		case Descendo:
-            logoExec.charExtra = reinterpret_cast<const uint8_t*>(&Icones::charDwn);
+            logo.charExtra = reinterpret_cast<const uint8_t*>(&Icones::CHAR_DWN);
             break;
 		case Subindo:
-            logoExec.charExtra = reinterpret_cast<const uint8_t*>(&Icones::charUp);
+            logo.charExtra = reinterpret_cast<const uint8_t*>(&Icones::CHAR_UP);
             break;
 		case Ok:
-            logoExec.charExtra = reinterpret_cast<const uint8_t*>(&Icones::charOk);
+            logo.charExtra = reinterpret_cast<const uint8_t*>(&Icones::CHAR_OK);
             break;
 		default: ;
-	}
-    menuExecucao.atualizaLogo();    
+	}  
 }
 
-void MenusClass::iniciaMenuExec()
+void MenusClass::iniciaMenuExecTig()
 {
-    AdjGenerico<float>  referencia = { Controle.referencia, 0.1, 99.9, 0.1, false };
+    static AdjGenerico<float>  referencia = { Controle.referencia, 0.1, 99.9, 0.1, false };
     referencia.atualiza();
-    AdjGenerico<float> zonaMorta = { Controle.zonaMorta, 0, 99.9, 0.1, false };
+    static AdjGenerico<float> zonaMorta = { Controle.zonaMorta, 0, 99.9, 0.1, false };
     zonaMorta.atualiza();
 
     uint8_t i = 0;
     linhasExec[i++] = { "Ref: ", referencia, 1, 4, "V" };
+    linhasExec[i++] = { " +-: ", zonaMorta, 1, 4, "V" };
     linhasExec[i++] = { " In: ", Controle.mediaTensaoDoArco, 1, 4, "V" };
     linhasExec[i++] = { "Err:", Controle.erro, 1, 5, "V" };
-    linhasExec[i++] = { " +-: ", zonaMorta, 1, 4, "V" };//*/
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
-    logoExec = { reinterpret_cast<const uint8_t*>(&Icones::logoTig), offsetLogo, nullptr, 2 };
+    logoExecTig = { reinterpret_cast<const uint8_t*>(&Icones::LOGO_TIG), offsetLogo, nullptr, 2 };
     pntrEstatico = this;
-    menuExecucao.ini(&menuIhmIndex, logoExec, linhasExec, i, []() { pntrEstatico->atualizaCharExec(); }, logoSize, offset, tLoop);
+    menuExecucaoTig.ini(&menuIhmIndex, logoExecTig, linhasExec, i, []() { pntrEstatico->atualizaCharExec(pntrEstatico->logoExecTig);  pntrEstatico->menuExecucaoTig.atualizaLogo();   }, logoSize, offset, tLoop);
+}
+
+void MenusClass::iniciaMenuExecMig()
+{
+    const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
+    logoExecMig = { reinterpret_cast<const uint8_t*>(&Icones::LOGO_MIG), offsetLogo, nullptr, 2 };
+    menuExecucaoMig.ini(&menuIhmIndex, logoExecMig, linhasExec, 4, []() { pntrEstatico->atualizaCharExec(pntrEstatico->logoExecMig);  pntrEstatico->menuExecucaoMig.atualizaLogo(); }, logoSize, offset, tLoop);
 }
 
 
 void MenusClass::iniciaMenuConfig()
 {
-    AdjGenerico<float> multEntrada = { Controle.multEntradaAnalogica, 1, 99.9, 0.1, false };
+    static Logo logoConfig{};
+    static LinhaValor<float> linhasConfig[4];
+    static AdjGenerico<float> multEntrada = { Controle.multEntradaAnalogica, 1, 99.9, 0.1, false };
     multEntrada.atualiza();
 
     uint8_t i = 0;
     linhasConfig[i++] = { "Mlt: ", multEntrada, 1, 4, "x" };
-    linhasConfig[i++] = { " In: ", Controle.mediaTensaoDoArco, 1, 4, "V" };
     linhasConfig[i++] = { "Out: ", Controle.valorSaidaCorrente, 1, 4, "A" };
+    linhasConfig[i++] = { " In: ", Controle.mediaTensaoDoArco, 1, 4, "V" };
     linhasConfig[i++] = { "Out: ", Controle.valorSaida, 1, 4, "V" };
     const auto logoSize = 3, offset = logoSize + 1, offsetLogo = 0;
-    logoConfig = { reinterpret_cast<const uint8_t*>(&Icones::logoConfig), offsetLogo, nullptr, 2 };
-    pntrEstatico = this;
+    logoConfig = { reinterpret_cast<const uint8_t*>(&Icones::LOGO_CONFIG), offsetLogo, nullptr, 2 };
     menuConfig.ini(&menuIhmIndex, logoConfig, linhasConfig, i, []() {}, logoSize, offset, tLoop);
 }//*/
 
@@ -94,7 +102,8 @@ MenusClass::MenusClass()
 {
      menus[Processos] = &menuProcessos;
      menus[Obras] = &menuEmObras;
-     menus[Execucao] = &menuExecucao;
+     menus[Tig] = &menuExecucaoTig;
+     menus[Mig] = &menuExecucaoMig;
      menus[Config] = &menuConfig;
 }
 
@@ -104,13 +113,14 @@ void MenusClass::init(const int tLoop)
     this->tLoop = tLoop;
     iniciaMenuProc();
     iniciaMenuObras();
-    iniciaMenuExec();
+    iniciaMenuExecTig();
+    iniciaMenuExecMig();
     iniciaMenuConfig();
 }
 
 uint8_t* MenusClass::linhasMenuExec()
 {
-	return menuExecucao.pntrLinhas();
+	return menuExecucaoTig.pntrLinhas();
 }
 
 

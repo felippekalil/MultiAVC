@@ -21,11 +21,19 @@ void ControleAVC::atualizaStatusControle(const float leitura)
 		statusControle = Subindo;
 }
 
-void ControleAVC::setupControle(const uint8_t pinArco = 255)
+void ControleAVC::setupControle() const
 {
-	pinArcoAberto = pinArco;
-	if (pinArcoAberto != 255)
-		pinMode(pinArcoAberto, OUTPUT);
+	pinMode(tensaoDoArco, INPUT);
+	pinMode(saidaComarc, OUTPUT);
+}
+
+void ControleAVC::setupControle(const uint8_t pinArcoBom, const uint8_t pinAbertura = 255)
+{
+	this->pinArcoBom = pinArcoBom;
+	this->pinAbertura = pinAbertura;
+	pinMode(pinArcoBom, OUTPUT);
+	if (pinAbertura != 255)
+		pinMode(pinAbertura, OUTPUT);
 	pinMode(tensaoDoArco, INPUT);
 	pinMode(saidaComarc, OUTPUT);
 }
@@ -70,7 +78,7 @@ void ControleAVC::atua()
 	valorTensaoDoArco = leTensaoArco();
 	mediaTensaoDoArco = valorTensaoDoArco * alpha + mediaTensaoDoArco * (1 - alpha);
 	erro = mediaTensaoDoArco - referencia;
-	if (valorTensaoDoArco < referencia / 3.0 || valorTensaoDoArco > 2 * referencia)
+	if (mediaTensaoDoArco < referencia / 3.0 || mediaTensaoDoArco > 2 * referencia)
 	{
 		setaSaida(referencia);
 		if (valorTensaoDoArco > 2 * referencia)
@@ -80,7 +88,10 @@ void ControleAVC::atua()
 	}
 	else
 		setaSaida(valorTensaoDoArco);
-	digitalWrite(pinArcoAberto, statusControle == Abrindo);
+	if (pinAbertura != 255)
+		digitalWrite(pinAbertura, statusControle == Abrindo);
+	if (pinArcoBom != 255)
+		digitalWrite(pinArcoBom, statusControle == Ok);
 }
 
 

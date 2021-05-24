@@ -26,14 +26,16 @@ class ControleAVC
     const float a = -1.003671372f, b = 0.990497072f;
     const float alpha = 0.01;
     const float tensaoSaidaMax = 8.8;
-    uint8_t pinArcoAberto = 255;
+    uint8_t pinAbertura = 255;
+    uint8_t pinArcoBom = 255;
 
     float leTensaoArco() const;
     void atualizaStatusControle(float leitura);
     StatusControle statusControle = Off;
 
  public:
-    void setupControle(uint8_t pinArco);
+    void setupControle() const;
+    void setupControle(uint8_t pinArcoBom, uint8_t pinAbertura);
 
     float valorTensaoDoArco = 0;
     float mediaTensaoDoArco = 0;
