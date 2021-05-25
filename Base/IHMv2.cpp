@@ -83,7 +83,7 @@ namespace IHMv2
 
 	void Ihm::processaBuzzer()
 	{
-		return;
+		//return;
 		if (apitaBuzzer)
 		{
 			switch (modoBuzzer)
@@ -292,7 +292,7 @@ namespace IHMv2
 
 		bloqueiaControles();
 
-		Logo /*logoIni = { reinterpret_cast<const uint8_t*>(&Icones::LOGO_LABSOLDA), 1 };
+		Logo logoIni = { reinterpret_cast<const uint8_t*>(&Icones::LOGO_LABSOLDA), 1 };
 		createLogo(logoIni);
 
 		telaInicialLabsolda();//*/

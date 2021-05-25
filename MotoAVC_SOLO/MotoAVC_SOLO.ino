@@ -34,10 +34,10 @@ namespace IOs
 		pinMode(OUT_2, OUTPUT);
 	}
 
-	void atualizaIOs()
+	void atualizaIOs() // para testes
 	{
-		//digitalWrite(OUT_1, !digitalRead(IN_1));
-		//digitalWrite(OUT_2, !digitalRead(IN_2));
+		digitalWrite(OUT_1, !digitalRead(IN_1));
+		digitalWrite(OUT_2, !digitalRead(IN_2));
 	}
 }
 
@@ -54,7 +54,6 @@ void plot()
 
 void setup() {
 	Serial.begin(9600);
-	//Serial.println(F("Inicializado!"));
 	IOs::inicializaIOs();
 	Eeprom::inicializaVarsEeprom();
 	Eeprom::carregaEeprom();
@@ -92,8 +91,7 @@ void loop() {
 
 #ifdef PRINT_SERIAL
 void serialEvent() {
-	while (Serial.available()) {
+	while (Serial.available()) 
 		ihm.interfaceSerial(static_cast<char>(Serial.read()));
-	}
 }
 #endif
