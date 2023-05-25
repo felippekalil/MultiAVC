@@ -59,11 +59,11 @@ namespace IHMv2
 
 		void imprimeInterface();
 
-		MenuBase* menuAtual{};
-
 	public:
 		explicit Ihm(uint16_t tLoop);
 		explicit Ihm(MenuBase* menu, uint16_t tLoop);
+
+		MenuBase* menuAtual{};
 
 		void atualizaMenu(MenuBase* menu);
 

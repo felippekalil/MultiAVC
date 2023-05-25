@@ -1,7 +1,7 @@
 /*
  Name:		MotoAVC.ino
  Created:	5/3/2020 5:53:23 PM
- Author:	Kalil
+ Author:	Felippe Kalil Mendonça
 */
 
 #include "EEPROM.h"
@@ -53,5 +53,5 @@ void loop() {
 	if(millis() % 300 == 0)
         ihm.imprimeInterface();
     if(ihm.varAjustadas())
-        atualizaEeprom();
+        atualizaEeprom();   
 }

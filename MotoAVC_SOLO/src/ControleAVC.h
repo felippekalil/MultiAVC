@@ -47,6 +47,8 @@ class ControleAVC
     float referencia = 12.6;
     float zonaMorta = 0;
     float erro = 0;
+    float tDelay = 0;
+    bool modoAuto = false;
     StatusControle getStatusControle() const;
 
     void setaSaida(float leitura);

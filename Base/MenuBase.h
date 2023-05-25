@@ -17,6 +17,7 @@ enum EnumMenus
 	Obras,
 	Tig,
 	Mig,
+	MigAuto,
 	Config,
 	CountMenus
 };
@@ -30,7 +31,7 @@ public:
 	uint8_t posCharExtra{};
 	Logo() = default;
 	Logo(const uint8_t* logo, const uint8_t off) : logoPtr(logo), offset(off) {}
-	Logo(const uint8_t* logo, const uint8_t off, const uint8_t* extra, const uint8_t pos) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(pos) {}
+	Logo(const uint8_t* logo, const uint8_t off, const uint8_t* extra, const uint8_t posExtra) : logoPtr(logo), offset(off), charExtra(extra), posCharExtra(posExtra) {}
 
 
 	/*Logo& operator = (const Logo oldLogo)   // copy operator

@@ -20,12 +20,17 @@ class MenusClass
 	uint16_t tPisca = 400; //ms
 
 	LinhaValor<float> linhasExec[4];
+	LinhaValor<float> linhasExecAuto[5];
 	Logo logoExecTig{};
-	void atualizaCharExec(Logo &logo);
+	Logo logoExecMigAuto{};
 	MenuLinhas menuExecucaoTig;
-	void iniciaMenuExecTig();
 	Logo logoExecMig{};
 	MenuLinhas menuExecucaoMig;
+	MenuLinhas menuExecucaoMigAuto;
+	void atualizaCharExec(Logo &logo);
+	void iniciaLinhasExec();
+	void iniciaLinhasExecAuto();
+	void iniciaMenuExecTig();
 	void iniciaMenuExecMig();
 
 	MenuLinhas menuConfig;
@@ -36,7 +41,7 @@ public:
 	void init(int tLoop);
 	EnumMenus menuIhmIndex = Processos;
 	EnumMenus menuIndexAnterior = Processos;
-	MenuBase* menus[5]{};
+	MenuBase* menus[CountMenus]{};
 	static MenusClass* pntrEstatico;
 
 	uint8_t* linhasMenuExec();

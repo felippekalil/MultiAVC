@@ -1,7 +1,7 @@
 /*
  Name:		MotoAVC_SOLO.ino
  Created:	11/26/2020 8:55:52 PM
- Author:	Kalil
+ Author:	Felippe Kalil Mendonça
 */
 
 constexpr auto T_LOOP = 50; // ms;
@@ -64,6 +64,14 @@ void setup() {
 	ihm.atualizaMenu(Menus.menus[Menus.menuIhmIndex]);
 }
 
+void atualizaModoAuto()
+{
+	if (ihm.menuAtual == Menus.menus[MigAuto])
+		Controle.modoAuto = true;
+	else
+		Controle.modoAuto = false;
+}
+
 void loop() {
 	Controle.atua();
 	const auto tAtual = millis();
@@ -78,9 +86,12 @@ void loop() {
 			Menus.menuIndexAnterior = Menus.menuIhmIndex;
 		ihm.loop();
 	}
+
+	atualizaModoAuto();
+
 	if (ihm.varAjustadas())
 		Eeprom::atualizaEeprom();//*/
-	//IOs::atualizaIOs();
+	IOs::atualizaIOs();
 	if (tAtual % T_LCD_RESET == 0)
 		ihm.iniLcd();//*/
 #ifndef PRINT_SERIAL

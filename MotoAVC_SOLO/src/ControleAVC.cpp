@@ -8,7 +8,7 @@ ControleAVC Controle;
 
 float ControleAVC::leTensaoArco() const
 {
-	return static_cast<float>(multEntradaAnalogica * b * powf(1.0 / (analogRead(tensaoDoArco) * ajuste5V), a));
+	return static_cast<float>(multEntradaAnalogica * b * powf(1.0 / (static_cast<float>(analogRead(tensaoDoArco)) * ajuste5V), a));
 }
 
 void ControleAVC::atualizaStatusControle(const float leitura)
@@ -88,6 +88,7 @@ void ControleAVC::atua()
 	}
 	else
 		setaSaida(valorTensaoDoArco);
+
 	if (pinAbertura != 255)
 		digitalWrite(pinAbertura, statusControle == Abrindo);
 	if (pinArcoBom != 255)

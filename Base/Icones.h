@@ -12,6 +12,7 @@ public:
 	static const uint8_t PROGMEM LOGO_ROBO[][8];
 	static const uint8_t PROGMEM LOGO_TIG[][8];
 	static const uint8_t PROGMEM LOGO_MIG[][8];
+	static const uint8_t PROGMEM LOGO_MIG_AUTO[][8];
 	static const uint8_t PROGMEM LOGO_CONFIG[][8];
 	static const uint8_t PROGMEM LOGO_MARTELO[][8];
 	static const uint8_t PROGMEM CHAR_RAIO[8];
