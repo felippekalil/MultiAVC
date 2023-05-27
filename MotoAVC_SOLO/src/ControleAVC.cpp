@@ -75,19 +75,36 @@ String ControleAVC::imprime() const
 
 void ControleAVC::atua()
 {
-	valorTensaoDoArco = leTensaoArco();
-	mediaTensaoDoArco = valorTensaoDoArco * alpha + mediaTensaoDoArco * (1 - alpha);
-	erro = mediaTensaoDoArco - referencia;
-	if (mediaTensaoDoArco < referencia / 3.0 || mediaTensaoDoArco > 2 * referencia)
+	valorTensaoDoArco = leTensaoArco(); //Atuação
+	mediaTensaoDoArco = valorTensaoDoArco * alpha + mediaTensaoDoArco * (1 - alpha); //Display e AutoRef
+	erro = mediaTensaoDoArco - referencia; //Display
+	if (mediaTensaoDoArco < referencia / 3.0 || mediaTensaoDoArco > 2 * referencia) //Região OFF
 	{
 		setaSaida(referencia);
 		if (valorTensaoDoArco > 2 * referencia)
+		{
 			statusControle = Abrindo;
+			instAbertura = millis();
+		}
 		else if (valorTensaoDoArco < referencia / 3.0)
 			statusControle = Off;
 	}
 	else
-		setaSaida(valorTensaoDoArco);
+	{
+		if (!modoAuto)
+			setaSaida(valorTensaoDoArco);
+		else //Atualiza Ref à todo início
+		{
+			auto agora = millis();
+			if (agora - instAbertura < tDelay * 1000) // se está esperando o tDelay
+			{
+				referencia = mediaTensaoDoArco; //Vai atualizando a referência
+				setaSaida(referencia); // Não corrige enquanto isso
+			}
+			else //se já deu o tempo
+				setaSaida(valorTensaoDoArco);
+		}
+	}
 
 	if (pinAbertura != 255)
 		digitalWrite(pinAbertura, statusControle == Abrindo);

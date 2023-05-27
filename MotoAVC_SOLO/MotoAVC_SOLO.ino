@@ -18,6 +18,7 @@ constexpr auto saidaLoop = 12;
 #include "src/SalvarDados.h"
 
 using namespace IHMv2;
+Ihm ihm(T_LOOP);
 
 namespace IOs
 {
@@ -41,9 +42,6 @@ namespace IOs
 	}
 }
 
-
-Ihm ihm(T_LOOP);
-
 void plot()
 {
 	Serial.print(Controle.referencia);
@@ -66,10 +64,7 @@ void setup() {
 
 void atualizaModoAuto()
 {
-	if (ihm.menuAtual == Menus.menus[MigAuto])
-		Controle.modoAuto = true;
-	else
-		Controle.modoAuto = false;
+	Controle.modoAuto = ihm.menuAtual == Menus.menus[MigAuto];
 }
 
 void loop() {
@@ -102,7 +97,7 @@ void loop() {
 
 #ifdef PRINT_SERIAL
 void serialEvent() {
-	while (Serial.available()) 
+	while (Serial.available())
 		ihm.interfaceSerial(static_cast<char>(Serial.read()));
 }
 #endif

@@ -32,6 +32,7 @@ class ControleAVC
     float leTensaoArco() const;
     void atualizaStatusControle(float leitura);
     StatusControle statusControle = Off;
+    unsigned long instAbertura = 0;
 
  public:
     void setupControle() const;
@@ -47,7 +48,7 @@ class ControleAVC
     float referencia = 12.6;
     float zonaMorta = 0;
     float erro = 0;
-    float tDelay = 0;
+    float tDelay = 0; //segundos
     bool modoAuto = false;
     StatusControle getStatusControle() const;
 

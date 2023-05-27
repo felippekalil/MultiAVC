@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33717.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TesteEncoder", "TesteEncoder\TesteEncoder.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
@@ -14,10 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlotterAVC", "PlotterAVC\PlotterAVC.csproj", "{A8F6EC60-8BB8-45AF-A644-95B373C744C1}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Base\Base.vcxitems*{fb3841b7-1e4c-48d8-a3c3-a08dbab44db6}*SharedItemsImports = 9
-		Base\Base.vcxitems*{fb61d1b0-7a0e-46b0-a718-280445efca58}*SharedItemsImports = 4
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -69,5 +65,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96CD9507-F794-483F-BEA7-F284D1F17768}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Base\Base.vcxitems*{fb3841b7-1e4c-48d8-a3c3-a08dbab44db6}*SharedItemsImports = 9
+		Base\Base.vcxitems*{fb61d1b0-7a0e-46b0-a718-280445efca58}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal
