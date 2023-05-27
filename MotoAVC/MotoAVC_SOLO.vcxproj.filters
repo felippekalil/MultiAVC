@@ -15,16 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MotoAVC_SOLO.ino" />
+    <None Include="MotoAVC.ino" />
     <None Include="src\arduino folders read me.txt">
       <Filter>Misc Files</Filter>
     </None>
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.MotoAVC_SOLO.vsarduino.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Menus.h">
       <Filter>Header Files</Filter>
     </ClInclude>

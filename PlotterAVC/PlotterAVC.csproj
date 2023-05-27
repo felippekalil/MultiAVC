@@ -63,7 +63,9 @@
     <Compile Include="PlotterAVC.Lista.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PlotterAVC.Serial.cs" />
+    <Compile Include="PlotterAVC.Serial.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="PlotterAVC.resx">

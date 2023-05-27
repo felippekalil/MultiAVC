@@ -80,7 +80,7 @@ void ControleAVC::atua()
 	erro = mediaTensaoDoArco - referencia; //Display
 	if (mediaTensaoDoArco < referencia / 3.0 || mediaTensaoDoArco > 2 * referencia) //Região OFF
 	{
-		setaSaida(referencia);
+		setaSaida(referencia); //não atua
 		if (valorTensaoDoArco > 2 * referencia)
 		{
 			statusControle = Abrindo;
@@ -92,17 +92,17 @@ void ControleAVC::atua()
 	else
 	{
 		if (!modoAuto)
-			setaSaida(valorTensaoDoArco);
-		else //Atualiza Ref à todo início
-		{
+			setaSaida(valorTensaoDoArco);//atua
+		else 
+		{//Atualiza Ref à todo início
 			auto agora = millis();
 			if (agora - instAbertura < tDelay * 1000) // se está esperando o tDelay
 			{
 				referencia = mediaTensaoDoArco; //Vai atualizando a referência
-				setaSaida(referencia); // Não corrige enquanto isso
+				setaSaida(referencia); // Não atua enquanto isso
 			}
 			else //se já deu o tempo
-				setaSaida(valorTensaoDoArco);
+				setaSaida(valorTensaoDoArco);//atua
 		}
 	}
 
