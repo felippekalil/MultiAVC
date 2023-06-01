@@ -86,7 +86,7 @@ void loop() {
 
 	if (ihm.varAjustadas())
 		Eeprom::atualizaEeprom();//*/
-	IOs::atualizaIOs();
+	//IOs::atualizaIOs();
 	if (tAtual % T_LCD_RESET == 0)
 		ihm.iniLcd();//*/
 #ifndef PRINT_SERIAL

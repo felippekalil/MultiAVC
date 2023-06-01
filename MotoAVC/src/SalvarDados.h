@@ -14,7 +14,7 @@
 
 namespace Eeprom //TODO Criar a classe SalvarDados
 {
-    constexpr uint8_t nVar = 3;
+    constexpr uint8_t nVar = 4; //QUANTIDADE DE VARIÁVEIS NA EEPROM
     struct DadoEeprom // para valores de até 4 bytes
     {
         uint8_t* local{};
